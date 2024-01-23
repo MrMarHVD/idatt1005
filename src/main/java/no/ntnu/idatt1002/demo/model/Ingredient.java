@@ -1,4 +1,4 @@
-package no.ntnu.idatt1002.model;
+package no.ntnu.idatt1002.demo.model;
 
 
 /**
