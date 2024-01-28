@@ -9,14 +9,17 @@ public class Recipe {
 
   String instructions;
 
+  String name;
+
   /**
    * Constructor for recipe.
    *
    * @param ingredients ingredients in the recipe.
    */
-  public Recipe(String instructions, Ingredient firstIngredient, Ingredient... ingredients) {
+  public Recipe(String name, String instructions, Ingredient firstIngredient, Ingredient... ingredients) {
 
     this.ingredients = new ArrayList<Ingredient>();
+    this.name = name;
 
     this.ingredients.add(firstIngredient);
     this.ingredients.addAll(Arrays.asList(ingredients));
@@ -41,4 +44,10 @@ public class Recipe {
         ", instructions='" + instructions + '\'' +
         '}';
   }
+
+  /**
+   * Get the name of the recipe.
+   * @return name of the recipe.
+   */
+  public String getName() { return this.name; }
 }

@@ -6,7 +6,6 @@ import no.ntnu.idatt1002.demo.model.Recipe;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -17,18 +16,42 @@ import javafx.stage.Stage;
  */
 public class MyApp extends Application {
 
+  /**
+   * Start method
+   *
+   * @param primaryStage
+   * @throws Exception
+   */
   @Override
   public void start(Stage primaryStage) throws Exception {
     try {
-      // Load the FXML file
-      FXMLLoader loader = new FXMLLoader(getClass().getResource(
-          "/no/ntnu/idatt1002/demo/view/UI.fxml"));
-      Parent root = loader.load();
 
+      // Load the FXML file.
+      String FXML_PATH = "/fxml/Ui.fxml";
+      FXMLLoader loader = new FXMLLoader(MyApp.class.getResource(FXML_PATH));
+
+      /*
+      Note: I had massive issues getting the application window to open and repeatedly got the error
+      "Location is not set" when trying to load the FXML file. I tried many different solutions, and
+      the final solution ended up being setting the scene = to null prior to instantiating it and
+      including the width and height parameters in the scene constructor. No idea why.
+       */
+      Scene scene = null;
+
+      // Load the controller.
+      //UiController controller = loader.getController();
+      try {
+        scene = new Scene(loader.load(), 800, 800);
+
+      } catch (Exception e)  {
+        e.printStackTrace();
+      }
       // Set the scene to the stage and configure the primary stage
-      Scene scene = new Scene(root);
+
       primaryStage.setScene(scene);
       primaryStage.setTitle("Purchase Planner");
+      primaryStage.setMinWidth(300);
+      primaryStage.setMinHeight(300);
 
       // Show the primary stage
       primaryStage.show();
@@ -36,21 +59,23 @@ public class MyApp extends Application {
     } catch (Exception e) {
       e.printStackTrace();
     }
+
   }
 
     /**
      * Main method for testing
      */
     public static void main(String[] args) throws Exception {
-        MyWindow window = new MyWindow("The Window");
-        window.setVisible(true);
-        System.out.println("Hei");
+      Application.launch(args);
+      MyWindow window = new MyWindow("The Window");
+      window.setVisible(true);
+      System.out.println("Hei");
 
       Ingredient eggs = new Ingredient("eggs");
       Ingredient flour = new Ingredient("flour");
       Ingredient milk = new Ingredient("milk");
 
-      Recipe bread = new Recipe("Add the eggs and milk, then mix with flour.",
+      Recipe bread = new Recipe("Bread", "Add the eggs and milk, then mix with flour.",
           flour, milk, eggs);
 
       System.out.println(bread.toString());
