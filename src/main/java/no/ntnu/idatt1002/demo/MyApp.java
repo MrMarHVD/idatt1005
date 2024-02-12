@@ -27,7 +27,7 @@ public class MyApp extends Application {
     try {
 
       // Load the FXML file.
-      String FXML_PATH = "/fxml/Ui.fxml";
+      String FXML_PATH = "/fxml/UiHome.fxml";
       FXMLLoader loader = new FXMLLoader(MyApp.class.getResource(FXML_PATH));
 
       /*

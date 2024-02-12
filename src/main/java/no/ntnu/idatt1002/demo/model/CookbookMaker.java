@@ -1,7 +1,7 @@
 package no.ntnu.idatt1002.demo.model;
 
 /**
- * Temporary class for instantiating some recipes.
+ * Temporary class for instantiating some recipes. This will not be part of the final app.
  */
 public class CookbookMaker {
 
