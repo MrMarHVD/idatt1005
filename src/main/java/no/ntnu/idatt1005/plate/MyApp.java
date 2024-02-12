@@ -67,8 +67,6 @@ public class MyApp extends Application {
      */
     public static void main(String[] args) throws Exception {
       Application.launch(args);
-      MyWindow window = new MyWindow("The Window");
-      window.setVisible(true);
       System.out.println("Hei");
 
       Ingredient eggs = new Ingredient("eggs");
