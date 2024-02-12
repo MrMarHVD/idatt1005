@@ -121,7 +121,7 @@
         <resource>
           <directory>src/main/resources</directory>
           <includes>
-            <include>fxml/Ui.fxml</include>
+            <include>fxml/UiHome.fxml</include>
           </includes>
         </resource>
       </resources>
