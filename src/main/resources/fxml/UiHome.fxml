@@ -42,15 +42,28 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.UiHomeController">
   <children>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button mnemonicParsing="false" text="Your Week" />
+            <Button mnemonicParsing="false" text="Cookbook" />
+            <Button mnemonicParsing="false" text="Inventory" />
+            <Button mnemonicParsing="false" text="Shopping List" />
+            <Button mnemonicParsing="false" text="Settings" />
+        </items>
+      </ToolBar>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
@@ -102,6 +115,20 @@
                 <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
               </textFill>
             </Label>
+                  <GridPane layoutX="29.0" layoutY="37.0" minWidth="-Infinity" prefHeight="445.0" prefWidth="164.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="37.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="377.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="403.0" minHeight="9.0" prefHeight="69.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="343.0" minHeight="10.0" prefHeight="66.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="343.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="343.0" minHeight="0.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="343.0" minHeight="0.0" prefHeight="62.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="343.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
