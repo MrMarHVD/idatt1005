@@ -1,8 +1,8 @@
-package no.ntnu.idatt1002.demo;
+package no.ntnu.idatt1005.plate;
 
-import no.ntnu.idatt1002.demo.view.MyWindow;
-import no.ntnu.idatt1002.demo.model.Ingredient;
-import no.ntnu.idatt1002.demo.model.Recipe;
+import no.ntnu.idatt1005.plate.view.MyWindow;
+import no.ntnu.idatt1005.plate.model.Ingredient;
+import no.ntnu.idatt1005.plate.model.Recipe;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

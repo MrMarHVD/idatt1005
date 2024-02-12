@@ -1,4 +1,4 @@
-package no.ntnu.idatt1002.demo.model;
+package no.ntnu.idatt1005.plate.model;
 
 import java.util.ArrayList;
 

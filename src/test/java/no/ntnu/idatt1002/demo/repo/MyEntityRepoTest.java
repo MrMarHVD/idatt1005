@@ -1,6 +1,7 @@
 package no.ntnu.idatt1002.demo.repo;
 
-import no.ntnu.idatt1002.demo.data.MyEntity;
+import no.ntnu.idatt1005.plate.data.MyEntity;
+import no.ntnu.idatt1005.plate.repo.MyEntityRepo;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

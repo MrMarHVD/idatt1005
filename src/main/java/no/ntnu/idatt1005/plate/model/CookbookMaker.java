@@ -1,4 +1,4 @@
-package no.ntnu.idatt1002.demo.model;
+package no.ntnu.idatt1005.plate.model;
 
 /**
  * Temporary class for instantiating some recipes. This will not be part of the final app.
