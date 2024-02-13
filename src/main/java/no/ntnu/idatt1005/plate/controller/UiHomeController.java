@@ -1,5 +1,6 @@
 package no.ntnu.idatt1005.plate.controller;
 
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -44,6 +45,10 @@ public class UiHomeController {
   public void initialize() {
     this.initializeCookBook();
     this.addRecipes();
+  }
+
+  public void initializeToolbar() {
+    FXMLLoader toolbarLoader = new FXMLLoader(getClass().getResource("/fxml/toolbar/Toolbar.fxml"));
   }
 
   /**
