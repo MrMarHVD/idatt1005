@@ -1,5 +1,6 @@
 package no.ntnu.idatt1005.plate;
 
+import no.ntnu.idatt1005.plate.controller.MainController;
 import no.ntnu.idatt1005.plate.view.MyWindow;
 import no.ntnu.idatt1005.plate.model.Ingredient;
 import no.ntnu.idatt1005.plate.model.Recipe;
@@ -16,6 +17,10 @@ import javafx.stage.Stage;
  */
 public class MyApp extends Application {
 
+  static Stage primaryStage;
+
+
+
   /**
    * Start method
    *
@@ -24,7 +29,7 @@ public class MyApp extends Application {
    */
   @Override
   public void start(Stage primaryStage) throws Exception {
-    try {
+    /*try {
 
       // Load the FXML file.
       String FXML_PATH = "/fxml/UiHome.fxml";
@@ -53,8 +58,19 @@ public class MyApp extends Application {
 
     } catch (Exception e) {
       e.printStackTrace();
-    }
+    }*/
+  MainController mainController = new MainController();
+  mainController.loadInitialView(primaryStage);
 
+
+  }
+
+  /**
+   * Get the primaryStage.
+   * @return primaryStage.
+   */
+  public static Stage getPrimaryStage() {
+    return MyApp.primaryStage; // Public getter for the primary stage
   }
 
     /**
