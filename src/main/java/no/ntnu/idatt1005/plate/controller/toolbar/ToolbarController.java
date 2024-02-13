@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import no.ntnu.idatt1005.plate.MyApp;
 import no.ntnu.idatt1005.plate.controller.MainController;
 import no.ntnu.idatt1005.plate.controller.calendar.CalendarController;
 import no.ntnu.idatt1005.plate.model.Recipe;
@@ -42,7 +43,7 @@ public class ToolbarController {
    *
    * @param mainController the main controller.
    */
-  @FXML public void setMainController(MainController mainController) {
+  public void setMainController(MainController mainController) {
     this.mainController = mainController;
   }
 
