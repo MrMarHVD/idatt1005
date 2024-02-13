@@ -7,7 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javax.tools.Tool;
 import no.ntnu.idatt1005.plate.controller.calendar.CalendarController;
+import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
@@ -17,7 +19,11 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
  */
 public class UiHomeController {
 
-  @FXML private MainController mainController;
+  @FXML
+  private MainController mainController;
+
+  @FXML
+  private ToolbarController toolbarController;
 
   @FXML
   private CalendarController calendarController;
@@ -38,6 +44,8 @@ public class UiHomeController {
    * Initialize the controller.
    */
   public void initialize() {
+    this.setMainController(mainController);
+
     this.initializeCookBook();
     this.addRecipes();
   }
@@ -47,8 +55,9 @@ public class UiHomeController {
    *
    * @param mainController the main controller.
    */
-  @FXML public void setMainController(MainController mainController) {
+  public void setMainController(MainController mainController) {
     this.mainController = mainController;
+    this.toolbarController.setMainController(mainController);
   }
 
   // Define an event handler method for your button

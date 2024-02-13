@@ -23,13 +23,8 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
  */
 public class MainController {
 
-  @FXML private ToolbarController toolbarController;
-  @FXML private UiInventoryController inventoryController;
-  @FXML private UiHomeController homeController;
-  @FXML private UiShoppingListController shoppingListController;
-
   private void initialize() {
-    toolbarController.setMainController(this);
+
   }
 
   /**
@@ -42,8 +37,13 @@ public class MainController {
       FXMLLoader homeLoader = new FXMLLoader(MyApp.class.getResource("/fxml/UiHome.fxml"));
       Parent homeView = homeLoader.load();
 
+      // Set the main controller for the home controller
+      UiHomeController homeController = homeLoader.getController();
+      homeController.setMainController(this);
+
       Scene scene = new Scene(homeView, 800, 800);
       stage.setScene(scene);
+
 
       stage.setTitle("Plate 1.0");
       stage.setMinWidth(300);
@@ -79,17 +79,21 @@ public class MainController {
    * Go to the inventory view.
    */
   public void goToInventory() {
+    System.out.println("Test");
     try {
       FXMLLoader inventoryLoader = new FXMLLoader(getClass().getResource("/fxml/UiInventory.fxml"));
       Parent inventoryView = inventoryLoader.load();
 
+      // Set the main controller for the inventory controller
+      UiInventoryController inventoryController = inventoryLoader.getController();
+      inventoryController.setMainController(this);
+
       Scene scene = new Scene(inventoryView);
-      Stage currentStage = (Stage) MyApp.getPrimaryStage();
+      Stage currentStage = MyApp.getPrimaryStage();
       currentStage.setScene(scene);
       //Stage stage = (Stage) inventory.getScene().getWindow();
       currentStage.show();
 
-      UiInventoryController inventoryController = inventoryLoader.getController();
 
     } catch (Exception e) {
 
