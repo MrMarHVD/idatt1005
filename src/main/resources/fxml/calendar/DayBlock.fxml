@@ -11,14 +11,14 @@
    <children>
       <VBox prefHeight="92.0" prefWidth="74.0">
          <children>
-            <Label prefHeight="52.0" prefWidth="87.0" text="Date" />
-            <Label prefHeight="54.0" prefWidth="87.0" text="Day" />
+            <Label fx:id="dateLabel" prefHeight="52.0" prefWidth="87.0" text="Date" />
+            <Label fx:id="dayLabel" prefHeight="54.0" prefWidth="87.0" text="Day" />
          </children>
       </VBox>
       <Separator orientation="VERTICAL" prefHeight="200.0" />
       <VBox prefHeight="92.0" prefWidth="60.0">
          <children>
-            <Label prefHeight="70.0" prefWidth="57.0" text="Recipe" />
+            <Label fx:id="recipeLabel" prefHeight="70.0" prefWidth="57.0" text="Recipe" />
          </children>
       </VBox>
       <Separator orientation="VERTICAL" prefHeight="200.0" />
