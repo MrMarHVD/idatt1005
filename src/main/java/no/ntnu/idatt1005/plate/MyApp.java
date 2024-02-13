@@ -31,12 +31,6 @@ public class MyApp extends Application {
       FXMLLoader loader = new FXMLLoader(MyApp.class.getResource(FXML_PATH));
       //System.out.println(MyApp.class.getResource(FXML_PATH));
 
-      /*
-      Note: I had massive issues getting the application window to open and repeatedly got the error
-      "Location is not set" when trying to load the FXML file. I tried many different solutions, and
-      the final solution ended up being setting the scene = to null prior to instantiating it and
-      including the width and height parameters in the scene constructor. No idea why.
-       */
       Scene scene = null;
 
       // Load the controller.
