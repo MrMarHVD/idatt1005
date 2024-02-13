@@ -17,7 +17,7 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
 public class UiHomeController {
 
   @FXML
-  private CalendarController calendarController;
+  private CalendarController calendar;
 
   @FXML
   private Button home;
