@@ -29,6 +29,7 @@ public class MyApp extends Application {
       // Load the FXML file.
       String FXML_PATH = "/fxml/UiHome.fxml";
       FXMLLoader loader = new FXMLLoader(MyApp.class.getResource(FXML_PATH));
+      //System.out.println(MyApp.class.getResource(FXML_PATH));
 
       /*
       Note: I had massive issues getting the application window to open and repeatedly got the error

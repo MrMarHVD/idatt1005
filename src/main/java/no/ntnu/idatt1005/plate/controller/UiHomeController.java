@@ -16,6 +16,11 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
 public class UiHomeController {
 
   @FXML
+  public Button home;
+  @FXML
+  public Button cookbook;
+
+  @FXML
   private Button testButton;
 
   @FXML
