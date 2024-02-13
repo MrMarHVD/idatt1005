@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import no.ntnu.idatt1005.plate.MyApp;
 import no.ntnu.idatt1005.plate.controller.calendar.CalendarController;
+import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
@@ -22,14 +23,10 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
  */
 public class MainController {
 
-
+  @FXML private ToolbarController toolbarController;
 
   private void initialize() {
-
-  }
-
-  private void initializeToolbar() {
-    FXMLLoader toolbarLoader = new FXMLLoader(getClass().getResource("/fxml/toolbar/Toolbar.fxml"));
+    toolbarController.setMainController(this);
   }
 
   /**
@@ -88,6 +85,8 @@ public class MainController {
       currentStage.setScene(scene);
       //Stage stage = (Stage) inventory.getScene().getWindow();
       currentStage.show();
+
+      UiInventoryController inventoryController = inventoryLoader.getController();
 
     } catch (Exception e) {
 

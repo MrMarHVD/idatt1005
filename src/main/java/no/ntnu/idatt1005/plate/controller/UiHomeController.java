@@ -17,6 +17,8 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
  */
 public class UiHomeController {
 
+  @FXML private MainController mainController;
+
   @FXML
   private CalendarController calendarController;
 
@@ -32,13 +34,6 @@ public class UiHomeController {
   @FXML
   private ListView<String> cookBookListView;
 
-  // Define an event handler method for your button
-  @FXML
-  private void handleButtonAction() {
-    // Your logic here
-    System.out.println("Button clicked!");
-  }
-
   /**
    * Initialize the controller.
    */
@@ -46,6 +41,23 @@ public class UiHomeController {
     this.initializeCookBook();
     this.addRecipes();
   }
+
+  /**
+   * Set the main controller for this class.
+   *
+   * @param mainController the main controller.
+   */
+  @FXML public void setMainController(MainController mainController) {
+    this.mainController = mainController;
+  }
+
+  // Define an event handler method for your button
+  @FXML
+  private void handleButtonAction() {
+    // Your logic here
+    System.out.println("Button clicked!");
+  }
+
 
   public void initializeToolbar() {
     FXMLLoader toolbarLoader = new FXMLLoader(getClass().getResource("/fxml/toolbar/Toolbar.fxml"));

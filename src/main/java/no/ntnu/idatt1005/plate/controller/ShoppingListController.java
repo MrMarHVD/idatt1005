@@ -13,4 +13,10 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
 public class ShoppingListController {
 
+  @FXML private MainController mainController;
+
+  @FXML public void setMainController(MainController mainController) {
+    this.mainController = mainController;
+  }
+
 }

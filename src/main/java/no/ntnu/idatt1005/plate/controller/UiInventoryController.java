@@ -12,4 +12,15 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
 public class UiInventoryController {
 
+  @FXML private MainController mainController;
+
+  /**
+   * Set the main controller for this class.
+   *
+   * @param mainController the main controller.
+   */
+  @FXML public void setMainController(MainController mainController) {
+    this.mainController = mainController;
+  }
+
 }
