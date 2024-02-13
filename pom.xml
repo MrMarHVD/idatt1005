@@ -27,6 +27,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.16.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>21.0.2</version>
@@ -121,7 +127,7 @@
         <resource>
           <directory>src/main/resources</directory>
           <includes>
-            <include>fxml</include>
+            <include>**/*.fxml</include>
           </includes>
         </resource>
       </resources>
