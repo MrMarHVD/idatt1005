@@ -114,17 +114,19 @@
                 <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <VBox layoutX="2.0" layoutY="44.0" prefHeight="467.0" prefWidth="220.0" />
+            <VBox layoutX="2.0" layoutY="44.0" prefHeight="467.0" prefWidth="220.0">
+                     <children>
+                        <fx:include source="calendar/Calendar.fxml" />
+                     </children></VBox>
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
           <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
-                <fx:include fx:id="calendar" source="/fxml/calendar/Calendar.fxml" />
                 <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="View" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                        <Button fx:id="testButton" layoutX="252.0" layoutY="13.0" mnemonicParsing="false" text="Test" />
-                        <ListView fx:id="cookBookListView" layoutX="14.0" layoutY="39.0" prefHeight="502.0" prefWidth="204.0" />
+                <Button fx:id="testButton" layoutX="252.0" layoutY="13.0" mnemonicParsing="false" text="Test" />
+                <ListView fx:id="cookBookListView" layoutX="14.0" layoutY="39.0" prefHeight="502.0" prefWidth="204.0" />
               </children>
             </AnchorPane>
           </content>
