@@ -17,13 +17,13 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
 public class UiHomeController {
 
   @FXML
-  private CalendarController calendar;
+  private CalendarController calendarController;
 
   @FXML
   private Button home;
 
   @FXML
-  private  Button cookbook;
+  private Button cookbook;
 
   @FXML
   private Button testButton;
@@ -47,7 +47,7 @@ public class UiHomeController {
   }
 
   /**
-   * Initialize cookbook components.
+   * Initialize cookbook components. (temporary)
    */
   public void initializeCookBook() {
     testButton.setOnAction(e -> handleButtonAction());

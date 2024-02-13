@@ -46,9 +46,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.UiHomeController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.UiInventoryController">
   <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <BorderPane prefHeight="520.0" prefWidth="900.0">
          <top>
             <VBox prefHeight="91.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                <children>
@@ -91,16 +91,12 @@
                     </Menu>
                   </menus>
                 </MenuBar>
-                  <fx:include fx:id="toolbar" source="toolbar/Toolbar.fxml" />
+                  <fx:include source="toolbar/Toolbar.fxml" />
                </children>
             </VBox>
          </top>
          <left>
-      <VBox prefHeight="467.0" prefWidth="220.0" BorderPane.alignment="CENTER">
-               <children>
-                  <fx:include fx:id="calendar" source="calendar/Calendar.fxml" />
-               </children>
-            </VBox>
+      <VBox prefHeight="195.0" prefWidth="220.0" BorderPane.alignment="CENTER" />
          </left>
          <center>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
@@ -115,7 +111,7 @@
                               <Color red="0.624" green="0.624" blue="0.624" fx:id="x6" />
                            </textFill></Label>
                 <Button fx:id="testButton" layoutX="252.0" layoutY="13.0" mnemonicParsing="false" text="Test" />
-                <ListView fx:id="cookBookListView" layoutX="14.0" layoutY="39.0" prefHeight="502.0" prefWidth="204.0" />
+                <ListView fx:id="cookBookListView" layoutX="15.0" layoutY="38.0" prefHeight="502.0" prefWidth="204.0" />
               </children>
             </AnchorPane>
           </content>

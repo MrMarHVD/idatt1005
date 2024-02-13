@@ -50,7 +50,7 @@ public class MyApp extends Application {
       // Set the scene to the stage and configure the primary stage
 
       primaryStage.setScene(scene);
-      primaryStage.setTitle("Purchase Planner");
+      primaryStage.setTitle("Plate 1.0");
       primaryStage.setMinWidth(300);
       primaryStage.setMinHeight(300);
 
