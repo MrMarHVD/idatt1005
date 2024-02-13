@@ -30,10 +30,27 @@ public class ToolbarController {
 
   @FXML private Button settings;
 
+  /**
+   * Initialize the controller.
+   */
+  @FXML public void initialize() {
+
+  }
+
+  /**
+   * Set the main controller for this class.
+   *
+   * @param mainController the main controller.
+   */
   @FXML public void setMainController(MainController mainController) {
     this.mainController = mainController;
   }
 
+  /**
+   * Respond to pressing the home button.
+   *
+   * @param event The event that was triggered.
+   */
   @FXML
   public void onHomeButtonPressed(ActionEvent event) {
     // TODO: Implement this method
