@@ -92,13 +92,13 @@
         </Menu>
       </menus>
     </MenuBar>
-      <ToolBar prefHeight="130.0" prefWidth="900.0">
+      <ToolBar prefHeight="51.0" prefWidth="851.0">
         <items>
           <Button fx:id="home" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Your Week" />
             <Button fx:id="cookbook" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Cookbook" />
             <Button fx:id="inventory" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Inventory" />
             <Button fx:id="shoppingList" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Shopping List" />
-            <Region prefHeight="50.0" prefWidth="341.0" />
+            <Region prefHeight="50.0" prefWidth="306.0" />
             <Button fx:id="Settings" alignment="CENTER" contentDisplay="LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Settings" />
         </items>
       </ToolBar>
@@ -121,6 +121,7 @@
           <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
+                <fx:include fx:id="calendar" source="/fxml/calendar/Calendar.fxml" />
                 <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="View" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                         <Button fx:id="testButton" layoutX="252.0" layoutY="13.0" mnemonicParsing="false" text="Test" />
                         <ListView fx:id="cookBookListView" layoutX="14.0" layoutY="39.0" prefHeight="502.0" prefWidth="204.0" />
@@ -128,7 +129,7 @@
             </AnchorPane>
           </content>
         </ScrollPane>
-        <AnchorPane>
+        <AnchorPane prefHeight="511.0" prefWidth="167.0">
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="$x2" wrapText="false" />
           </children>
@@ -137,7 +138,7 @@
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
       <children>
-        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" prefHeight="92.0" prefWidth="49.0" text="Left status" HBox.hgrow="ALWAYS">
           <font>
             <Font size="11.0" fx:id="x3" />
           </font>

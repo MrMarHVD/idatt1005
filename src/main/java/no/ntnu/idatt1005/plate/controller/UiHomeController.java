@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import no.ntnu.idatt1005.plate.controller.calendar.CalendarController;
 import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
@@ -16,9 +17,13 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
 public class UiHomeController {
 
   @FXML
-  public Button home;
+  private CalendarController calendarController;
+
   @FXML
-  public Button cookbook;
+  private Button home;
+
+  @FXML
+  private  Button cookbook;
 
   @FXML
   private Button testButton;
