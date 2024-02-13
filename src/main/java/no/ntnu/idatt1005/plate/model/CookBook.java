@@ -1,39 +1,43 @@
 package no.ntnu.idatt1005.plate.model;
 
-import java.util.ArrayList;
-
 /**
- * Cookbook class manages a set of recipes.
+ * CookBook class represents a cook book containing recipes.
  */
 public class CookBook {
 
-  private ArrayList<Recipe> recipes;
+  private static int nextId = 1;
 
-  public CookBook(Recipe... recipes) {
-    this.recipes = new ArrayList<>();
-    for (Recipe recipe : recipes) {
-      this.recipes.add(recipe);
-    }
-
-  }
-  public ArrayList<Recipe> getRecipes() { return this.recipes; }
+  private final int id;
+  private String name;
+  private Integer[] recipes;
 
   /**
-   * Find the name of a recipe.
-   * @param name name the recipe.
-   * @return the recipe.
+   * No-argument constructor for Jackson.
    */
-  public Recipe findRecipe(String name) {
-    for (Recipe recipe : this.recipes) {
-      if (recipe.getName().equals(name)) {
-        return recipe;
-      }
-    }
-    return null;
+  public CookBook() {
+    this.id = nextId++;
   }
 
-  public void addRecipe(Recipe recipe) {
-    this.recipes.add(recipe);
+  /**
+   * Constructor for cook book.
+   *
+   * @param recipeIds ids of the recipes in the cook book.
+   */
+  public CookBook(String name, Integer... recipeIds) {
+    this.id = nextId++;
+    this.name = name;
+    this.recipes = recipeIds;
   }
 
+  public Integer[] getRecipes() {
+    return this.recipes;
+  }
+
+  public int getId() {
+    return this.id;
+  }
+
+  public String getName() {
+    return this.name;
+  }
 }

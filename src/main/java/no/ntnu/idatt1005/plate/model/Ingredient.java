@@ -4,21 +4,23 @@ import java.util.List;
 
 
 /**
- * Class representing an ingredient for a recipe.
+ * Ingredient class represents an ingredient in a recipe.
  */
 public class Ingredient {
 
-  /**
-   * The name of the ingredient.
-   */
-  private final String name;
+  private static int nextId = 1;
 
-  /**
-   * The allergens in this ingredient.
-   */
+  private final int id;
+  private String name;
   private List<String> allergens;
-
   private String category;
+
+  /**
+   * No-argument constructor for Jackson.
+   */
+  public Ingredient() {
+    this.id = nextId++;
+  }
 
   /**
    * Constructor for ingredient.
@@ -26,26 +28,36 @@ public class Ingredient {
    * @param name name of the ingredient.
    */
   public Ingredient(String name) {
+    this();
     this.name = name;
   }
 
   /**
-   * Parameterised constructor for ingredient.
+   * Constructor for ingredient, including category and allergens.
    *
-   * @param name name of the ingredient
+   * @param name      name of the ingredient.
+   * @param category  category of the ingredient.
+   * @param allergens allergens in the ingredient.
    */
   public Ingredient(String name, String category, String... allergens) {
-
-    this.name = name;
+    this(name);
     this.category = category;
     this.allergens = List.of(allergens);
+  }
 
-    }
+  public String getName() {
+    return this.name;
+  }
 
-  /**
-   * Get name of ingredient.
-   * @return name of ingredient.
-   */
-  public String getName() {return this.name; }
+  public int getId() {
+    return this.id;
+  }
 
+  public List<String> getAllergens() {
+    return this.allergens;
+  }
+
+  public String getCategory() {
+    return this.category;
+  }
 }
