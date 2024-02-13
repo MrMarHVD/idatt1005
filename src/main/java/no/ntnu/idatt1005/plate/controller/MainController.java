@@ -24,6 +24,9 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
 public class MainController {
 
   @FXML private ToolbarController toolbarController;
+  @FXML private UiInventoryController inventoryController;
+  @FXML private UiHomeController homeController;
+  @FXML private UiShoppingListController shoppingListController;
 
   private void initialize() {
     toolbarController.setMainController(this);
