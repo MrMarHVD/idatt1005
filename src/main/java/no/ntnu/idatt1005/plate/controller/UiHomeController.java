@@ -37,8 +37,6 @@ public class UiHomeController {
   @FXML
   private Button testButton;
 
-  @FXML
-  private ListView<String> cookBookListView;
 
   /**
    * Initialize the controller.
@@ -46,8 +44,6 @@ public class UiHomeController {
   public void initialize() {
     this.setMainController(mainController);
 
-    this.initializeCookBook();
-    this.addRecipes();
   }
 
   /**
@@ -75,25 +71,6 @@ public class UiHomeController {
   /**
    * Initialize cookbook components. (temporary)
    */
-  public void initializeCookBook() {
-    testButton.setOnAction(e -> handleButtonAction());
 
-    cookBookListView.setCellFactory(lv -> {
-      ListCell<String> cell = new ListCell<>();
-      Insets insets = new Insets(5, 10, 5, 10);
-      cell.setPadding(insets);
-      cell.textProperty().bind(cell.itemProperty());
-      return cell;
-    });
 
-  }
-
-  /**
-   * Add the names of the recipes to the cookbook list view. (temporary)
-   */
-  public void addRecipes() {
-    for (Recipe recipe : CookbookMaker.createCookBook().getRecipes()) {
-      cookBookListView.getItems().add(recipe.getName());
-    }
-  }
 }

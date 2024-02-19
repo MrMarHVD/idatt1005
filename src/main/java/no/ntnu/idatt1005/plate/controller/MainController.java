@@ -157,6 +157,9 @@ public class MainController {
     }
   }
 
+  /**
+   * Go to the settings view.
+   */
   public void goToSettings() {
     // Go to settings
   }
