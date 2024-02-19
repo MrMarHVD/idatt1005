@@ -49,12 +49,16 @@ public class ToolbarController {
 
   /**
    * Respond to pressing the home button.
+   * 'onHomeButtonPressed' is set as the action for the home button in the FXML file.
    *
    * @param event The event that was triggered.
    */
   @FXML
   public void onHomeButtonPressed(ActionEvent event) {
-    // TODO: Implement this method
+    Node source = (Node) event.getSource();
+    if (this.mainController != null) {
+      this.mainController.goToHome();
+    }
   }
 
   /**

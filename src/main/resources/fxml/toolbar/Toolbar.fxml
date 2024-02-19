@@ -6,7 +6,7 @@
 
 <ToolBar prefHeight="51.0" prefWidth="851.0" xmlns="http://javafx.com/javafx/21" fx:controller="no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController" xmlns:fx="http://javafx.com/fxml/1">
    <items>
-      <Button fx:id="home" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Your Week" />
+      <Button fx:id="home" mnemonicParsing="false" onAction="#onHomeButtonPressed" prefHeight="50.0" prefWidth="100.0" text="Your Week" />
       <Button fx:id="cookbook" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Cookbook" />
       <Button fx:id="inventory" onAction="#onInventoryButtonPressed" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Inventory" />
       <Button fx:id="shoppingList" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Shopping List" />

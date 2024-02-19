@@ -91,7 +91,7 @@
                     </Menu>
                   </menus>
                 </MenuBar>
-                  <fx:include source="toolbar/Toolbar.fxml" />
+                  <fx:include fx:id="toolbar" source="toolbar/Toolbar.fxml" />
                </children>
             </VBox>
          </top>

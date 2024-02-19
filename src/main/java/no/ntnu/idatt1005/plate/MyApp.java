@@ -27,9 +27,13 @@ public class MyApp extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
 
+    // Assign the mainController for the app (remains the same throughout the runtime)
   MainController mainController = new MainController();
 
+  // Set the primaryStage such that i can be accessed from other classes
   MyApp.primaryStage = primaryStage;
+
+  // Load initial view (home view)
   mainController.loadInitialView(MyApp.getPrimaryStage());
 
   }
