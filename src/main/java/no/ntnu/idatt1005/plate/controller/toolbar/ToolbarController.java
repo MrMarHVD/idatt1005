@@ -55,7 +55,6 @@ public class ToolbarController {
    */
   @FXML
   public void onHomeButtonPressed(ActionEvent event) {
-    Node source = (Node) event.getSource();
     if (this.mainController != null) {
       this.mainController.goToHome();
     }
@@ -68,7 +67,6 @@ public class ToolbarController {
    */
   @FXML
   public void onInventoryButtonPressed(ActionEvent event) {
-    Node source = (Node) event.getSource();
     if (this.mainController != null) {
       this.mainController.goToInventory();
     }
@@ -76,14 +74,20 @@ public class ToolbarController {
 
   @FXML
   public void onCookbookButtonPressed(ActionEvent event) {
-    // TODO: Implement this method
+    if (this.mainController != null) {
+      this.mainController.goToCookbook();
+    }
   }
 
+  /**
+   * Respond to pressing the shopping list button.
+   *
+   * @param event The event that was triggered.
+   */
   @FXML
   public void onShoppingListButtonPressed(ActionEvent event) {
-    Node source = (Node) event.getSource();
     if (this.mainController != null) {
-      this.mainController.goToInventory();
+      this.mainController.goToShoppingList();
     }
   }
 

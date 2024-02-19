@@ -16,6 +16,8 @@ import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
+// TODO: improve error handling (i.e. no printStackTrace)
+
 /**
  * Main controller class handles the logic across all the views of the application.
  * The purpose of this class is to manage the controllers for each separate view
@@ -79,6 +81,30 @@ public class MainController {
   }
 
   /**
+   * Go to the cookbook view.
+   */
+  public void goToCookbook() {
+    try {
+      FXMLLoader cookbookLoader = new FXMLLoader(getClass().getResource("/fxml/UiCookbook.fxml"));
+      Parent cookbookView = cookbookLoader.load();
+
+      // Instantiate the cookbook controller
+      UiCookbookController cookbookController = cookbookLoader.getController();
+
+      // Set the main controller for the cookbook controller
+      cookbookController.setMainController(this);
+
+      Scene scene = new Scene(cookbookView);
+      Stage currentStage = MyApp.getPrimaryStage();
+      currentStage.setScene(scene);
+      currentStage.show();
+  }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
    * Go to the inventory view.
    */
   public void goToInventory() {
@@ -101,7 +127,6 @@ public class MainController {
 
 
     } catch (Exception e) {
-
       e.printStackTrace();
     }
   }

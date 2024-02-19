@@ -33,19 +33,20 @@
 -->
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.UiShoppingListController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.UiCookbookController">
   <children>
       <BorderPane prefHeight="520.0" prefWidth="900.0">
          <top>
@@ -94,19 +95,28 @@
                </children>
             </VBox>
          </top>
-         <left>
-      <VBox prefHeight="195.0" prefWidth="220.0" BorderPane.alignment="CENTER" />
-         </left>
          <center>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
-               <content>
-                  <VBox prefHeight="429.0" prefWidth="353.0">
-                     <children>
-                        <Label prefHeight="95.0" prefWidth="351.0" text="Shopping List" />
-                        <ListView prefHeight="430.0" prefWidth="353.0" />
-                     </children>
-                  </VBox>
-               </content>
+          <content>
+            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
+              <children>
+                        <VBox prefHeight="409.0" prefWidth="678.0">
+                           <children>
+                              <Label prefHeight="36.0" prefWidth="504.0" text="Cookbook">
+                                 <font>
+                                    <Font size="40.0" />
+                                 </font>
+                              </Label>
+                              <TilePane prefHeight="368.0" prefWidth="672.0">
+                                 <children>
+                                    <ImageView fitHeight="110.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </TilePane>
+                           </children>
+                        </VBox>
+              </children>
+            </AnchorPane>
+          </content>
         </ScrollPane>
          </center>
          <right>
