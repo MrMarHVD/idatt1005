@@ -81,7 +81,10 @@ public class ToolbarController {
 
   @FXML
   public void onShoppingListButtonPressed(ActionEvent event) {
-    // TODO: Implement this method
+    Node source = (Node) event.getSource();
+    if (this.mainController != null) {
+      this.mainController.goToInventory();
+    }
   }
 
   @FXML

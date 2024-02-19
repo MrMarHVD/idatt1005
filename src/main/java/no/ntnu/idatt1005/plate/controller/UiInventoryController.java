@@ -11,6 +11,9 @@ import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
+/**
+ * Controller class for the inventory view
+ */
 public class UiInventoryController {
 
   @FXML
@@ -19,18 +22,22 @@ public class UiInventoryController {
   @FXML
   private ToolbarController toolbarController;
 
+  /**
+   * Initialize the controller.
+   */
   public void initialize() {
     this.setMainController(mainController);
 
   }
 
   /**
-   * Set the main controller for this class.
+   * Set the main controller for this class and its toolbar controller.
    *
    * @param mainController the main controller.
    */
   public void setMainController(MainController mainController) {
     this.mainController = mainController;
+
     if (toolbarController != null)
       toolbarController.setMainController(mainController);
 
