@@ -27,6 +27,8 @@ public class MyApp extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
 
+    primaryStage.setResizable(true);
+
     // Assign the mainController for the app (remains the same throughout the runtime)
   MainController mainController = new MainController();
 
