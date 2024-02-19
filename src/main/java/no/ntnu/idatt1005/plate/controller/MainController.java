@@ -70,8 +70,7 @@ public class MainController {
       currentStage.setScene(scene);
 
       currentStage.setTitle("Plate 1.0");
-      //currentStage.setMinWidth(300);
-      //currentStage.setMinHeight(300);
+
       currentStage.show();
 
     } catch (Exception e) {
@@ -88,8 +87,10 @@ public class MainController {
       FXMLLoader inventoryLoader = new FXMLLoader(getClass().getResource("/fxml/UiInventory.fxml"));
       Parent inventoryView = inventoryLoader.load();
 
-      // Set the main controller for the inventory controller
+      // Instantiate the inventory controller
       UiInventoryController inventoryController = inventoryLoader.getController();
+
+      // Set the main controller for the inventory controller
       inventoryController.setMainController(this);
 
       Scene scene = new Scene(inventoryView);
@@ -105,8 +106,30 @@ public class MainController {
     }
   }
 
+  /**
+   * Go to the shopping list view.
+   */
   public void goToShoppingList() {
-    // Go to shopping list
+    try {
+      FXMLLoader shoppingListLoader = new FXMLLoader(getClass().getResource("/fxml/UiShoppingList.fxml"));
+      Parent shoppingListView = shoppingListLoader.load();
+
+      // Instantiate the shopping list controller
+      UiShoppingListController shoppingListController = shoppingListLoader.getController();
+
+      // Set the main controller for the shopping list controller
+      shoppingListController.setMainController(this);
+
+      Scene scene = new Scene(shoppingListView);
+      Stage currentStage = MyApp.getPrimaryStage();
+      currentStage.setScene(scene);
+      currentStage.show();
+
+
+    } catch (Exception e) {
+
+      e.printStackTrace();
+    }
   }
 
   public void goToSettings() {
