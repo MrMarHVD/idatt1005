@@ -13,11 +13,14 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
 public class UiInventoryController {
 
-  @FXML private MainController mainController;
+  @FXML
+  private MainController mainController;
 
-  @FXML private ToolbarController toolbarController;
+  @FXML
+  private ToolbarController toolbarController;
 
   public void initialize() {
+    this.setMainController(mainController);
 
   }
 
@@ -28,10 +31,9 @@ public class UiInventoryController {
    */
   public void setMainController(MainController mainController) {
     this.mainController = mainController;
-
-    if (toolbarController != null) {
+    if (toolbarController != null)
       toolbarController.setMainController(mainController);
-    }
+
   }
 
 

@@ -62,14 +62,18 @@ public class MainController {
       FXMLLoader homeLoader = new FXMLLoader(MyApp.class.getResource("/fxml/UiHome.fxml"));
       Parent homeView = homeLoader.load();
 
-      Scene scene = new Scene(homeView, 800, 800);
-      Stage currentStage = (Stage) MyApp.getPrimaryStage();
+      UiHomeController homeController = homeLoader.getController();
+      homeController.setMainController(this);
+
+      Scene scene = new Scene(homeView);
+      Stage currentStage = MyApp.getPrimaryStage();
       currentStage.setScene(scene);
 
       currentStage.setTitle("Plate 1.0");
-      currentStage.setMinWidth(300);
-      currentStage.setMinHeight(300);
+      //currentStage.setMinWidth(300);
+      //currentStage.setMinHeight(300);
       currentStage.show();
+
     } catch (Exception e) {
       e.printStackTrace();
     }

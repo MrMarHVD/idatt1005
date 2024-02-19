@@ -51,7 +51,7 @@ public class UiHomeController {
   }
 
   /**
-   * Set the main controller for this class.
+   * Set the main controller for this class and the toolbar controller.
    *
    * @param mainController the main controller.
    */
@@ -89,7 +89,7 @@ public class UiHomeController {
   }
 
   /**
-   * Add the names of the recipes to the cookbook list view.
+   * Add the names of the recipes to the cookbook list view. (temporary)
    */
   public void addRecipes() {
     for (Recipe recipe : CookbookMaker.createCookBook().getRecipes()) {
