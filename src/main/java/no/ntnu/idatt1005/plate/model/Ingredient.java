@@ -14,6 +14,7 @@ public class Ingredient {
   private String name;
   private List<String> allergens;
   private String category;
+  private String unit;
 
   /**
    * No-argument constructor for Jackson.
@@ -33,14 +34,25 @@ public class Ingredient {
   }
 
   /**
+   * Constructor for ingredient, including unit.
+   *
+   * @param name name of the ingredient.
+   * @param unit unit of measurement for the ingredient.
+   */
+  public Ingredient(String name, String unit) {
+    this(name);
+    this.unit = unit;
+  }
+
+  /**
    * Constructor for ingredient, including category and allergens.
    *
    * @param name      name of the ingredient.
    * @param category  category of the ingredient.
    * @param allergens allergens in the ingredient.
    */
-  public Ingredient(String name, String category, String... allergens) {
-    this(name);
+  public Ingredient(String name, String unit, String category, String... allergens) {
+    this(name, unit);
     this.category = category;
     this.allergens = List.of(allergens);
   }
@@ -59,5 +71,9 @@ public class Ingredient {
 
   public String getCategory() {
     return this.category;
+  }
+
+  public String getUnit() {
+    return this.unit;
   }
 }
