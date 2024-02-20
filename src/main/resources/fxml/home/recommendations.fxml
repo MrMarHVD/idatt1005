@@ -49,7 +49,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
         </items>
       </SplitPane>
-      <HBox prefHeight="193.0" prefWidth="478.0">
+      <HBox spacing="20" prefHeight="193.0" prefWidth="478.0">
          <children>
             <fx:include source="recipe.fxml" HBox.hgrow="ALWAYS" />
             <fx:include source="recipe.fxml" HBox.hgrow="ALWAYS" />
