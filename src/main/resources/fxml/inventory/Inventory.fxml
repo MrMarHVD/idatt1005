@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-border-color:black" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="366.0" fx:controller="no.ntnu.idatt1005.plate.controller.inventory.InventoryController" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-border-color:black" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="366.0" fx:controller="no.ntnu.idatt1005.plate.controller.UiInventoryController" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="93.0" prefWidth="366.0">
          <children>

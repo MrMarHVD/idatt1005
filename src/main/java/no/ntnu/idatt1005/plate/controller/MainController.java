@@ -116,6 +116,7 @@ public class MainController {
       // Instantiate the inventory controller
       UiInventoryController inventoryController = inventoryLoader.getController();
 
+
       // Set the main controller for the inventory controller
       inventoryController.setMainController(this);
 

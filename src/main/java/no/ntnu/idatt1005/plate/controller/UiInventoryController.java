@@ -35,14 +35,19 @@ public class UiInventoryController {
   private ToolbarController toolbarController;
 
   @FXML
-  private ListView<Ingredient> ingredientListView;
+  private ListView<String> ingredientListView;
 
   /**
    * Initialize the controller.
    */
   public void initialize() {
     this.setMainController(mainController);
-    this.displayIngredients();
+
+    if (ingredientListView != null) {
+      this.displayIngredients();
+    } else {
+      System.out.println("ingredientListView is null");
+    }
   }
 
   /**
@@ -64,7 +69,11 @@ public class UiInventoryController {
   public void displayIngredients() {
     List<Ingredient> allIngredients = JsonReader.getAllIngredients();
     ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList(allIngredients);
-    ingredientListView.setItems(observableIngredients);
+    ObservableList<String> ingredientNames = FXCollections.observableArrayList();
+    for (Ingredient ingredient : allIngredients) {
+      ingredientNames.add(ingredient.getName());
+    }
+    ingredientListView.setItems(ingredientNames);
   }
 
 }
