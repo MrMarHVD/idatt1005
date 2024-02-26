@@ -1,5 +1,6 @@
 package no.ntnu.idatt1005.plate;
 
+import no.ntnu.idatt1005.plate.controller.MainController;
 import no.ntnu.idatt1005.plate.view.MyWindow;
 import no.ntnu.idatt1005.plate.model.Ingredient;
 import no.ntnu.idatt1005.plate.model.Recipe;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
  */
 public class MyApp extends Application {
 
+  static Stage primaryStage;
   /**
    * Start method
    *
@@ -24,42 +26,27 @@ public class MyApp extends Application {
    */
   @Override
   public void start(Stage primaryStage) throws Exception {
-    try {
 
-      // Load the FXML file.
-      String FXML_PATH = "/fxml/UiHome.fxml";
-      FXMLLoader loader = new FXMLLoader(MyApp.class.getResource(FXML_PATH));
+    primaryStage.setResizable(true);
 
-      /*
-      Note: I had massive issues getting the application window to open and repeatedly got the error
-      "Location is not set" when trying to load the FXML file. I tried many different solutions, and
-      the final solution ended up being setting the scene = to null prior to instantiating it and
-      including the width and height parameters in the scene constructor. No idea why.
-       */
-      Scene scene = null;
+    // Assign the mainController for the app (remains the same throughout the runtime)
+  MainController mainController = new MainController();
 
-      // Load the controller.
-      //UiController controller = loader.getController();
-      try {
-        scene = new Scene(loader.load(), 800, 800);
+  // Set the primaryStage such that i can be accessed from other classes
+  MyApp.primaryStage = primaryStage;
 
-      } catch (Exception e)  {
-        e.printStackTrace();
-      }
-      // Set the scene to the stage and configure the primary stage
+  // Load initial view (home view)
+  mainController.loadInitialView(MyApp.getPrimaryStage());
 
-      primaryStage.setScene(scene);
-      primaryStage.setTitle("Purchase Planner");
-      primaryStage.setMinWidth(300);
-      primaryStage.setMinHeight(300);
+  }
 
-      // Show the primary stage
-      primaryStage.show();
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
+  /**
+   * Get the primaryStage.
+   *
+   * @return primaryStage.
+   */
+  public static Stage getPrimaryStage() {
+    return MyApp.primaryStage; // Public getter for the primary stage
   }
 
     /**

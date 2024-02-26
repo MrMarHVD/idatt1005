@@ -1,42 +1,32 @@
 package no.ntnu.idatt1005.plate.controller;
 
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import javax.tools.Tool;
 import no.ntnu.idatt1005.plate.controller.calendar.CalendarController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
 /**
- * This class is the controller for the user interface, mediating between the model and view
- * layers.
+ * Controller class for the inventory view
  */
-public class UiHomeController {
+public class UiInventoryController {
 
+  /**
+   * The main controller for the application.
+   */
   @FXML
   private MainController mainController;
 
+  /**
+   * The toolbar controller for this view.
+   */
   @FXML
   private ToolbarController toolbarController;
-
-  @FXML
-  private CalendarController calendarController;
-
-  @FXML
-  private Button home;
-
-  @FXML
-  private Button cookbook;
-
-  @FXML
-  private Button testButton;
-
 
   /**
    * Initialize the controller.
@@ -47,30 +37,18 @@ public class UiHomeController {
   }
 
   /**
-   * Set the main controller for this class and the toolbar controller.
+   * Set the main controller for this class and its toolbar controller.
    *
    * @param mainController the main controller.
    */
   public void setMainController(MainController mainController) {
     this.mainController = mainController;
-    this.toolbarController.setMainController(mainController);
+
+    if (toolbarController != null)
+      toolbarController.setMainController(mainController);
+
   }
 
-  // Define an event handler method for your button
-  @FXML
-  private void handleButtonAction() {
-    // Your logic here
-    System.out.println("Button clicked!");
-  }
-
-
-  public void initializeToolbar() {
-    FXMLLoader toolbarLoader = new FXMLLoader(getClass().getResource("/fxml/toolbar/Toolbar.fxml"));
-  }
-
-  /**
-   * Initialize cookbook components. (temporary)
-   */
 
 
 }
