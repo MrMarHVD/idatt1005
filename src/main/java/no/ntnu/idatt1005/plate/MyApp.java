@@ -1,6 +1,7 @@
 package no.ntnu.idatt1005.plate;
 
 import no.ntnu.idatt1005.plate.controller.MainController;
+import no.ntnu.idatt1005.plate.model.DataInitializer;
 import no.ntnu.idatt1005.plate.view.MyWindow;
 import no.ntnu.idatt1005.plate.model.Ingredient;
 import no.ntnu.idatt1005.plate.model.Recipe;
@@ -28,6 +29,16 @@ public class MyApp extends Application {
   public void start(Stage primaryStage) throws Exception {
 
     primaryStage.setResizable(true);
+
+    // Create ingredients and write them to ingredients.json
+    DataInitializer.createIngredients();
+
+    // Create recipes and write them to recipes.json
+    DataInitializer.createRecipes();
+
+    // Create cookbooks and write them to cookbooks.json
+    DataInitializer.createCookBooks();
+
 
     // Assign the mainController for the app (remains the same throughout the runtime)
   MainController mainController = new MainController();

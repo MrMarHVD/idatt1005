@@ -1,0 +1,87 @@
+[ {
+  "id" : 1,
+  "ingredients" : {
+    "4" : 50,
+    "3" : 100,
+    "2" : 200,
+    "1" : 2
+  },
+  "instructions" : "Mix flour, eggs, milk, sugar, and salt. Fry in a pan.",
+  "name" : "Pancake"
+}, {
+  "id" : 2,
+  "ingredients" : {
+    "6" : 5,
+    "5" : 30,
+    "1" : 4
+  },
+  "instructions" : "Beat eggs in a bowl. Melt butter in a pan. Pour eggs into the pan and stir until cooked.",
+  "name" : "Scrambled Eggs"
+}, {
+  "id" : 3,
+  "ingredients" : {
+    "30" : 100,
+    "4" : 10,
+    "8" : 500
+  },
+  "instructions" : "Boil water. Add oats and reduce heat. Cook until water is absorbed. Add sugar to taste.",
+  "name" : "Oatmeal"
+}, {
+  "id" : 4,
+  "ingredients" : {
+    "14" : 150,
+    "13" : 100,
+    "12" : 2,
+    "11" : 100
+  },
+  "instructions" : "Grill chicken breast. Serve with lettuce, tomatoes, and cucumbers.",
+  "name" : "Chicken Salad"
+}, {
+  "id" : 5,
+  "ingredients" : {
+    "31" : 200,
+    "19" : 200,
+    "10" : 100,
+    "1" : 2
+  },
+  "instructions" : "Cook penne pasta. In a separate pan, cook bacon with cheese and beaten eggs. Mix together and serve.",
+  "name" : "Pasta Carbonara"
+}, {
+  "id" : 6,
+  "ingredients" : {
+    "15" : 200,
+    "21" : 200
+  },
+  "instructions" : "Grill beef steak. Serve with russet potatoes.",
+  "name" : "Steak and Potatoes"
+}, {
+  "id" : 7,
+  "ingredients" : {
+    "18" : 200,
+    "9" : 30,
+    "28" : 100,
+    "27" : 100,
+    "14" : 200
+  },
+  "instructions" : "Cut chicken breast into strips. Stir fry with vegetables in oil. Serve with basmati rice.",
+  "name" : "Chicken Stir Fry"
+}, {
+  "id" : 8,
+  "ingredients" : {
+    "12" : 200,
+    "15" : 200,
+    "19" : 200
+  },
+  "instructions" : "Cook penne pasta. In a separate pan, cook beef steak with tomatoes. Mix together and serve.",
+  "name" : "Spaghetti Bolognese"
+}, {
+  "id" : 9,
+  "ingredients" : {
+    "13" : 100,
+    "12" : 100,
+    "11" : 100,
+    "17" : 150
+  },
+  "instructions" : "Grill salmon filet. Serve with lettuce, tomatoes, and cucumbers.",
+  "name" : "Salmon Salad"
+} ]
