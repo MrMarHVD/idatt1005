@@ -67,15 +67,6 @@ public class MyApp extends Application {
      */
     public static void main(String[] args) throws Exception {
       Application.launch(args);
-      System.out.println("Hei");
 
-      Ingredient eggs = new Ingredient("eggs");
-      Ingredient flour = new Ingredient("flour");
-      Ingredient milk = new Ingredient("milk");
-
-      Recipe bread = new Recipe("Bread", "Add the eggs and milk, then mix with flour.",
-          flour, milk, eggs);
-
-      System.out.println(bread.toString());
    }  
 }
