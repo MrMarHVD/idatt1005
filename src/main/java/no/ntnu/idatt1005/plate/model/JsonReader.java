@@ -51,6 +51,26 @@ public class JsonReader {
             .findFirst().orElse(null);
   }
 
+  // JsonReader.java
+
+  /**
+   * Gets all ingredients.
+   *
+   *
+   * @return list of all ingredients.
+   */
+  public static List<Ingredient> getAllIngredients() {
+      try {
+          ObjectMapper objectMapper = new ObjectMapper();
+          File file = new File("src/main/resources/json/ingredients.json");
+          return objectMapper.readValue(file, new TypeReference<List<Ingredient>>(){});
+      } catch (IOException e) {
+          e.printStackTrace();
+          return Collections.emptyList();
+      }
+  }
+
+
   /**
    * Gets a single recipe by its id.
    *

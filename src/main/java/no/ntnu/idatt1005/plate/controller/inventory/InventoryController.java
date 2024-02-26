@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller;
+package no.ntnu.idatt1005.plate.controller.inventory;
 
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -9,8 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import no.ntnu.idatt1005.plate.controller.UiInventoryController;
 import no.ntnu.idatt1005.plate.controller.calendar.CalendarController;
-import no.ntnu.idatt1005.plate.controller.inventory.InventoryController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Ingredient;
 import no.ntnu.idatt1005.plate.model.JsonReader;
@@ -18,22 +18,21 @@ import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
 /**
- * Controller class for the inventory view
+ * Controller class for the specific subsection of the inventory view
+ * relating to the display and handling of ingredients.
  */
-public class UiInventoryController {
+
+public class InventoryController {
 
   /**
-   * The main controller for the application.
+   * The parent controller.
    */
   @FXML
-  private MainController mainController;
+  private UiInventoryController mainController;
 
   /**
-   * The toolbar controller for this view.
+   * The list view for displaying ingredients.
    */
-  @FXML
-  private ToolbarController toolbarController;
-
   @FXML
   private ListView<Ingredient> ingredientListView;
 
@@ -41,21 +40,16 @@ public class UiInventoryController {
    * Initialize the controller.
    */
   public void initialize() {
-    this.setMainController(mainController);
-    this.displayIngredients();
+
   }
 
   /**
-   * Set the main controller for this class and its toolbar controller.
+   * Set the parent controller.
    *
-   * @param mainController the main controller.
+   * @param mainController the parent controller (UiInventoryController).
    */
-  public void setMainController(MainController mainController) {
+  public void setMainController(UiInventoryController mainController) {
     this.mainController = mainController;
-
-    if (toolbarController != null)
-      toolbarController.setMainController(mainController);
-
   }
 
   /**
