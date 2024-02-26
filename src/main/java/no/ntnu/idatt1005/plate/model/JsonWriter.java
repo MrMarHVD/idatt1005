@@ -26,7 +26,7 @@ public class JsonWriter {
    */
   public static void writeCookbookToJson(List<CookBook> cookbooks) {
     try {
-      objectMapper.writeValue(new File("src/main/resources/cookbooks.json"), cookbooks);
+      objectMapper.writeValue(new File("src/main/resources/json/cookbooks.json"), cookbooks);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -39,7 +39,7 @@ public class JsonWriter {
     */
   public static void writeRecipesToJson(List<Recipe> recipes) {
     try {
-      objectMapper.writeValue(new File("src/main/resources/recipes.json"), recipes);
+      objectMapper.writeValue(new File("src/main/resources/json/recipes.json"), recipes);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -52,7 +52,7 @@ public class JsonWriter {
     */
   public static void writeIngredientsToJson(List<Ingredient> ingredients) {
     try {
-      objectMapper.writeValue(new File("src/main/resources/ingredients.json"), ingredients);
+      objectMapper.writeValue(new File("src/main/resources/json/ingredients.json"), ingredients);
     } catch (IOException e) {
       e.printStackTrace();
     }

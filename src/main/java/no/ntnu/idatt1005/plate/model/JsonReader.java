@@ -44,7 +44,7 @@ public class JsonReader {
    */
   public static Ingredient getIngredientById(int id) {
     List<Ingredient> ingredients = readValueFromFile(
-            "src/main/resources/ingredients.json",
+            "src/main/resources/json/ingredients.json",
             new TypeReference<>() {}
     );
     return ingredients.stream().filter(ingredient -> ingredient.getId() == id)
@@ -59,7 +59,7 @@ public class JsonReader {
    */
   public static Recipe getRecipeById(int id) {
     List<Recipe> recipes = readValueFromFile(
-            "src/main/resources/recipes.json",
+            "src/main/resources/json/recipes.json",
             new TypeReference<>() {}
     );
     return recipes.stream().filter(recipe -> recipe.getId() == id).findFirst().orElse(null);
@@ -73,7 +73,7 @@ public class JsonReader {
    */
   public static CookBook getCookBookById(int id) {
     List<CookBook> cookBooks = readValueFromFile(
-            "src/main/resources/cookbooks.json",
+            "src/main/resources/json/cookbooks.json",
             new TypeReference<>() {}
     );
     return cookBooks.stream().filter(cookBook -> cookBook.getId() == id).findFirst().orElse(null);
