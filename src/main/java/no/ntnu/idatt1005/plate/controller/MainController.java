@@ -43,7 +43,7 @@ public class MainController {
       UiHomeController homeController = homeLoader.getController();
       homeController.setMainController(this);
 
-      Scene scene = new Scene(homeView, 800, 800);
+      Scene scene = new Scene(homeView);
       stage.setScene(scene);
 
 

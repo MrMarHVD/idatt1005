@@ -94,7 +94,7 @@
             </VBox>
          </top>
          <left>
-      <VBox prefHeight="195.0" prefWidth="220.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="429.0" prefWidth="75.0" BorderPane.alignment="CENTER" />
          </left>
          <center>
         <ScrollPane BorderPane.alignment="CENTER">
