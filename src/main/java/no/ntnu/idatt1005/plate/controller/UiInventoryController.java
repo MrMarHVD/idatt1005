@@ -4,10 +4,12 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Ingredient;
-import no.ntnu.idatt1005.plate.model.JsonReader;
+import no.ntnu.idatt1005.plate.model.json.JsonReader;
 import no.ntnu.idatt1005.plate.model.IngredientListCell;
 
 /**
@@ -27,8 +29,25 @@ public class UiInventoryController {
   @FXML
   private ToolbarController toolbarController;
 
+  /**
+   * The list view for displaying ingredients in the inventory.
+   */
   @FXML
   private ListView<Ingredient> ingredientListView;
+
+  /**
+   * Text field or inputting what to search for.
+   */
+  @FXML
+  private TextField searchField;
+
+  /**
+   * The search button for performing search in inventory.
+   */
+  @FXML
+  private Button searchButton;
+
+
 
   /**
    * Initialize the controller.
@@ -41,6 +60,13 @@ public class UiInventoryController {
     } else {
       System.out.println("ingredientListView is null");
     }
+
+    if (searchButton != null) {
+      searchButton.setOnAction(event -> searchIngredients(searchField.getText()));
+    } else {
+      System.out.println("searchButton is null");
+    }
+
   }
 
   /**
@@ -63,6 +89,24 @@ public class UiInventoryController {
     List<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
     ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList(allIngredients);
     ObservableList<String> ingredientNames = FXCollections.observableArrayList();
+    ingredientListView.setItems(observableIngredients);
+    ingredientListView.setCellFactory(param -> new IngredientListCell());
+  }
+
+  /**
+   * Implement search in order to update display of ingredients.
+   *
+   * @param input into the search prompt.
+   */
+  public void searchIngredients(String input) {
+    List<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
+    ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList();
+
+    for (Ingredient ingredient : allIngredients) {
+      if (ingredient.getName().contains(input)) {
+        observableIngredients.add(ingredient);
+      }
+    }
     ingredientListView.setItems(observableIngredients);
     ingredientListView.setCellFactory(param -> new IngredientListCell());
   }

@@ -1,14 +1,9 @@
 package no.ntnu.idatt1005.plate;
 
 import no.ntnu.idatt1005.plate.controller.MainController;
-import no.ntnu.idatt1005.plate.model.DataInitializer;
-import no.ntnu.idatt1005.plate.view.MyWindow;
-import no.ntnu.idatt1005.plate.model.Ingredient;
-import no.ntnu.idatt1005.plate.model.Recipe;
+import no.ntnu.idatt1005.plate.model.json.DataInitializer;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**

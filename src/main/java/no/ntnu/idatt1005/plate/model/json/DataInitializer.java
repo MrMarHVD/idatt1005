@@ -1,11 +1,14 @@
-package no.ntnu.idatt1005.plate.model;
+package no.ntnu.idatt1005.plate.model.json;
 
 import java.util.Arrays;
 import java.util.Map;
+import no.ntnu.idatt1005.plate.model.CookBook;
+import no.ntnu.idatt1005.plate.model.Ingredient;
+import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
- * Class for creating data to be written to JSON.
- * Only used to set up initial data, not in the final application.
+ * Class for creating json to be written to JSON.
+ * Only used to set up initial json, not in the final application.
  */
 public class DataInitializer {
 

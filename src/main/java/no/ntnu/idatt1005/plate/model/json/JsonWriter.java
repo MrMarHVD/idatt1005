@@ -1,10 +1,13 @@
-package no.ntnu.idatt1005.plate.model;
+package no.ntnu.idatt1005.plate.model.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import no.ntnu.idatt1005.plate.model.CookBook;
+import no.ntnu.idatt1005.plate.model.Ingredient;
+import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
  * Class for writing objects to JSON files.
