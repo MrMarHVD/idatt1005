@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.model;
+package no.ntnu.idatt1005.plate.controller.inventory;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -34,12 +34,9 @@ public class IngredientListCell extends ListCell<Ingredient> {
   private Label category = new Label();
 
   public IngredientListCell() {
-    //GridPane.setConstraints(name, 0, 0);
-    //GridPane.setConstraints(allergens, 1, 0);
-    //GridPane.setConstraints(category, 2, 0);
 
     // Set the column constraints for the grid such that the columns are equally wide.
-    int noOfColumns = 3;
+    int noOfColumns = 3; // Change this if you want to change the number of columns.
     ColumnConstraints column1 = new ColumnConstraints();
     column1.setPercentWidth((float) (100 / noOfColumns));
     ColumnConstraints column2 = new ColumnConstraints();
@@ -56,7 +53,7 @@ public class IngredientListCell extends ListCell<Ingredient> {
   }
 
   /**
-   * Updates the item in the cell.
+   * Updates the item in the cell (automatic).
    *
    * @param item the new ingredient.
    * @param empty whether the cell is to be empty.
@@ -69,7 +66,13 @@ public class IngredientListCell extends ListCell<Ingredient> {
       setGraphic(null);
     } else {
       name.setText(item.getName());
-      allergens.setText(item.getAllergens().toString());
+
+      // If the ingredient has allergens, display them. Otherwise, display "None".
+      if (item.getAllergens() != null && !item.getAllergens().isEmpty()) {
+        allergens.setText(String.join(", ", item.getAllergens()));
+      } else {
+        allergens.setText("None");
+      }
       category.setText(item.getCategory());
       setGraphic(grid);
     }

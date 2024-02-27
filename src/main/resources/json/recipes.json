@@ -57,11 +57,11 @@
 }, {
   "id" : 7,
   "ingredients" : {
+    "14" : 200,
     "27" : 100,
     "28" : 100,
     "9" : 30,
-    "18" : 200,
-    "14" : 200
+    "18" : 200
   },
   "instructions" : "Cut chicken breast into strips. Stir fry with vegetables in oil. Serve with basmati rice.",
   "name" : "Chicken Stir Fry"

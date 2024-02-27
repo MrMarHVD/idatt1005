@@ -1,7 +1,7 @@
 [ {
   "id" : 1,
   "name" : "egg(s)",
-  "allergens" : [ ],
+  "allergens" : [ "eggs" ],
   "category" : "protein",
   "unit" : "pieces"
 }, {

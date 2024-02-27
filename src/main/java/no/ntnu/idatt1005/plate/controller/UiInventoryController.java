@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Ingredient;
 import no.ntnu.idatt1005.plate.model.json.JsonReader;
-import no.ntnu.idatt1005.plate.model.IngredientListCell;
+import no.ntnu.idatt1005.plate.controller.inventory.IngredientListCell;
 
 /**
  * Controller class for the inventory view
@@ -125,7 +125,6 @@ public class UiInventoryController {
   private void displayIngredients() {
     List<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
     ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList(allIngredients);
-    ObservableList<String> ingredientNames = FXCollections.observableArrayList();
     ingredientListView.setItems(observableIngredients);
     ingredientListView.setCellFactory(param -> new IngredientListCell());
   }

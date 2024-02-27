@@ -20,7 +20,7 @@ public class DataInitializer {
    * Method for creating ingredients and writing them to JSON.
    */
   public static void createIngredients() {
-    Ingredient eggs = new Ingredient("egg(s)", "pieces", "protein");
+    Ingredient eggs = new Ingredient("egg(s)", "pieces", "protein", "eggs");
     Ingredient flour = new Ingredient("flour", "grams", "carbohydrate");
     Ingredient milk = new Ingredient("milk", "milliliters", "dairy");
     Ingredient sugar = new Ingredient("sugar", "grams", "carbohydrate");
