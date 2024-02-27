@@ -54,15 +54,15 @@ public class JsonReader {
   // JsonReader.java
 
   /**
-   * Gets all ingredients.
+   * Gets all ingredients from the inventory.
    *
    *
    * @return list of all ingredients.
    */
-  public static List<Ingredient> getAllIngredients() {
+  public static List<Ingredient> getInventoryIngredients() {
       try {
           ObjectMapper objectMapper = new ObjectMapper();
-          File file = new File("src/main/resources/json/ingredients.json");
+          File file = new File("src/main/resources/json/inventory.json");
           return objectMapper.readValue(file, new TypeReference<List<Ingredient>>(){});
       } catch (IOException e) {
           e.printStackTrace();

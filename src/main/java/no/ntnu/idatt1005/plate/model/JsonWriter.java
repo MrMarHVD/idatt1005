@@ -58,4 +58,17 @@ public class JsonWriter {
     }
   }
 
+  /**
+   * Writes a list of ingredients to the inventory JSON file.
+   *
+   * @param ingredients list of ingredients to write to file.
+   */
+  public static void writeInventoryIngredientsToJson(List<Ingredient> ingredients) {
+    try {
+      objectMapper.writeValue(new File("src/main/resources/json/inventory.json"), ingredients);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
 }

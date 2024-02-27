@@ -58,6 +58,11 @@ public class DataInitializer {
         grannySmithApples, bananas, navelOranges, strawberries,
         broccoli, carrots, peas, spinach, oats, bacon
 ));
+    JsonWriter.writeInventoryIngredientsToJson(Arrays.asList(
+            eggs, flour, milk, sugar, butter, salt, yeast,
+            water, oil, cheese, lettuce, tomatoes, cucumbers,
+            chickenBreast, beefSteak, porkChops, salmonFilet,
+            basmatiRice, pennePasta));
 }
 
   /**
