@@ -1,10 +1,10 @@
 [ {
   "id" : 1,
   "ingredients" : {
-    "3" : 100,
     "4" : 50,
     "1" : 2,
-    "2" : 200
+    "2" : 200,
+    "3" : 100
   },
   "instructions" : "Mix flour, eggs, milk, sugar, and salt. Fry in a pan.",
   "name" : "Pancake"
@@ -20,29 +20,29 @@
 }, {
   "id" : 3,
   "ingredients" : {
-    "8" : 500,
     "4" : 10,
-    "30" : 100
+    "30" : 100,
+    "8" : 500
   },
   "instructions" : "Boil water. Add oats and reduce heat. Cook until water is absorbed. Add sugar to taste.",
   "name" : "Oatmeal"
 }, {
   "id" : 4,
   "ingredients" : {
-    "11" : 100,
     "12" : 2,
     "13" : 100,
-    "14" : 150
+    "14" : 150,
+    "11" : 100
   },
   "instructions" : "Grill chicken breast. Serve with lettuce, tomatoes, and cucumbers.",
   "name" : "Chicken Salad"
 }, {
   "id" : 5,
   "ingredients" : {
-    "19" : 200,
     "31" : 200,
     "1" : 2,
-    "10" : 100
+    "10" : 100,
+    "19" : 200
   },
   "instructions" : "Cook penne pasta. In a separate pan, cook bacon with cheese and beaten eggs. Mix together and serve.",
   "name" : "Pasta Carbonara"
@@ -57,11 +57,11 @@
 }, {
   "id" : 7,
   "ingredients" : {
-    "14" : 200,
     "27" : 100,
     "28" : 100,
     "9" : 30,
-    "18" : 200
+    "18" : 200,
+    "14" : 200
   },
   "instructions" : "Cut chicken breast into strips. Stir fry with vegetables in oil. Serve with basmati rice.",
   "name" : "Chicken Stir Fry"
@@ -77,10 +77,10 @@
 }, {
   "id" : 9,
   "ingredients" : {
-    "11" : 100,
     "12" : 100,
     "13" : 100,
-    "17" : 150
+    "17" : 150,
+    "11" : 100
   },
   "instructions" : "Grill salmon filet. Serve with lettuce, tomatoes, and cucumbers.",
   "name" : "Salmon Salad"

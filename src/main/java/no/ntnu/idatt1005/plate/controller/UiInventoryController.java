@@ -1,10 +1,12 @@
 package no.ntnu.idatt1005.plate.controller;
 
+import java.util.Comparator;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
@@ -47,6 +49,27 @@ public class UiInventoryController {
   @FXML
   private Button searchButton;
 
+  /**
+   * Label for the name of the ingredient.
+   */
+  @FXML
+  private Label nameLabel;
+
+  /**
+   * Label for the allergens of the ingredient.
+   */
+  @FXML
+  private Label allergensLabel;
+
+  /**
+   * Label for the category of the ingredient.
+   */
+  @FXML
+  private Label categoryLabel;
+
+  private boolean sortNameAsc = true;
+  private boolean sortAllergensAsc = true;
+  private boolean sortCategoryAsc = true;
 
 
   /**
@@ -67,6 +90,20 @@ public class UiInventoryController {
       System.out.println("searchButton is null");
     }
 
+    if (nameLabel != null && allergensLabel != null && categoryLabel != null) {
+      this.initializeSortLabelHandlers();
+    } else {
+      System.out.println("One or more of the sort labels are null");
+    }
+
+  }
+
+  /**
+   * Define the event handlers for when the sort labels are clicked.
+   */
+  private void initializeSortLabelHandlers() {
+    nameLabel.setOnMouseClicked(event -> sortByName());
+    categoryLabel.setOnMouseClicked(event -> sortByCategory());
   }
 
   /**
@@ -85,7 +122,7 @@ public class UiInventoryController {
   /**
    * Display all ingredients in the inventory.
    */
-  public void displayIngredients() {
+  private void displayIngredients() {
     List<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
     ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList(allIngredients);
     ObservableList<String> ingredientNames = FXCollections.observableArrayList();
@@ -98,7 +135,7 @@ public class UiInventoryController {
    *
    * @param input into the search prompt.
    */
-  public void searchIngredients(String input) {
+  private void searchIngredients(String input) {
     List<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
     ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList();
 
@@ -109,6 +146,31 @@ public class UiInventoryController {
     }
     ingredientListView.setItems(observableIngredients);
     ingredientListView.setCellFactory(param -> new IngredientListCell());
+  }
+
+  /**
+   * Method to sort ingredients by their name in either ascending or descending order.
+   */
+  private void sortByName() {
+    if (sortNameAsc) {
+      ingredientListView.getItems().sort(Comparator.comparing(Ingredient::getName));
+    } else {
+      ingredientListView.getItems().sort(Comparator.comparing(Ingredient::getName).reversed());
+    }
+    sortNameAsc = !sortNameAsc;
+  }
+
+
+  /**
+   * Method to sort ingredients by their category in either ascending or descending order.
+   */
+  private void sortByCategory() {
+    if (sortCategoryAsc) {
+      ingredientListView.getItems().sort(Comparator.comparing(Ingredient::getCategory));
+    } else {
+      ingredientListView.getItems().sort(Comparator.comparing(Ingredient::getCategory).reversed());
+    }
+    sortCategoryAsc = !sortCategoryAsc;
   }
 
 }
