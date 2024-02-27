@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-border-color:black" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="366.0" fx:controller="no.ntnu.idatt1005.plate.controller.UiInventoryController" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="670.0" style="-fx-border-color:black" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.UiInventoryController">
    <children>
       <VBox prefHeight="93.0" prefWidth="366.0">
          <children>
@@ -19,6 +18,6 @@
             <TextField prefHeight="33.0" prefWidth="366.0" />
          </children>
       </VBox>
-      <ListView fx:id="ingredientListView" prefHeight="435.0" prefWidth="366.0" />
+      <ListView fx:id="ingredientListView" prefHeight="409.0" prefWidth="386.0" />
    </children>
 </VBox>

@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Ingredient;
 import no.ntnu.idatt1005.plate.model.JsonReader;
+import no.ntnu.idatt1005.plate.model.IngredientListCell;
 
 /**
  * Controller class for the inventory view
@@ -27,7 +28,7 @@ public class UiInventoryController {
   private ToolbarController toolbarController;
 
   @FXML
-  private ListView<String> ingredientListView;
+  private ListView<Ingredient> ingredientListView;
 
   /**
    * Initialize the controller.
@@ -62,10 +63,8 @@ public class UiInventoryController {
     List<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
     ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList(allIngredients);
     ObservableList<String> ingredientNames = FXCollections.observableArrayList();
-    for (Ingredient ingredient : allIngredients) {
-      ingredientNames.add(ingredient.getName());
-    }
-    ingredientListView.setItems(ingredientNames);
+    ingredientListView.setItems(observableIngredients);
+    ingredientListView.setCellFactory(param -> new IngredientListCell());
   }
 
 }

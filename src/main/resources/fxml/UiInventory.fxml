@@ -36,7 +36,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -94,17 +93,6 @@
          <left>
       <VBox prefHeight="429.0" prefWidth="75.0" BorderPane.alignment="CENTER" />
          </left>
-         <center>
-        <ScrollPane BorderPane.alignment="CENTER">
-          <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="477.0" prefWidth="440.0">
-                     <children>
-                        <fx:include source="inventory/Inventory.fxml" />
-                     </children>
-            </AnchorPane>
-          </content>
-        </ScrollPane>
-         </center>
          <right>
             <VBox prefHeight="429.0" prefWidth="114.0" BorderPane.alignment="CENTER">
                <children>
@@ -115,6 +103,13 @@
                </children>
             </VBox>
          </right>
+         <center>
+      <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="477.0" prefWidth="440.0" BorderPane.alignment="CENTER">
+               <children>
+                  <fx:include source="inventory/Inventory.fxml" />
+               </children>
+      </AnchorPane>
+         </center>
       </BorderPane>
   </children>
 </VBox>
