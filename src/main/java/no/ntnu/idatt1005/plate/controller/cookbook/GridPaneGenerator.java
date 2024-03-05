@@ -3,11 +3,12 @@ package no.ntnu.idatt1005.plate.controller.cookbook;
 import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 /**
  * This class is used to insert recipe icons into the GridPane
- * in the UiCookbook.fxml view.
+ * in the UiCookbook.fxml view and handle when user clicks them.
  */
 public class GridPaneGenerator {
 
@@ -24,6 +25,9 @@ public class GridPaneGenerator {
       Image image = getIconForRecipe(recipeId);
       ImageView imageView = new ImageView(image);
 
+      // Handle when the user clicks the recipe icon.
+      imageView.setOnMouseClicked(event -> iconClicked(event, recipeId));
+
       // Set the fx:id of the ImageView to the recipe name
       // imageView.setId(recipeId); This has to be defined once the database is in place
 
@@ -38,5 +42,14 @@ public class GridPaneGenerator {
     // Return an Image for the recipe
     // This is just a placeholder, you should replace this with your actual code
     return new Image("file:resources/images/" + recipeId + ".png");
+  }
+
+  /**
+   * Handle mouse click of the recipe icons.
+   * @param event the event that was triggered
+   * @param recipeId the ID of the recipe in question
+   */
+  private void iconClicked(MouseEvent event, int recipeId)  {
+    // Code to handle the click on the icon
   }
 }
