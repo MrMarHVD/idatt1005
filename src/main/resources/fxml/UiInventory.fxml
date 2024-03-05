@@ -100,16 +100,16 @@
          <right>
             <VBox prefHeight="477.0" prefWidth="165.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField prefHeight="30.0" prefWidth="114.0" promptText="Name" />
+                  <TextField fx:id="addIngredientNameField" prefHeight="30.0" prefWidth="114.0" promptText="Name" />
                   <HBox prefHeight="30.0" prefWidth="151.0">
                      <children>
-                        <TextField prefHeight="30.0" prefWidth="108.0" promptText="Quantity" />
-                        <ComboBox prefHeight="34.0" prefWidth="57.0" />
+                        <TextField fx:id="quantityField" prefHeight="30.0" prefWidth="108.0" promptText="Quantity" />
+                        <ComboBox fx:id="quantityComboBox" prefHeight="34.0" prefWidth="57.0" />
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Add" />
+                  <Button fx:id="addIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Add" />
                   <Region prefHeight="50.0" prefWidth="152.0" />
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="166.0" text="Remove selected" />
+                  <Button fx:id="removeSelectedButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="166.0" text="Remove selected" />
                </children>
             </VBox>
          </right>

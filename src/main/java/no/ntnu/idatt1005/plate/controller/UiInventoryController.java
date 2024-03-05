@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -67,8 +68,44 @@ public class UiInventoryController {
   @FXML
   private Label categoryLabel;
 
+  /**
+   * Text field for adding a new ingredient.
+   */
+  @FXML
+  private TextField addIngredientNameField;
+
+  /**
+   * Text field for the quantity of the ingredient
+   */
+  @FXML
+  private TextField quantityField;
+
+  /**
+   * ComboBox for the unit of the ingredient.
+   */
+  @FXML
+  private ComboBox<Ingredient> quantityComboBox;
+
+  /**
+   * Button for adding a new ingredient to the inventory.
+   */
+  @FXML
+  private Button addIngredientButton;
+
+  /**
+   * Button for removing the selected ingredient from the inventory.
+   */
+  @FXML
+  private Button removeSelectedButton;
+
+  /**
+   * Boolean for determining whether to sort by ingredient name in ascending or descending order.
+   */
   private boolean sortNameAsc = true;
-  private boolean sortAllergensAsc = true;
+
+  /**
+   * Boolean for determining whether to sort by ingredient category in ascending or descending order.
+   */
   private boolean sortCategoryAsc = true;
 
 
