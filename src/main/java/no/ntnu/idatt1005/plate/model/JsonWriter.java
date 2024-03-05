@@ -25,9 +25,9 @@ public class JsonWriter {
    *
    * @param cookbooks list of cookbooks to write to file.
    */
-  public static void writeCookbookToJson(List<CookBook> cookbooks) {
+  public static void writeCookbookToJson(List<CookBook> cookbooks, String filename) {
     try {
-      objectMapper.writeValue(new File("src/main/resources/cookbooks.json"), cookbooks);
+      objectMapper.writeValue(new File("src/main/resources/json/" + filename + ".json"), cookbooks);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -38,9 +38,9 @@ public class JsonWriter {
     *
     * @param recipes list of recipes to write to file.
     */
-  public static void writeRecipesToJson(List<Recipe> recipes) {
+  public static void writeRecipesToJson(List<Recipe> recipes, String filename) {
     try {
-      objectMapper.writeValue(new File("src/main/resources/recipes.json"), recipes);
+      objectMapper.writeValue(new File("src/main/resources/json/" + filename + ".json"), recipes);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -51,9 +51,9 @@ public class JsonWriter {
     *
     * @param ingredients list of ingredients to write to file.
     */
-  public static void writeIngredientsToJson(List<Ingredient> ingredients) {
+  public static void writeIngredientsToJson(List<Ingredient> ingredients, String filename) {
     try {
-      objectMapper.writeValue(new File("src/main/resources/ingredients.json"), ingredients);
+      objectMapper.writeValue(new File("src/main/resources/json/" + filename + ".json"), ingredients);
     } catch (IOException e) {
       e.printStackTrace();
     }

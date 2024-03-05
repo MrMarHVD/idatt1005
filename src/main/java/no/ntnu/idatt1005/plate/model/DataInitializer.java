@@ -58,7 +58,7 @@ public class DataInitializer {
         basmatiRice, pennePasta, wholeWheatBread, russetPotatoes,
         grannySmithApples, bananas, navelOranges, strawberries,
         broccoli, carrots, peas, spinach, oats, bacon
-));
+), "ingredients");
 }
 
   /**
@@ -165,7 +165,7 @@ Recipe salmonSalad = new Recipe(
 
 
     // Write recipes to JSON
-    JsonWriter.writeRecipesToJson(Arrays.asList(pancake, scrambledEggs, oatmeal, chickenSalad, pastaCarbonara, steakAndPotatoes, chickenStirFry, spaghettiBolognese, salmonSalad));
+    JsonWriter.writeRecipesToJson(Arrays.asList(pancake, scrambledEggs, oatmeal, chickenSalad, pastaCarbonara, steakAndPotatoes, chickenStirFry, spaghettiBolognese, salmonSalad), "recipes");
   }
 
   /**
@@ -175,7 +175,13 @@ Recipe salmonSalad = new Recipe(
     CookBook breakfast = new CookBook("Breakfast", 1, 2, 3 );
     CookBook lunch = new CookBook("Lunch", 4, 5, 6);
     CookBook dinner = new CookBook("Dinner", 7, 8, 9);
-    JsonWriter.writeCookbookToJson(Arrays.asList(breakfast, lunch, dinner));
+    JsonWriter.writeCookbookToJson(Arrays.asList(breakfast, lunch, dinner), "cookbooks");
+  }
+
+  public static void main(String[] args) {
+    DataInitializer.createIngredients();
+    DataInitializer.createCookBooks();
+    DataInitializer.createRecipes();
   }
 
   /**
