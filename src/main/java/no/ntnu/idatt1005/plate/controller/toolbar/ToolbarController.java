@@ -21,14 +21,29 @@ public class ToolbarController {
    */
   @FXML private MainController mainController;
 
+  /**
+   * The button to go to the home view.
+   */
   @FXML private Button home;
 
+  /**
+   * The button to go to the cookbook view.
+   */
   @FXML private Button cookbook;
 
+  /**
+   * The button to go to the inventory view.
+   */
   @FXML private Button inventory;
 
+  /**
+   * The button to go to the shoppingList view.
+   */
   @FXML private Button shoppingList;
 
+  /**
+   * The button to go to the settings view.
+   */
   @FXML private Button settings;
 
   /**

@@ -1,6 +1,7 @@
 package no.ntnu.idatt1005.plate.controller;
 
 import javafx.fxml.FXML;
+import no.ntnu.idatt1005.plate.controller.cookbook.GridPaneGenerator;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 
 public class UiCookbookController {
@@ -21,7 +22,9 @@ public class UiCookbookController {
    * Initialize the controller.
    */
   public void initialize() {
+
     this.setMainController(mainController);
+    // TODO: Instantiate a GridPaneGenerator and implement function
   }
 
   /**

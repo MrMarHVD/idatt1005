@@ -13,11 +13,24 @@ import javafx.scene.layout.GridPane;
 public class GridPaneGenerator {
 
   /**
+   * The GridPane to insert the recipe icons into.
+   */
+  private final GridPane gridPane;
+
+  /**
+   * Default constructor.
+   *
+   * @param gridPane gridPane to insert the recipe icons into.
+   */
+  public GridPaneGenerator(GridPane gridPane) {
+    this.gridPane = gridPane;
+  }
+
+  /**
    * Populate the input GridPane with recipe icons.
-   * @param gridPane the grid pane in question
    * @param recipeIds a list containing the Ids of the recipes
    */
-  public void populateGridPaneWithIcons(GridPane gridPane, List<Integer> recipeIds) {
+  public void populateGridPaneWithIcons(List<Integer> recipeIds) {
     for (int i = 0; i < recipeIds.size(); i++) {
       int recipeId = recipeIds.get(i);
 

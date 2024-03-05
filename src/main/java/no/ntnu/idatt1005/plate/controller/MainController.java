@@ -25,8 +25,8 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
  */
 public class MainController {
 
+  @FXML
   private void initialize() {
-
   }
 
   /**
