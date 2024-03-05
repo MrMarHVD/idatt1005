@@ -13,6 +13,7 @@ public class JsonWriter {
 
   private JsonWriter() {
   }
+
   private static final ObjectMapper objectMapper = new ObjectMapper();
 
   static {
@@ -56,6 +57,30 @@ public class JsonWriter {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+    * Writes a list of shopping list items to a JSON file.
+    *
+    * @param shoppingList list of shopping list items to write to file.
+    */
+  public static void writeShoppingListToJson(List<ShoppingListItem> shoppingList) {
+    try {
+      objectMapper.writeValue(new File("src/main/resources/json/shoppingList.json"), shoppingList);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+    * Writes a single shopping list item to a JSON file.
+    *
+    * @param item shopping list item to write to file.
+    */
+  public static void writeShoppingListItemToJson(ShoppingListItem item) {
+    List<ShoppingListItem> shoppingList = JsonReader.getShoppingList();
+    shoppingList.add(item);
+    writeShoppingListToJson(shoppingList);
   }
 
 }

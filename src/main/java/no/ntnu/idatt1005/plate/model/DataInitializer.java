@@ -1,6 +1,7 @@
 package no.ntnu.idatt1005.plate.model;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -177,5 +178,17 @@ Recipe salmonSalad = new Recipe(
     JsonWriter.writeCookbookToJson(Arrays.asList(breakfast, lunch, dinner));
   }
 
+  /**
+   * Method for creating shopping list items and writing them to JSON.
+   */
+  public static void createShoppingList() {
+    ShoppingListItem item = new ShoppingListItem(2, 200);
+    ShoppingListItem item2 = new ShoppingListItem(3, 300);
+    ShoppingListItem item3 = new ShoppingListItem(4, 50);
+    ShoppingListItem item4 = new ShoppingListItem(5, 30);
+
+
+    JsonWriter.writeShoppingListToJson(Arrays.asList(item, item2, item3, item4));
+  }
 
 }
