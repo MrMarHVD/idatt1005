@@ -26,14 +26,14 @@ public class SqlConnector {
    * Close the connection to the database.
    */
   public void close() {
-    try {
-      if (con != null) {
+    //try {
+      //if (con != null) {
         //con.close();
         //System.out.println("Connection closed");
-      }
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-    }
+      //}
+    //} catch (Exception e) {
+      //System.out.println(e.getMessage());
+    //}
   }
 
 
