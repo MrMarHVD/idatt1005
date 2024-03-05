@@ -14,7 +14,8 @@ public class UiCookbookController {
   /**
    * The toolbar controller for this view.
    */
-  @FXML private ToolbarController toolbarController;
+  @FXML
+  private ToolbarController toolbarController;
 
   /**
    * Initialize the controller.
