@@ -33,12 +33,16 @@
 -->
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.UiInventoryController">
@@ -91,20 +95,26 @@
             </VBox>
          </top>
          <left>
-      <VBox prefHeight="429.0" prefWidth="75.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="477.0" prefWidth="65.0" BorderPane.alignment="CENTER" />
          </left>
          <right>
-            <VBox prefHeight="429.0" prefWidth="114.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="477.0" prefWidth="165.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="114.0" text="Button" />
+                  <TextField prefHeight="30.0" prefWidth="114.0" promptText="Name" />
+                  <HBox prefHeight="30.0" prefWidth="151.0">
+                     <children>
+                        <TextField prefHeight="30.0" prefWidth="108.0" promptText="Quantity" />
+                        <ComboBox prefHeight="34.0" prefWidth="57.0" />
+                     </children>
+                  </HBox>
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Add" />
+                  <Region prefHeight="50.0" prefWidth="152.0" />
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="166.0" text="Remove selected" />
                </children>
             </VBox>
          </right>
          <center>
-      <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="477.0" prefWidth="440.0" BorderPane.alignment="CENTER">
+      <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="477.0" prefWidth="654.0" BorderPane.alignment="CENTER">
                <children>
                   <fx:include source="inventory/Inventory.fxml" />
                </children>
