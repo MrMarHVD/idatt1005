@@ -1,20 +1,11 @@
 package no.ntnu.idatt1005.plate.controller;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import no.ntnu.idatt1005.plate.MyApp;
-import no.ntnu.idatt1005.plate.controller.calendar.CalendarController;
-import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
-import no.ntnu.idatt1005.plate.model.Recipe;
-import no.ntnu.idatt1005.plate.model.CookbookMaker;
+import no.ntnu.idatt1005.plate.controller.shoppinglist.UiShoppingListController;
 
 // TODO: improve error handling (i.e. no printStackTrace)
 

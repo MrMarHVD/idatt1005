@@ -52,6 +52,21 @@ public class JsonReader {
   }
 
   /**
+   * Gets a single ingredient ID by its name.
+   *
+   * @return ingredient ID with the given name, or null if not found.
+   */
+  public static Integer getIngredientIdByName(String name) {
+    List<Ingredient> ingredients = readValueFromFile(
+            "src/main/resources/ingredients.json",
+            new TypeReference<>() {}
+    );
+    return ingredients.stream().filter(ingredient -> ingredient.getName().equals(name))
+            .map(Ingredient::getId)
+            .findFirst().orElse(null);
+  }
+
+  /**
    * Gets a single recipe by its id.
    *
    *
@@ -79,6 +94,15 @@ public class JsonReader {
     return cookBooks.stream().filter(cookBook -> cookBook.getId() == id).findFirst().orElse(null);
   }
 
-
-
+  /**
+   * Reads a shoppinglist from a JSON file.
+   *
+   * @return list of shopping list items.
+   */
+  public static List<ShoppingListItem> getShoppingList() {
+    return readValueFromFile(
+            "src/main/resources/json/shoppingList.json",
+            new TypeReference<>() {}
+    );
+  }
 }
