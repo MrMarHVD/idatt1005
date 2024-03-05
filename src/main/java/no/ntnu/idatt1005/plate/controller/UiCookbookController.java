@@ -1,5 +1,6 @@
 package no.ntnu.idatt1005.plate.controller;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
@@ -8,6 +9,7 @@ import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.CookBook;
 import no.ntnu.idatt1005.plate.model.CookbookMaker;
 import no.ntnu.idatt1005.plate.model.Recipe;
+import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 public class UiCookbookController {
 
@@ -42,10 +44,15 @@ public class UiCookbookController {
    */
   public void initialize() {
     this.setMainController(mainController);
-
     CookBook cookBook= CookbookMaker.createCookBook();
-    for (Recipe recipe : cookBook.getRecipes()) {
-      addRecipeButton(recipe);
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe");
+      while (rs.next()) {
+        String name = rs.getString("name");
+        addRecipeButton(name);
+      }
+    } catch (Exception e) {
+      e.getMessage();
     }
 
   }
@@ -64,15 +71,14 @@ public class UiCookbookController {
   }
 
   /**
-   * Add a recepie button for the given recipe.
+   * Add a recipe button for the given recipe.
    * @param recipe the recipe to add a button for.
    */
-  public void addRecipeButton(Recipe recipe) {
+  public void addRecipeButton(String recipe) {
 
-    Button button = new Button(recipe.getName());
-//    button = recipeButton;
+    Button button = new Button(recipe);
     button.setOnAction(event -> {
-      System.out.println("Going to recipe: " + recipe.getName());
+      System.out.println("Going to recipe: " + recipe);
     });
     recipeButtons.add(button);
     updateRecipeButtons();

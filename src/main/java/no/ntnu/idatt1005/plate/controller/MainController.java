@@ -15,6 +15,7 @@ import no.ntnu.idatt1005.plate.controller.calendar.CalendarController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.CookbookMaker;
+import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 // TODO: improve error handling (i.e. no printStackTrace)
 
@@ -24,9 +25,8 @@ import no.ntnu.idatt1005.plate.model.CookbookMaker;
  * as well as the toolbar on a high level.
  */
 public class MainController {
-
+  public static SqlConnector sqlConnector = new SqlConnector();
   private void initialize() {
-
   }
 
   /**
