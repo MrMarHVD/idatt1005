@@ -1,7 +1,13 @@
 package no.ntnu.idatt1005.plate.controller;
 
+import java.util.ArrayList;
 import javafx.fxml.FXML;
+import javafx.scene.layout.GridPane;
+import javafx.scene.control.Button;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.model.CookBook;
+import no.ntnu.idatt1005.plate.model.CookbookMaker;
+import no.ntnu.idatt1005.plate.model.Recipe;
 
 public class UiCookbookController {
 
@@ -17,10 +23,31 @@ public class UiCookbookController {
   @FXML private ToolbarController toolbarController;
 
   /**
+   * The grid containing buttons for each recipe.
+   */
+  @FXML private GridPane gridPane;
+
+  /**
+   * The default recipe button.
+   */
+  //@FXML private Button recipeButton;
+
+  /**
+   * The buttons for each recipe.
+   */
+  private ArrayList<Button> recipeButtons = new ArrayList<>();
+
+  /**
    * Initialize the controller.
    */
   public void initialize() {
     this.setMainController(mainController);
+
+    CookBook cookBook= CookbookMaker.createCookBook();
+    for (Recipe recipe : cookBook.getRecipes()) {
+      addRecipeButton(recipe);
+    }
+
   }
 
   /**
@@ -35,5 +62,36 @@ public class UiCookbookController {
       toolbarController.setMainController(mainController);
     }
   }
+
+  /**
+   * Add a recepie button for the given recipe.
+   * @param recipe the recipe to add a button for.
+   */
+  public void addRecipeButton(Recipe recipe) {
+
+    Button button = new Button(recipe.getName());
+//    button = recipeButton;
+    button.setOnAction(event -> {
+      System.out.println("Going to recipe: " + recipe.getName());
+    });
+    recipeButtons.add(button);
+    updateRecipeButtons();
+
+  }
+
+  /**
+   * Update the recipe buttons in the grid with the current list of recipe buttons.
+   */
+  public void updateRecipeButtons() {
+    if (gridPane != null) {
+      gridPane.getChildren().clear();
+      for (int i = 0; i < recipeButtons.size(); i++) {
+        gridPane.add(recipeButtons.get(i), i % 3, i / 3);
+      }
+    } else {
+      System.out.println("gridPane is null in updateRecipeButtons");
+    }
+  }
+
 
 }
