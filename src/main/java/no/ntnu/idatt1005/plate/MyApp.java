@@ -1,13 +1,8 @@
 package no.ntnu.idatt1005.plate;
 
 import no.ntnu.idatt1005.plate.controller.MainController;
-import no.ntnu.idatt1005.plate.view.MyWindow;
-import no.ntnu.idatt1005.plate.model.Ingredient;
-import no.ntnu.idatt1005.plate.model.Recipe;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -29,14 +24,16 @@ public class MyApp extends Application {
 
     primaryStage.setResizable(true);
 
+
+
     // Assign the mainController for the app (remains the same throughout the runtime)
-  MainController mainController = new MainController();
+    MainController mainController = new MainController();
 
-  // Set the primaryStage such that i can be accessed from other classes
-  MyApp.primaryStage = primaryStage;
+    // Set the primaryStage such that i can be accessed from other classes
+    MyApp.primaryStage = primaryStage;
 
-  // Load initial view (home view)
-  mainController.loadInitialView(MyApp.getPrimaryStage());
+    // Load initial view (home view)
+    mainController.loadInitialView(MyApp.getPrimaryStage());
 
   }
 
@@ -49,11 +46,11 @@ public class MyApp extends Application {
     return MyApp.primaryStage; // Public getter for the primary stage
   }
 
-    /**
-     * Main method for testing
-     */
-    public static void main(String[] args) throws Exception {
-      Application.launch(args);
+  /**
+   * Main method for testing
+   */
+  public static void main(String[] args) throws Exception {
+    Application.launch(args);
 
-   }  
+  }
 }

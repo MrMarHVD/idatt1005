@@ -2,7 +2,6 @@ package no.ntnu.idatt1005.plate.model;
 
 import java.util.List;
 
-
 /**
  * Ingredient class represents an ingredient in a recipe.
  */

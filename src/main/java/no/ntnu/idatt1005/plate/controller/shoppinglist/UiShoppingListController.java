@@ -10,7 +10,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import no.ntnu.idatt1005.plate.controller.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
-import no.ntnu.idatt1005.plate.model.JsonReader;
 import no.ntnu.idatt1005.plate.model.ShoppingListItem;
 
 
@@ -48,9 +47,6 @@ public class UiShoppingListController {
     }
     items = FXCollections.observableArrayList();
 
-    List<ShoppingListItem> shoppingListItemList = JsonReader.getShoppingList();
-
-    items.addAll(shoppingListItemList);
 
     if (listView != null) {
       listView.setItems(items);
@@ -61,13 +57,7 @@ public class UiShoppingListController {
    * add items to the shopping list.
    */
   public void addItems() {
-    items.add(
-            new ShoppingListItem(
-                    JsonReader.getIngredientIdByName(
-                            itemNameField.getText()),
-                    parseInt(itemAmountField.getText())
-            )
-    );
+    // Add items using database
   }
 
 

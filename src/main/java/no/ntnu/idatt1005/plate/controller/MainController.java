@@ -5,7 +5,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import no.ntnu.idatt1005.plate.MyApp;
+
 import no.ntnu.idatt1005.plate.controller.shoppinglist.UiShoppingListController;
+import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 // TODO: improve error handling (i.e. no printStackTrace)
 
@@ -15,9 +17,8 @@ import no.ntnu.idatt1005.plate.controller.shoppinglist.UiShoppingListController;
  * as well as the toolbar on a high level.
  */
 public class MainController {
-
+  public static SqlConnector sqlConnector = new SqlConnector();
   private void initialize() {
-
   }
 
   /**
@@ -89,7 +90,7 @@ public class MainController {
       Stage currentStage = MyApp.getPrimaryStage();
       currentStage.setScene(scene);
       currentStage.show();
-  }
+    }
     catch (Exception e) {
       e.printStackTrace();
     }
@@ -152,7 +153,27 @@ public class MainController {
    * Go to the settings view.
    */
   public void goToSettings() {
-    // Go to settings
+    try {
+      FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("/fxml/UiSettings.fxml"));
+      Parent shoppingListView = settingsLoader.load();
+
+      // Instantiate the shopping list controller
+      UiSettingsController settingsController = settingsLoader.getController();
+
+      // Set the main controller for the shopping list controller
+      settingsController.setMainController(this);
+
+      Scene scene = new Scene(shoppingListView);
+      Stage currentStage = MyApp.getPrimaryStage();
+      currentStage.setScene(scene);
+      currentStage.show();
+
+
+    } catch (Exception e) {
+
+      e.printStackTrace();
+    }
   }
+
 
 }

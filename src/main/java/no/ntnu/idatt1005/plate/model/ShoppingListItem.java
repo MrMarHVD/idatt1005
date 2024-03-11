@@ -46,9 +46,7 @@ public class ShoppingListItem {
 
   @Override
   public String toString() {
-    return JsonReader.getIngredientById(ingredientId).getName()
-            + ", " + amount + " "
-            + JsonReader.getIngredientById(ingredientId).getUnit();
+    return "Add new code using database";
   }
 
 

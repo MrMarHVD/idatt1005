@@ -1,17 +1,10 @@
 package no.ntnu.idatt1005.plate.controller;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
-import javax.tools.Tool;
 import no.ntnu.idatt1005.plate.controller.calendar.CalendarController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
-import no.ntnu.idatt1005.plate.model.Recipe;
-import no.ntnu.idatt1005.plate.model.CookbookMaker;
 
 /**
  * This class is the controller for the user interface, mediating between the model and view
