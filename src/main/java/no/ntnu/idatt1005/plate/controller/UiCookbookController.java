@@ -3,6 +3,7 @@ package no.ntnu.idatt1005.plate.controller;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
@@ -76,6 +77,11 @@ public class UiCookbookController {
   public void addRecipeButton(String recipe) {
 
     Button button = new Button(recipe);
+    button.setPrefWidth(100);
+    button.setPrefHeight(50);
+    button.setMaxHeight(75);
+    button.setMaxWidth(125);
+
     button.setOnAction(event -> {
       System.out.println("Going to recipe: " + recipe);
     });
@@ -91,7 +97,11 @@ public class UiCookbookController {
     if (gridPane != null) {
       gridPane.getChildren().clear();
       for (int i = 0; i < recipeButtons.size(); i++) {
-        gridPane.add(recipeButtons.get(i), i % 3, i / 3);
+        gridPane.add(recipeButtons.get(i), i % 4, i / 4);
+        Button button = recipeButtons.get(i);
+        GridPane.setHalignment(button, HPos.CENTER);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
       }
     } else {
       System.out.println("gridPane is null in updateRecipeButtons");
