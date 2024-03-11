@@ -32,95 +32,94 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.UiInventoryController">
   <children>
-      <BorderPane prefHeight="520.0" prefWidth="900.0">
-         <top>
-            <VBox prefHeight="91.0" prefWidth="900.0" BorderPane.alignment="CENTER">
-               <children>
-                <MenuBar VBox.vgrow="NEVER">
-                  <menus>
-                    <Menu mnemonicParsing="false" text="File">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
-                        <MenuItem mnemonicParsing="false" text="Open…" />
-                        <Menu mnemonicParsing="false" text="Open Recent" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                        <MenuItem mnemonicParsing="false" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save As…" />
-                        <MenuItem mnemonicParsing="false" text="Revert" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Preferences…" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Quit" />
-                      </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Edit">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="Undo" />
-                        <MenuItem mnemonicParsing="false" text="Redo" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Cut" />
-                        <MenuItem mnemonicParsing="false" text="Copy" />
-                        <MenuItem mnemonicParsing="false" text="Paste" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Select All" />
-                        <MenuItem mnemonicParsing="false" text="Unselect All" />
-                      </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Help">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-                      </items>
-                    </Menu>
-                  </menus>
-                </MenuBar>
-                  <fx:include fx:id="toolbar" source="toolbar/Toolbar.fxml" />
-               </children>
-            </VBox>
-         </top>
-         <left>
-      <VBox prefHeight="429.0" prefWidth="75.0" BorderPane.alignment="CENTER" />
-         </left>
-         <center>
-        <ScrollPane BorderPane.alignment="CENTER">
-          <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="477.0" prefWidth="440.0">
-                     <children>
-                        <fx:include source="inventory/Inventory.fxml" />
-                     </children>
-            </AnchorPane>
-          </content>
-        </ScrollPane>
-         </center>
-         <right>
-        <AnchorPane prefHeight="417.0" prefWidth="199.0" BorderPane.alignment="CENTER">
+    <BorderPane prefHeight="520.0" prefWidth="900.0">
+      <top>
+        <VBox prefHeight="91.0" prefWidth="900.0" BorderPane.alignment="CENTER">
           <children>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" wrapText="false">
-                     <font>
-                        <Font size="18.0" fx:id="x7" />
-                     </font>
-                     <textFill>
-                        <Color red="0.624" green="0.624" blue="0.624" fx:id="x8" />
-                     </textFill>
-                  </Label>
+            <MenuBar VBox.vgrow="NEVER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="New" />
+                    <MenuItem mnemonicParsing="false" text="Open…" />
+                    <Menu mnemonicParsing="false" text="Open Recent" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem mnemonicParsing="false" text="Save" />
+                    <MenuItem mnemonicParsing="false" text="Save As…" />
+                    <MenuItem mnemonicParsing="false" text="Revert" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem mnemonicParsing="false" text="Preferences…" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem mnemonicParsing="false" text="Quit" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Undo" />
+                    <MenuItem mnemonicParsing="false" text="Redo" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem mnemonicParsing="false" text="Cut" />
+                    <MenuItem mnemonicParsing="false" text="Copy" />
+                    <MenuItem mnemonicParsing="false" text="Paste" />
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem mnemonicParsing="false" text="Select All" />
+                    <MenuItem mnemonicParsing="false" text="Unselect All" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <fx:include fx:id="toolbar" source="toolbar/Toolbar.fxml" />
+          </children>
+        </VBox>
+      </top>
+      <left>
+        <VBox prefHeight="477.0" prefWidth="65.0" BorderPane.alignment="CENTER" />
+      </left>
+      <right>
+        <VBox prefHeight="477.0" prefWidth="165.0" BorderPane.alignment="CENTER">
+          <children>
+            <TextField fx:id="addIngredientNameField" prefHeight="30.0" prefWidth="114.0" promptText="Name" />
+            <HBox prefHeight="30.0" prefWidth="151.0">
+              <children>
+                <TextField fx:id="quantityField" prefHeight="30.0" prefWidth="108.0" promptText="Quantity" />
+                <ComboBox fx:id="quantityComboBox" prefHeight="34.0" prefWidth="57.0" />
+              </children>
+            </HBox>
+            <Button fx:id="addIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Add" />
+            <Region prefHeight="50.0" prefWidth="152.0" />
+            <Button fx:id="removeSelectedButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="166.0" text="Remove selected" />
+          </children>
+        </VBox>
+      </right>
+      <center>
+        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="477.0" prefWidth="654.0" BorderPane.alignment="CENTER">
+          <children>
+            <fx:include source="inventory/Inventory.fxml" />
           </children>
         </AnchorPane>
-         </right>
-      </BorderPane>
+      </center>
+    </BorderPane>
   </children>
 </VBox>

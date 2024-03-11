@@ -98,7 +98,7 @@ public class MainController {
       Stage currentStage = MyApp.getPrimaryStage();
       currentStage.setScene(scene);
       currentStage.show();
-  }
+    }
     catch (Exception e) {
       e.printStackTrace();
     }

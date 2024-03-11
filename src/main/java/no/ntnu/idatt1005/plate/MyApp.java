@@ -1,13 +1,9 @@
 package no.ntnu.idatt1005.plate;
 
 import no.ntnu.idatt1005.plate.controller.MainController;
-import no.ntnu.idatt1005.plate.view.MyWindow;
-import no.ntnu.idatt1005.plate.model.Ingredient;
-import no.ntnu.idatt1005.plate.model.Recipe;
+import no.ntnu.idatt1005.plate.model.json.DataInitializer;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -29,14 +25,24 @@ public class MyApp extends Application {
 
     primaryStage.setResizable(true);
 
+    // Create ingredients and write them to ingredients.json
+    DataInitializer.createIngredients();
+
+    // Create recipes and write them to recipes.json
+    DataInitializer.createRecipes();
+
+    // Create cookbooks and write them to cookbooks.json
+    DataInitializer.createCookBooks();
+
+
     // Assign the mainController for the app (remains the same throughout the runtime)
-  MainController mainController = new MainController();
+    MainController mainController = new MainController();
 
-  // Set the primaryStage such that i can be accessed from other classes
-  MyApp.primaryStage = primaryStage;
+    // Set the primaryStage such that i can be accessed from other classes
+    MyApp.primaryStage = primaryStage;
 
-  // Load initial view (home view)
-  mainController.loadInitialView(MyApp.getPrimaryStage());
+    // Load initial view (home view)
+    mainController.loadInitialView(MyApp.getPrimaryStage());
 
   }
 
@@ -49,20 +55,11 @@ public class MyApp extends Application {
     return MyApp.primaryStage; // Public getter for the primary stage
   }
 
-    /**
-     * Main method for testing
-     */
-    public static void main(String[] args) throws Exception {
-      Application.launch(args);
-      System.out.println("Hei");
+  /**
+   * Main method for testing
+   */
+  public static void main(String[] args) throws Exception {
+    Application.launch(args);
 
-      Ingredient eggs = new Ingredient("eggs");
-      Ingredient flour = new Ingredient("flour");
-      Ingredient milk = new Ingredient("milk");
-
-      Recipe bread = new Recipe("Bread", "Add the eggs and milk, then mix with flour.",
-          flour, milk, eggs);
-
-      System.out.println(bread.toString());
-   }  
+  }
 }

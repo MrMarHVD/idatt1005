@@ -7,26 +7,26 @@
 <?import javafx.scene.text.Font?>
 
 <HBox style="-fx-border-color: black" prefHeight="423.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox prefHeight="423.0" prefWidth="350.0">
-         <children>
-            <Label prefHeight="48.0" minHeight="48" prefWidth="316.0" text="Your Shopping List">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <ListView prefHeight="385.0" prefWidth="316.0" />
-         </children>
-      </VBox>
-      <VBox prefHeight="423.0" prefWidth="168.0">
-         <children>
-            <Label prefHeight="43.0" minHeight="48" prefWidth="134.0" text="Quantity">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <ListView prefHeight="382.0" prefWidth="134.0" />
-         </children>
-      </VBox>
-   </children>
+  <children>
+    <VBox prefHeight="423.0" prefWidth="350.0">
+      <children>
+        <Label prefHeight="48.0" minHeight="48" prefWidth="316.0" text="Your Shopping List">
+          <font>
+            <Font size="18.0" />
+          </font>
+        </Label>
+        <ListView prefHeight="385.0" prefWidth="316.0" />
+      </children>
+    </VBox>
+    <VBox prefHeight="423.0" prefWidth="168.0">
+      <children>
+        <Label prefHeight="43.0" minHeight="48" prefWidth="134.0" text="Quantity">
+          <font>
+            <Font size="18.0" />
+          </font>
+        </Label>
+        <ListView prefHeight="382.0" prefWidth="134.0" />
+      </children>
+    </VBox>
+  </children>
 </HBox>

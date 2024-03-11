@@ -21,7 +21,7 @@ public class MyEntityRepo {
     public MyEntity getMyEntity(String id) {
 		// Get connection (maybe use pool?)
 		// Do some SQL
-		// Return som real data
+		// Return som real json
 		
 		return new MyEntity("id", "name");
     }
@@ -29,7 +29,7 @@ public class MyEntityRepo {
     public List<MyEntity> findMyEntities(String someParameter) {
 		// Get connection (maybe use pool?)
 		// Do some SQL
-		// Return som real data
+		// Return som real json
 		
 		return Arrays.asList(new MyEntity("id1", "name1"), new MyEntity("id2", "name2"));
     }

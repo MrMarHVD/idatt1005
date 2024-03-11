@@ -1,53 +1,57 @@
 package no.ntnu.idatt1005.plate.model;
 
-import java.util.Arrays;
-import java.util.ArrayList;
+import java.util.Map;
 
+/**
+ * Recipe class represents a recipe in a cook book.
+ */
 public class Recipe {
 
-  ArrayList<Ingredient> ingredients;
+  private static int nextId = 1;
 
-  String instructions;
+  private final int id;
+  private Map<Integer, Integer> ingredients; // Key: ingredient id, Value: amount
+  private String instructions;
+  private String name;
 
-  String name;
+  /**
+   * No-argument constructor for Jackson.
+   */
+  public Recipe() {
+    this.id = nextId++;
+  }
 
   /**
    * Constructor for recipe.
    *
+   * @param name         name of the recipe.
+   * @param instructions instructions for the recipe.
    * @param ingredients ingredients in the recipe.
    */
-  public Recipe(String name, String instructions, Ingredient firstIngredient, Ingredient... ingredients) {
-
-    this.ingredients = new ArrayList<Ingredient>();
+  public Recipe(String name, String instructions, Map<Integer, Integer> ingredients) {
+    this();
     this.name = name;
-
-    this.ingredients.add(firstIngredient);
-    this.ingredients.addAll(Arrays.asList(ingredients));
-
     this.instructions = instructions;
+    this.ingredients = ingredients;
   }
 
-  /**
-   * toString-method returns the ingredients and instructions as Strings.
-   *
-   * @return ingredients and instructions as strings.
-   */
-  @Override
-  public String toString() {
-
-    ArrayList<String> ingredientsStrings = new ArrayList<>();
-    for (Ingredient ingredient : this.ingredients) {
-      ingredientsStrings.add(ingredient.getName());
-    }
-    return "Recipe{" +
-        "ingredients=" + ingredientsStrings +
-        ", instructions='" + instructions + '\'' +
-        '}';
+  public String getName() {
+    return this.name;
   }
 
-  /**
-   * Get the name of the recipe.
-   * @return name of the recipe.
-   */
-  public String getName() { return this.name; }
+  public Map<Integer, Integer> getIngredients() {
+    return this.ingredients;
+  }
+
+  public int getId() {
+    return this.id;
+  }
+
+  public String getInstructions() {
+    return this.instructions;
+  }
+
+  public Integer getAmountOfIngredient(int ingredientId) {
+    return this.ingredients.get(ingredientId);
+  }
 }
