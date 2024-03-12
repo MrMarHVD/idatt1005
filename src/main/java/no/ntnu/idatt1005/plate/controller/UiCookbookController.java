@@ -2,8 +2,15 @@ package no.ntnu.idatt1005.plate.controller;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
@@ -29,6 +36,14 @@ public class UiCookbookController {
    * The grid containing buttons for each recipe.
    */
   @FXML private GridPane gridPane;
+
+  @FXML
+  public void onRecipeButtonPressed(ActionEvent event) {
+    if (this.mainController != null) {
+      this.mainController.goToRecipe();
+    }
+  }
+
 
   /**
    * The default recipe button.
@@ -82,12 +97,16 @@ public class UiCookbookController {
     button.setMaxHeight(75);
     button.setMaxWidth(125);
 
-    button.setOnAction(event -> {
-      System.out.println("Going to recipe: " + recipe);
-    });
+
     recipeButtons.add(button);
     updateRecipeButtons();
+    button.setOnAction(event -> {
 
+      System.out.println("Going to recipe: " + recipe);
+      if (this.mainController != null) {
+        this.mainController.goToRecipe();
+      }
+    });
   }
 
   /**
@@ -107,6 +126,5 @@ public class UiCookbookController {
       System.out.println("gridPane is null in updateRecipeButtons");
     }
   }
-
 
 }
