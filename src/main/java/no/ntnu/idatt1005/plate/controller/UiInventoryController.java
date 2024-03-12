@@ -1,5 +1,7 @@
 package no.ntnu.idatt1005.plate.controller;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -35,7 +37,7 @@ public class UiInventoryController {
    * The list view for displaying ingredients in the inventory.
    */
   @FXML
-  private ListView<Ingredient> ingredientListView;
+  private ListView<Integer> ingredientListView;
 
   /**
    * Text field or inputting what to search for.
@@ -103,7 +105,8 @@ public class UiInventoryController {
   private boolean sortNameAsc = true;
 
   /**
-   * Boolean for determining whether to sort by ingredient category in ascending or descending order.
+   * Boolean for determining whether to sort by ingredient category in ascending or descending
+   * order.
    */
   private boolean sortCategoryAsc = true;
 
@@ -156,13 +159,38 @@ public class UiInventoryController {
   }
 
   /**
-   * Display all ingredients in the inventory.
+   * Get the main controller for this class.
+   *
+   * @return the main controller.
+   */
+  public MainController getMainController() {
+    return this.mainController;
+  }
+
+  /**
+   * Queries all ingredients in the inventory and displays them.
    */
   private void displayIngredients() {
     //ist<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
     //ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList(allIngredients);
     //ingredientListView.setItems(observableIngredients);
     //ingredientListView.setCellFactory(param -> new IngredientListCell());
+    List<Integer> fullInventory = new ArrayList<Integer>();
+
+    try {
+      ResultSet inventoryIngredients = MainController.sqlConnector.executeSqlSelect(
+          "SELECT i.ingredient_id "
+              + "FROM ingredient i "
+              + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id;");
+      while (inventoryIngredients.next()) {
+        fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
+    ingredientListView.setItems(observableIngredients);
+    ingredientListView.setCellFactory(param -> new IngredientListCell());
   }
 
   /**
@@ -178,21 +206,49 @@ public class UiInventoryController {
     //  if (ingredient.getName().contains(input)) {
     //    observableIngredients.add(ingredient);
     //  }
-   // }
+    // }
     //ingredientListView.setItems(observableIngredients);
     //ingredientListView.setCellFactory(param -> new IngredientListCell());
+    List<Integer> fullInventory = new ArrayList<Integer>();
+    try {
+      ResultSet searchResults = MainController.sqlConnector.executeSqlSelect(""
+          + "SELECT i.ingredient_id "
+          + "FROM ingredient i "
+          + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
+          + "WHERE i.name LIKE '%" + input + "%';");
+      while (searchResults.next()) {
+        fullInventory.add(searchResults.getInt("ingredient_id"));
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
+    ingredientListView.setItems(observableIngredients);
+    ingredientListView.setCellFactory(param -> new IngredientListCell());
   }
 
   /**
    * Method to sort ingredients by their name in either ascending or descending order.
    */
   private void sortByName() {
-    if (sortNameAsc) {
-      ingredientListView.getItems().sort(Comparator.comparing(Ingredient::getName));
-    } else {
-      ingredientListView.getItems().sort(Comparator.comparing(Ingredient::getName).reversed());
+    List<Integer> fullInventory = new ArrayList<Integer>();
+
+    try {
+      ResultSet inventoryIngredients = MainController.sqlConnector.executeSqlSelect(""
+          + "SELECT i.ingredient_id "
+          + "FROM ingredient i "
+          + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
+          + "ORDER BY i.name DESC;");
+      while (inventoryIngredients.next()) {
+        fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    sortNameAsc = !sortNameAsc;
+    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
+    ingredientListView.setItems(observableIngredients);
+    ingredientListView.setCellFactory(param -> new IngredientListCell());
   }
 
 
@@ -200,12 +256,24 @@ public class UiInventoryController {
    * Method to sort ingredients by their category in either ascending or descending order.
    */
   private void sortByCategory() {
-    if (sortCategoryAsc) {
-      ingredientListView.getItems().sort(Comparator.comparing(Ingredient::getCategory));
-    } else {
-      ingredientListView.getItems().sort(Comparator.comparing(Ingredient::getCategory).reversed());
-    }
-    sortCategoryAsc = !sortCategoryAsc;
-  }
+    List<Integer> fullInventory = new ArrayList<Integer>();
 
+    try {
+      ResultSet inventoryIngredients = MainController.sqlConnector.executeSqlSelect(""
+          + "SELECT i.ingredient_id "
+          + "FROM ingredient i "
+          + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
+          + "INNER JOIN category c ON i.category_id = c.id "
+          + "ORDER BY c.name DESC;");
+      while (inventoryIngredients.next()) {
+        fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
+    ingredientListView.setItems(observableIngredients);
+    ingredientListView.setCellFactory(param -> new IngredientListCell());
+
+  }
 }
