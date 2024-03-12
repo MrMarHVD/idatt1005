@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
-import no.ntnu.idatt1005.plate.model.Ingredient;
 import no.ntnu.idatt1005.plate.controller.inventory.IngredientListCell;
 import org.w3c.dom.Text;
 
@@ -44,12 +43,6 @@ public class UiInventoryController {
    */
   @FXML
   private TextField searchField;
-
-  /**
-   * The search button for performing search in inventory.
-   */
-  @FXML
-  private Button searchButton;
 
   /**
    * Label for the name of the ingredient.
@@ -119,7 +112,9 @@ public class UiInventoryController {
     this.setMainController(mainController);
     this.displayIngredients();
 
-    searchButton.setOnAction(event -> searchIngredients(searchField.getText()));
+    searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+      searchIngredients(newValue);
+    });
 
     this.initializeSortLabelHandlers();
 
@@ -199,16 +194,6 @@ public class UiInventoryController {
    * @param input into the search prompt.
    */
   private void searchIngredients(String input) {
-    //List<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
-    //ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList();
-
-    //for (Ingredient ingredient : allIngredients) {
-    //  if (ingredient.getName().contains(input)) {
-    //    observableIngredients.add(ingredient);
-    //  }
-    // }
-    //ingredientListView.setItems(observableIngredients);
-    //ingredientListView.setCellFactory(param -> new IngredientListCell());
     List<Integer> fullInventory = new ArrayList<Integer>();
     try {
       ResultSet searchResults = MainController.sqlConnector.executeSqlSelect(""
