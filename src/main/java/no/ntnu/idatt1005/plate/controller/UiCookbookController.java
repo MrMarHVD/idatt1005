@@ -37,14 +37,6 @@ public class UiCookbookController {
    */
   @FXML private GridPane gridPane;
 
-  @FXML
-  public void onRecipeButtonPressed(ActionEvent event) {
-    if (this.mainController != null) {
-      this.mainController.goToRecipe();
-    }
-  }
-
-
   /**
    * The default recipe button.
    */
