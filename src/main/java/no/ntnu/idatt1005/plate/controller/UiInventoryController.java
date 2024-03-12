@@ -8,18 +8,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Ingredient;
 import no.ntnu.idatt1005.plate.controller.inventory.IngredientListCell;
+import org.w3c.dom.Text;
 
 /**
  * Controller class for the inventory view
  */
 public class UiInventoryController {
+
+  /**
+   * The list view for displaying ingredients in the inventory.
+   */
+  @FXML
+  private ListView<Integer> ingredientListView;
 
   /**
    * The main controller for the application.
@@ -32,12 +38,6 @@ public class UiInventoryController {
    */
   @FXML
   private ToolbarController toolbarController;
-
-  /**
-   * The list view for displaying ingredients in the inventory.
-   */
-  @FXML
-  private ListView<Integer> ingredientListView;
 
   /**
    * Text field or inputting what to search for.
@@ -82,10 +82,10 @@ public class UiInventoryController {
   private TextField quantityField;
 
   /**
-   * ComboBox for the unit of the ingredient.
+   * Text field for the unit of the ingredient.
    */
   @FXML
-  private ComboBox<Ingredient> quantityComboBox;
+  private TextField unitField;
 
   /**
    * Button for adding a new ingredient to the inventory.
@@ -114,26 +114,17 @@ public class UiInventoryController {
   /**
    * Initialize the controller.
    */
+  @FXML
   public void initialize() {
     this.setMainController(mainController);
+    this.displayIngredients();
 
-    if (ingredientListView != null) {
-      this.displayIngredients();
-    } else {
-      System.out.println("ingredientListView is null");
-    }
+    searchButton.setOnAction(event -> searchIngredients(searchField.getText()));
 
-    if (searchButton != null) {
-      searchButton.setOnAction(event -> searchIngredients(searchField.getText()));
-    } else {
-      System.out.println("searchButton is null");
-    }
+    this.initializeSortLabelHandlers();
 
-    if (nameLabel != null && allergensLabel != null && categoryLabel != null) {
-      this.initializeSortLabelHandlers();
-    } else {
-      System.out.println("One or more of the sort labels are null");
-    }
+    this.initializeButtonHandlers();
+
 
   }
 
@@ -143,6 +134,15 @@ public class UiInventoryController {
   private void initializeSortLabelHandlers() {
     nameLabel.setOnMouseClicked(event -> sortByName());
     categoryLabel.setOnMouseClicked(event -> sortByCategory());
+  }
+
+  /**
+   * Define the event handlers for when the add and remove buttons are clicked.
+   */
+  private void initializeButtonHandlers() {
+    removeSelectedButton.setOnMouseClicked(event -> removeSelectedIngredient());
+    addIngredientButton.setOnMouseClicked(event -> addIngredient(addIngredientNameField.getText(),
+        Integer.parseInt(quantityField.getText()), unitField.getText()));
   }
 
   /**
@@ -275,5 +275,65 @@ public class UiInventoryController {
     ingredientListView.setItems(observableIngredients);
     ingredientListView.setCellFactory(param -> new IngredientListCell());
 
+  }
+
+  /**
+   * Respond to the delete button being pressed.
+   */
+  @FXML
+  private void removeSelectedIngredient() {
+    if (ingredientListView == null) {
+      System.out.println("ingredientListView is null");
+    } else {
+        Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
+        this.deleteIngredient(selectedIngredientId);
+        this.displayIngredients();
+    }
+  }
+
+  /**
+   * Delete an ingredient from the inventory.
+   *
+   * @param ingredientId the ID of the ingredient to be deleted.
+   */
+  private void deleteIngredient(int ingredientId) {
+    try {
+      MainController.sqlConnector.executeSqlUpdate(""
+          + "DELETE FROM inventory_ingredient "
+          + "WHERE ingredient_id = " + ingredientId + ";");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Add a new ingredient to the inventory.
+   *
+   * @param name name of the ingredient
+   * @param quantity quantity of the ingredient
+   * @param unit unit of the ingredient
+   */
+  @FXML
+  private void addIngredient(String name, int quantity, String unit) {
+    try {
+      // Check if the ingredient exists in the ingredient table
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT ingredient_id FROM ingredient WHERE name = '" + name + "'"
+      );
+
+      // If the ingredient exists, then add it to the inventory_ingredient table
+      if (rs.next()) {
+        int ingredientId = rs.getInt("ingredient_id");
+        MainController.sqlConnector.executeSqlUpdate(
+            "INSERT INTO inventory_ingredient (ingredient_id, quantity, unit) "
+                + "VALUES (" + ingredientId + ", " + quantity + ", '" + unit + "')"
+        );
+      } else {
+        System.out.println("Ingredient " + name + " does not exist in the ingredient table.");
+        // TODO: Show this as a popup for the user
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
