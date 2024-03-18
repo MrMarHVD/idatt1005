@@ -280,12 +280,13 @@ public class UiInventoryController {
           + "SELECT i.ingredient_id "
           + "FROM ingredient i "
           + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
-          + "INNER JOIN category c ON i.category_id = c.id "
+          + "LEFT JOIN category c ON i.category_id = c.id "
           + "ORDER BY c.name DESC;");
       while (inventoryIngredients.next()) {
         fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
       }
     } catch (Exception e) {
+      PopupManager.displayError("Error", "Failed to sort", e.getMessage());
       e.printStackTrace();
     }
     ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
@@ -324,7 +325,7 @@ public class UiInventoryController {
   }
 
   /**
-   * This method is called when an existing ingredient is to be updated.
+   * This method is called when the quantity of an existing ingredient is to be updated.
    *
    * @param name name of the ingredient
    * @param quantity quantity entered by the user
@@ -357,6 +358,14 @@ public class UiInventoryController {
     }
   }
 
+  /**
+   * Add a new ingredient to the 'inventory_ingredient'-table assuming it doesn't already exist.
+   * This method only works for ingredients which have already been registered in the
+   * 'ingredients'-table.
+   *
+   * @param name name of the ingredient to add
+   * @param quantity quantity to add when adding the ingredient
+   */
   @FXML
   private void addNewIngredient(String name, float quantity) {
     try {
@@ -364,8 +373,6 @@ public class UiInventoryController {
           "SELECT i.ingredient_id "
               + "FROM ingredient i "
               + "WHERE i.name = '" + name + "'");
-
-
 
       if (rs.next()) {
         int ingredientId = rs.getInt("ingredient_id");
