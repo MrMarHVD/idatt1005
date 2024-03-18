@@ -14,7 +14,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import no.ntnu.idatt1005.plate.controller.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
-import no.ntnu.idatt1005.plate.model.ShoppingListItem;
 
 
 /**
@@ -63,6 +62,9 @@ public class UiShoppingListController {
       listView.setItems(items);
       listView.setStyle("-fx-font-family: 'Consolas';");
     }
+
+    buyItemsButton.setStyle("-fx-background-color: #cedece;");
+    clearListButton.setStyle("-fx-background-color: #decece;");
 
   }
 
@@ -140,7 +142,6 @@ public class UiShoppingListController {
         String item = String.format("%-30s %-5s %s", name, quantity, unit);
         items.add(item);
         listView.setItems(items);
-
       }
     } catch (Exception e) {
       e.getMessage();
