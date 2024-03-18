@@ -2,7 +2,6 @@ package no.ntnu.idatt1005.plate.controller;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -69,22 +68,34 @@ public class UiInventoryController {
   private TextField addIngredientNameField;
 
   /**
-   * Text field for the quantity of the ingredient
+   * Text field for the quantity of the new ingredient to be added
    */
   @FXML
-  private TextField quantityField;
+  private TextField quantityFieldAdd;
 
   /**
-   * Text field for the unit of the ingredient.
+   * Text field for the unit of the new ingredient to be added.
    */
   @FXML
   private TextField unitField;
+
+  /**
+   * TextField for inserting the quantity to add to the selected ingredient.
+   */
+  @FXML
+  private TextField quantityFieldUpdate;
 
   /**
    * Button for adding a new ingredient to the inventory.
    */
   @FXML
   private Button addIngredientButton;
+
+  /**
+   * Button for executing update of selected ingredient
+   */
+  @FXML
+  private Button updateIngredientButton;
 
   /**
    * Button for removing the selected ingredient from the inventory.
@@ -135,10 +146,35 @@ public class UiInventoryController {
    * Define the event handlers for when the add and remove buttons are clicked.
    */
   private void initializeButtonHandlers() {
+
+    // Set handler for the update button
+    updateIngredientButton.setOnMouseClicked(event -> {
+      Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
+      if (selectedIngredientId != null) {
+        try {
+          ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+              "SELECT name FROM ingredient WHERE ingredient_id = " + selectedIngredientId
+          );
+          if (rs.next()) {
+            String ingredientName = rs.getString("name");
+
+            // Update the ingredient selected with the new quantity.
+            this.updateIngredient(ingredientName, Float.parseFloat(quantityFieldUpdate.getText()));
+          }
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    });
     removeSelectedButton.setOnMouseClicked(event -> removeSelectedIngredient());
-    addIngredientButton.setOnMouseClicked(event -> addIngredient(addIngredientNameField.getText(),
-        Integer.parseInt(quantityField.getText()), unitField.getText()));
+    addIngredientButton.setOnMouseClicked(event -> addNewIngredient(addIngredientNameField.getText(),
+        Integer.parseInt(quantityFieldAdd.getText()), unitField.getText()));
   }
+
+  /**
+   * Initialize the listener which monitors which fields in the listview are selected.
+   */
+
 
   /**
    * Set the main controller for this class and its toolbar controller.
@@ -292,33 +328,62 @@ public class UiInventoryController {
   }
 
   /**
-   * Add a new ingredient to the inventory.
+   * This method is called when an existing ingredient is to be updated.
    *
    * @param name name of the ingredient
-   * @param quantity quantity of the ingredient
-   * @param unit unit of the ingredient
+   * @param quantity quantity entered by the user
    */
   @FXML
-  private void addIngredient(String name, int quantity, String unit) {
+  private void updateIngredient(String name, float quantity) {
     try {
-      // Check if the ingredient exists in the ingredient table
+      // Get the ingredient_id of the ingredient with the given name
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
           "SELECT ingredient_id FROM ingredient WHERE name = '" + name + "'"
       );
 
-      // If the ingredient exists, then add it to the inventory_ingredient table
       if (rs.next()) {
         int ingredientId = rs.getInt("ingredient_id");
-        MainController.sqlConnector.executeSqlUpdate(
-            "INSERT INTO inventory_ingredient (ingredient_id, quantity, unit) "
-                + "VALUES (" + ingredientId + ", " + quantity + ", '" + unit + "')"
+
+        // Check if the ingredient exists in the inventory_ingredient table
+        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+            "SELECT ingredient_id FROM inventory_ingredient WHERE ingredient_id = " + ingredientId
         );
-      } else {
-        System.out.println("Ingredient " + name + " does not exist in the ingredient table.");
-        // TODO: Show this as a popup for the user
+
+        if (rsInventory.next()) {
+          // If the ingredient exists, update its quantity
+          MainController.sqlConnector.executeSqlUpdate(
+              "UPDATE inventory_ingredient SET quantity = quantity + " + quantity + " WHERE ingredient_id = " + ingredientId
+          );
+        }
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  @FXML
+  private void addNewIngredient(String name, float quantity, String unit) {
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT ii.ingredient_id "
+              + "FROM inventory_ingredient ii "
+              + "RIGHT JOIN ingredient i ON i.ingredient_id = ii.ingredient_id "
+              + "WHERE i.name = '" + name + "'"
+      );
+
+    // If the ingredient exists, update quantity
+    if (rs.next()) {
+      int ingredientId = rs.getInt("ingredient_id");
+      MainController.sqlConnector.executeSqlUpdate(
+          "UPDATE inventory_ingredient ii "
+              + "SET ii.quantity = ii.quantity + '" + quantity + "'"
+              + "WHERE ii.ingredient_id = '" + ingredientId + "'"
+      );
+    } else {
+      this.updateIngredient(name, quantity);
+    }
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
   }
 }
