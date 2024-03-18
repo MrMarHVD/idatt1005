@@ -36,7 +36,6 @@ public class UiHomeController {
    */
   public void initialize() {
     this.setMainController(mainController);
-
   }
 
   /**
@@ -57,13 +56,6 @@ public class UiHomeController {
   }
 
 
-  public void initializeToolbar() {
-    FXMLLoader toolbarLoader = new FXMLLoader(getClass().getResource("/fxml/toolbar/Toolbar.fxml"));
-  }
-
-  /**
-   * Initialize cookbook components. (temporary)
-   */
 
 
 }
