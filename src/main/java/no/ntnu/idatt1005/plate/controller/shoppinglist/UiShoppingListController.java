@@ -33,7 +33,9 @@ public class UiShoppingListController {
 
   private ObservableList<String> items;
 
+  @FXML
   private Button clearListButton;
+  @FXML
   private Button buyItemsButton;
 
   @FXML
@@ -61,12 +63,6 @@ public class UiShoppingListController {
       listView.setItems(items);
       listView.setStyle("-fx-font-family: 'Consolas';");
     }
-    buyItemsButton = new Button("Buy items");
-    buyItemsButton.setOnAction(e -> buyItems());
-
-    clearListButton = new Button("Clear list");
-    clearListButton.setOnAction(e -> clearList());
-
 
   }
 
@@ -135,7 +131,7 @@ public class UiShoppingListController {
       while (rs.next()) {
         if (Float.parseFloat(rs.getString("quantity")) <= 0) {
           MainController.sqlConnector.executeSqlUpdate(
-              "DELETE FROM shopping_list_items WHERE quantity = 0");
+              "DELETE FROM shopping_list_items WHERE quantity <= 0");
           continue;
         }
         String name = rs.getString("name");
@@ -169,15 +165,28 @@ public class UiShoppingListController {
   /**
    * Add items from shopping list to inventory
    */
+  @FXML
   private void buyItems() {
     try {
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
           "SELECT ingredient_id, quantity FROM shopping_list_items");
       while (rs.next()) {
         int ingredientId = rs.getInt("ingredient_id");
-        float quantity = rs.getFloat("quantity");
-        MainController.sqlConnector.executeSqlUpdate(
-            "INSERT INTO inventory_ingredient(quantity, ingredientId) VALUES(quantity, ingredientId)");
+        float qty = rs.getFloat("quantity");
+
+        ResultSet rs2 = MainController.sqlConnector.executeSqlSelect(
+            "SELECT * FROM inventory_ingredient WHERE ingredient_id = " + ingredientId);
+        if (rs2.next()) {
+          MainController.sqlConnector.executeSqlUpdate(
+              "UPDATE inventory_ingredient SET quantity = quantity + " + qty
+                  + " WHERE ingredient_id = "
+                  + ingredientId);
+        } else {
+          MainController.sqlConnector.executeSqlUpdate(
+              "INSERT INTO inventory_ingredient(ingredient_id, quantity ) VALUES(" + ingredientId
+                  + ", "
+                  + qty + ")");
+        }
       }
       MainController.sqlConnector.executeSqlUpdate("DELETE FROM shopping_list_items");
       updateItems();
@@ -189,6 +198,7 @@ public class UiShoppingListController {
   /**
    * Clear the shopping list.
    */
+  @FXML
   private void clearList() {
     try {
       MainController.sqlConnector.executeSqlUpdate("DELETE FROM shopping_list_items");
