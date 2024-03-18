@@ -41,7 +41,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.UiCookbookController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.ui_mainviews.UiCookbookController">
   <children>
     <BorderPane prefHeight="520.0" prefWidth="900.0">
       <top>

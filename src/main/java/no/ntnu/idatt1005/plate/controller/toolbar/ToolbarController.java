@@ -3,7 +3,7 @@ package no.ntnu.idatt1005.plate.controller.toolbar;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import no.ntnu.idatt1005.plate.controller.MainController;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
 
 public class ToolbarController {
 

@@ -1,8 +1,8 @@
-package no.ntnu.idatt1005.plate.controller;
+package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
-import no.ntnu.idatt1005.plate.controller.MainController;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 
 /**

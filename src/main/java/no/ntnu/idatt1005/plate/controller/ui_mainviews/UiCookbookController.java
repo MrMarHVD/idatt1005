@@ -1,15 +1,12 @@
-package no.ntnu.idatt1005.plate.controller;
+package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
-import no.ntnu.idatt1005.plate.model.CookBook;
-
-import no.ntnu.idatt1005.plate.model.Recipe;
-import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 public class UiCookbookController {
 

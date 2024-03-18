@@ -2,13 +2,12 @@ package no.ntnu.idatt1005.plate.controller.shoppinglist;
 
 import static java.lang.Integer.parseInt;
 
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import no.ntnu.idatt1005.plate.controller.MainController;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.ShoppingListItem;
 

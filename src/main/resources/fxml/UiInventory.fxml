@@ -47,7 +47,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.UiInventoryController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.ui_mainviews.UiInventoryController">
   <children>
     <BorderPane prefHeight="520.0" prefWidth="900.0">
       <top>
@@ -105,8 +105,7 @@
             <TextField fx:id="addIngredientNameField" prefHeight="30.0" prefWidth="114.0" promptText="Name" />
             <HBox prefHeight="30.0" prefWidth="151.0">
               <children>
-                <TextField fx:id="quantityFieldAdd" prefHeight="30.0" prefWidth="108.0" promptText="Quantity" />
-                <TextField fx:id="unitField" prefHeight="36.0" prefWidth="109.0" promptText="Unit" />
+                <TextField fx:id="quantityFieldAdd" prefHeight="30.0" prefWidth="166.0" promptText="Quantity" />
               </children>
             </HBox>
             <Button fx:id="addIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Add new" />

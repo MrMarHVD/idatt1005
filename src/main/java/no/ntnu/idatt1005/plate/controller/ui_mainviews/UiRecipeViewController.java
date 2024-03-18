@@ -1,9 +1,9 @@
-package no.ntnu.idatt1005.plate.controller;
+package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import no.ntnu.idatt1005.plate.controller.cookbook.GridPaneGenerator;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import javafx.fxml.FXML;
 import no.ntnu.idatt1005.plate.model.Ingredient;
