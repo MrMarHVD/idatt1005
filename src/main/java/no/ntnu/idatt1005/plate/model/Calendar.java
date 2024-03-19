@@ -96,5 +96,22 @@ public class Calendar {
     return dayRecipes;
   }
 
+  public static String getRecipe (Date date) {
+    String recipe = "";
+    SqlConnector sqlConnector = new SqlConnector();
+    String selectQuery = "SELECT * FROM day JOIN recipe ON day.recipe_id = recipe.recipe_id WHERE date = '" + date + "';";
+    ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
+    if (rs != null) {
+      try {
+        recipe = rs.getString("name");
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } else {
+      System.err.println("Error: ResultSet is null");
+    }
+    return recipe;
+  }
+
 
 }
