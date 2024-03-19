@@ -1,9 +1,12 @@
 package no.ntnu.idatt1005.plate;
 
+import atlantafx.base.theme.*;
+
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+
 
 /**
  * Use this class to start the application.
@@ -12,7 +15,11 @@ import javafx.stage.Stage;
  */
 public class MyApp extends Application {
 
+  /**
+   * Primary stage, defined here to allow access from other classes using getter.
+   */
   static Stage primaryStage;
+
   /**
    * Start method
    *
@@ -24,17 +31,17 @@ public class MyApp extends Application {
 
     primaryStage.setResizable(true);
 
-
-
     // Assign the mainController for the app (remains the same throughout the runtime)
     MainController mainController = new MainController();
 
     // Set the primaryStage such that i can be accessed from other classes
     MyApp.primaryStage = primaryStage;
 
+    // Set the theme for the app.
+    Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+
     // Load initial view (home view)
     mainController.loadInitialView(MyApp.getPrimaryStage());
-
   }
 
   /**

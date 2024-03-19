@@ -39,7 +39,9 @@ public class MainController {
       UiHomeController homeController = homeLoader.getController();
       homeController.setMainController(this);
 
+      //String css = this.getStyle("styles/appStyle1.css");
       Scene scene = new Scene(homeView);
+      //scene.getStylesheets().add(css);
       stage.setScene(scene);
 
 
@@ -177,6 +179,16 @@ public class MainController {
 
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Get a style file based on the name of the css file.
+   *
+   * @param name name of the files
+   * @return the path
+   */
+  private String getStyle(String name) {
+    return MyApp.class.getClassLoader().getResource(name).toExternalForm();
   }
 
 
