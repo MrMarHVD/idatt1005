@@ -1,0 +1,110 @@
+.root {
+    -fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    -fx-base: #606060;
+    -fx-background: #f0f0f0;
+}
+
+.label {
+    -fx-font-size: 12pt;
+    -fx-text-fill: #333333;
+}
+
+.text-field, .text-area, .list-view, .scroll-pane {
+    -fx-font-size: 11pt;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 2px;
+}
+
+.button {
+    -fx-background-color: #5cb85c;
+    -fx-text-fill: white;
+    -fx-font-size: 11pt;
+    -fx-border-radius: 2px;
+    -fx-padding: 5 22 5 22;
+}
+
+.button:hover {
+    -fx-background-color: #449d44;
+}
+
+.vbox, .hbox {
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+.grid-pane {
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+}
+
+.list-view, .scroll-pane {
+    -fx-background-color: white;
+}
+
+.anchor-pane {
+    -fx-padding: 10px;
+}
+
+.text-area {
+    -fx-background-color: white;
+}
+
+.separator {
+    -fx-border-color: #cccccc;
+}
+
+/* Additional Styles for Common Components */
+.menu-bar {
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+}
+
+.menu-item {
+    -fx-text-fill: white;
+}
+
+.table-view {
+    -fx-base: white;
+    -fx-control-inner-background: #f0f0f0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #b0e2ff;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+.progress-bar, .progress-indicator {
+    -fx-accent: #5cb85c;
+}
+
+.slider .thumb {
+    -fx-fill: #5cb85c;
+}
+
+.radio-button, .check-box {
+    -fx-text-fill: #333;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: #f0f0f0;
+}
+
+.tab {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #333333;
+}
+
+.tab:selected {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c0c0c0;
+}
+
+.tooltip {
+    -fx-font-size: 10pt;
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}

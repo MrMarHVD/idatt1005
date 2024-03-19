@@ -117,7 +117,9 @@ public class UiInventoryController {
   @FXML
   public void initialize() {
     this.setMainController(mainController);
+    ingredientListView.setCellFactory(param -> new IngredientListCell());
     this.displayIngredients();
+
 
     searchField.textProperty().addListener((observable, oldValue, newValue) -> {
       searchIngredients(newValue);
@@ -242,7 +244,6 @@ public class UiInventoryController {
     }
     ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
     ingredientListView.setItems(observableIngredients);
-    ingredientListView.setCellFactory(param -> new IngredientListCell());
   }
 
   /**
