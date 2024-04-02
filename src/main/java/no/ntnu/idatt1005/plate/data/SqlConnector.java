@@ -1,10 +1,17 @@
 package no.ntnu.idatt1005.plate.data;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 
 public class SqlConnector {
 
   private static Connection con = null;
+
+  private static final String createSqlFilePath = "src/main/resources/CreateQuery.sql";
+  private static final String insertSqlFilePath = "src/main/resources/InsertQuery.sql";
+
   /**
    * Constructor for the SqlConnector class.
    */
@@ -41,7 +48,7 @@ public class SqlConnector {
    * @return true if the table exists, false otherwise.
    */
   private boolean tableExists(String tableName) {
-    try  {
+    try {
       ResultSet tables = executeSqlSelect("SELECT * FROM %s".formatted(tableName));
       return tables.next();
     } catch (SQLException e) {
@@ -58,7 +65,7 @@ public class SqlConnector {
    */
   public ResultSet executeSqlSelect(String query) {
     ResultSet rs = null;
-    try  {
+    try {
       if (con.isClosed()) {
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
       }
@@ -66,8 +73,7 @@ public class SqlConnector {
       rs = stmt.executeQuery(query);
     } catch (SQLException e) {
       System.out.println(e.getMessage());
-    }
-    finally {
+    } finally {
       close();
     }
     return rs;
@@ -98,163 +104,34 @@ public class SqlConnector {
    * @return true if any table is missing, false otherwise.
    */
   private boolean anyTableMissing() {
-    return !tableExists("ingredient") || !tableExists("allergen") || !tableExists("category") || !tableExists("recipe_ingredients") || !tableExists("recipe") || !tableExists("day");
+    return !tableExists("ingredient") || !tableExists("allergen") || !tableExists("category")
+        || !tableExists("recipe_ingredients") || !tableExists("recipe") || !tableExists("day");
   }
 
   /**
-   * Reset the database to its initial state.
+   * Reset the database to its initial state. If any table is missing, the tables are created and
+   * default  data is inserted.
    */
   private void resetDatabase() {
-    executeSqlUpdate("CREATE TABLE IF NOT EXISTS allergen(\n"
-        + "  id INTEGER NOT NULL,\n"
-        + "  name VARCHAR(60) NOT NULL,\n"
-        + "  CONSTRAINT allergen_pk PRIMARY KEY(id)\n"
-        + ");\n"
-        + "CREATE TABLE IF NOT EXISTS category(\n"
-        + "  id INTEGER NOT NULL,\n"
-        + "  name VARCHAR(60) NOT NULL,\n"
-        + "  CONSTRAINT category_pk PRIMARY KEY(id)\n"
-        + ");\n"
-        + "CREATE TABLE IF NOT EXISTS ingredient(\n"
-        + "  ingredient_id INTEGER NOT NULL,\n"
-        + "  name VARCHAR(60) NOT NULL,\n"
-        + "  allergen_id INTEGER,\n"
-        + "  category_id INTEGER,\n"
-        + "  unit VARCHAR(60),\n"
-        + "  CONSTRAINT ingredient_pk PRIMARY KEY(ingredient_id),\n"
-        + "  CONSTRAINT allergen_fk FOREIGN KEY(allergen_id) REFERENCES allergen(id),\n"
-        + "  CONSTRAINT category_fk FOREIGN KEY(category_id) REFERENCES category(id)\n"
-        + ");\n"
-        + "CREATE TABLE IF NOT EXISTS recipe(\n"
-        + "  recipe_id INTEGER NOT NULL,\n"
-        + "  name VARCHAR(60) NOT NULL,\n"
-        + "  instruction TEXT NOT NULL,\n"
-        + "  CONSTRAINT recipe_pk PRIMARY KEY(recipe_id)\n"
-        + ");\n"
-        + "CREATE TABLE IF NOT EXISTS recipe_ingredients(\n"
-        + "  recipe_id INTEGER,\n"
-        + "  ingredient_id INTEGER,\n"
-        + "  quantity DECIMAL(10,2),\n"
-        + "  CONSTRAINT RecipeIngredients_pk PRIMARY KEY (recipe_id, ingredient_id),\n"
-        + "  CONSTRAINT recipe_fk FOREIGN KEY(recipe_id) REFERENCES recipe(recipe_id),\n"
-        + "  CONSTRAINT ingredient_fk FOREIGN KEY(ingredient_id) REFERENCES ingredient(ingredient_id)\n"
-        + ");\n"
-        + "CREATE TABLE IF NOT EXISTS day(\n"
-        + "date DATE,\n"
-        + "recipe_id INTEGER,\n"
-        + "CONSTRAINT calendar_pk PRIMARY KEY (date),\n"
-        + "CONSTRAINT calendar_fk FOREIGN KEY (recipe_id) REFERENCES ingredient(ingredient_id)\n"
-        + ");\n"
-        + "CREATE TABLE IF NOT EXISTS inventory_ingredient(\n"
-        + "  id INTEGER,\n"
-        + "  ingredient_id INTEGER,\n"
-        + "  quantity DECIMAL(10,2),\n"
-        + "  CONSTRAINT inv_pk PRIMARY KEY (id),\n"
-        + "  CONSTRAINT inv_ingredient_fk FOREIGN KEY(ingredient_id) REFERENCES ingredient(ingredient_id)\n"
-        + ");\n"
-        + "CREATE TABLE IF NOT EXISTS shopping_list_items(\n"
-        + "  id INTEGER,\n"
-        + "  ingredient_id INTEGER,\n"
-        + "  quantity DECIMAL(10,2),\n"
-        + "  CONSTRAINT inv_pk PRIMARY KEY (id),\n"
-        + "  CONSTRAINT inv_ingredient_fk FOREIGN KEY(ingredient_id) REFERENCES ingredient(ingredient_id)\n"
-        + ");\n");
+    runSqlFile(createSqlFilePath);
     if (anyTableMissing()) {
-      executeSqlUpdate("-- Allergener\n"
-          + "INSERT INTO allergen(id, name) values(1,'Nuts');\n"
-          + "INSERT INTO allergen(id, name) values(2,'Eggs');\n"
-          + "INSERT INTO allergen(id, name) values(3,'Gluten');\n"
-          + "INSERT INTO allergen(id, name) values(4,'Laktose');\n"
-          + "\n"
-          + "-- Kategorier\n"
-          + "INSERT INTO category(id, name) VALUES (1, 'Vegetable');\n"
-          + "INSERT INTO category(id, name) VALUES (2, 'Fruit');\n"
-          + "INSERT INTO category(id, name) VALUES (3, 'Protein');\n"
-          + "INSERT INTO category(id, name) VALUES (4, 'Berry');\n"
-          + "INSERT INTO category(id, name) VALUES (5, 'Dairy');\n"
-          + "INSERT INTO category(id, name) VALUES (6, 'Bakery');\n"
-          + "INSERT INTO category(id, name) VALUES (7, 'Condiment');\n"
-          + "INSERT INTO category(id, name) VALUES (8, 'Spice');\n"
-          + "\n"
-          + "-- Ingredienser\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (1, 'Apple', NULL, 2, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (2, 'Orange', NULL, 2, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (3, 'Milk', 4, 5, 'dL');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (4, 'Beef', NULL, 3, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (5, 'Chicken', NULL, 3, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (6, 'Egg', 2, 3, 'qty');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (7, 'Butter', 4, 5, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (8, 'Flour', 3, 6, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (9, 'Bread', 3, 2, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (10, 'Salt', NULL, 8, 'g');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (11, 'Pepper', NULL, 8, 'g');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (12, 'Chillipepper', NULL, 8, 'g');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (13, 'Paprika', NULL, 1, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (14, 'Cuecumber', NULL, 1, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (15, 'Corn', NULL, 1, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (16, 'Onion', NULL, 1, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (17, 'Sweet Chilli Sauce', NULL, 7, 'dL');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (18, 'Pepperoni', NULL, 3, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (19, 'Cheese', NULL, 5, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (20, 'Pizza dough', 3, 6, 'kg');\n"
-          + "INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (21, 'Pizza sauce', NULL, 7, 'dL');\n"
-          + "\n"
-          + "-- Oppskrifter\n"
-          + "INSERT INTO recipe(recipe_id, name, instruction) VALUES (1, 'Margherita Pizza', 'Classic Margherita Pizza with tomato sauce, mozzarella, and fresh basil. Roll out pizza dough, add sauce and toppings, and bake.');\n"
-          + "\n"
-          + "INSERT INTO recipe(recipe_id, name, instruction) VALUES (2, 'Classic Grilled Cheese Sandwich', 'A simple and delicious grilled cheese sandwich made with butter, bread, and melted cheese. Butter both sides of bread, add cheese, and grill until golden brown.');\n"
-          + "\n"
-          + "INSERT INTO recipe(recipe_id, name, instruction) VALUES (3, 'Chicken and Paprika Skewers', 'Flavorful Chicken and Paprika Skewers with marinated chicken and paprika. Skewer chicken and paprika alternately, grill, and serve.');\n"
-          + "\n"
-          + "INSERT INTO recipe(recipe_id, name, instruction) VALUES (4, 'Spicy Pepperoni Pizza', 'Spicy Pepperoni Pizza with tomato sauce, pepperoni, and chilli peppers. Roll out pizza dough, add sauce, toppings, and bake.');\n"
-          + "\n"
-          + "INSERT INTO recipe(recipe_id, name, instruction) VALUES (5, 'Egg and Onion Scramble', 'Quick and tasty Egg and Onion Scramble with scrambled eggs and sautéed onions. Scramble eggs, sauté onions, and mix together.');\n"
-          + "\n"
-          + "INSERT INTO recipe(recipe_id, name, instruction) VALUES (6, 'Recipe 6', 'Recipe 6 instruction');\n"
-          + "\n"
-          + "INSERT INTO recipe(recipe_id, name, instruction) VALUES (7, 'Recipe 7', 'Recipe 7 instruction');\n"
-          + "\n"
-          + "INSERT INTO recipe(recipe_id, name, instruction) VALUES (8, 'Recipe 8', 'Recipe 8 instruction');\n"
-          + "\n"
-          + "INSERT INTO recipe(recipe_id, name, instruction) VALUES (9, 'Recipe 9', 'Recipe 9 instruction');\n"
-          + "\n"
-          + "INSERT INTO recipe(recipe_id, name, instruction) VALUES (10, 'Recipe 10', 'Recipe 10 instruction');\n"
-          + "\n"
-          + "-- OppskriftsIngredienser\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (1, 20, 1); -- Pizza Dough\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (1, 21, 0.5); -- Pizza Sauce\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (1, 19, 100); -- Cheese\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (2, 9, 2); -- Bread\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (2, 7, 1); -- Butter\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (2, 19, 50); -- Cheese\n"
-          + "\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (3, 5, 300); -- Chicken\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (3, 13, 2); -- Paprika\n"
-          + "\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (4, 20, 1); -- Pizza Dough\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (4, 21, 0.5); -- Pizza Sauce\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (4, 18, 50); -- Pepperoni\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (4, 12, 2); -- Chilli Pepper\n"
-          + "\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (5, 6, 3); -- Eggs\n"
-          + "INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (5, 16, 1); -- Onion\n"
+      runSqlFile(insertSqlFilePath);
 
-          + "-- Kallender\n"
-          + "INSERT INTO day(date, recipe_id) VALUES ('2024-03-12', 3);\n"
-          + "INSERT INTO day(date, recipe_id) VALUES ('2024-03-13', 4);\n"
-          + "INSERT INTO day(date, recipe_id) VALUES ('2024-03-14', 2);\n"
-          + "INSERT INTO day(date, recipe_id) VALUES ('2024-03-15', 1);\n"
-          + "INSERT INTO day(date, recipe_id) VALUES ('2024-03-16', 4);\n"
-          + "INSERT INTO day(date, recipe_id) VALUES ('2024-03-17', 1);\n"
-          + "INSERT INTO day(date, recipe_id) VALUES ('2024-03-18', 3);\n"
-          + "\n"
-          + "-- Lager\n"
-          + "INSERT INTO inventory_ingredient(id, ingredient_id, quantity) VALUES (1, 3, 2.5); -- Melk\n"
-          + "INSERT INTO inventory_ingredient(id, ingredient_id, quantity) VALUES (2, 9, 1); -- Brød\n"
-          + "INSERT INTO inventory_ingredient(id, ingredient_id, quantity) VALUES (3, 15, 0.5); -- Agurk\n"
-          + "INSERT INTO inventory_ingredient(id, ingredient_id, quantity) VALUES (4, 16, 1); -- Mais\n"
-          + "INSERT INTO inventory_ingredient(id, ingredient_id, quantity) VALUES (5, 17, 0.3); -- Sweet Chilli \n");
       System.out.println("data inserted");
+    }
+  }
+
+  /**
+   * Run the queries in a SQL file.
+   *
+   * @param path the path to the file.
+   */
+  private void runSqlFile(String path) {
+    try {
+      String Query = new String(Files.readAllBytes(Paths.get(path)));
+      executeSqlUpdate(Query);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
