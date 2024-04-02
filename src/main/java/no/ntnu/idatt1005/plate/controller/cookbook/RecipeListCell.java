@@ -7,8 +7,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import no.ntnu.idatt1005.plate.controller.MainController;
-import no.ntnu.idatt1005.plate.controller.UiInventoryController;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiInventoryController;
 import no.ntnu.idatt1005.plate.model.Ingredient;
 import org.iq80.snappy.Main;
 

@@ -1,18 +1,27 @@
 package no.ntnu.idatt1005.plate.controller.shoppinglist;
 
 
+
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import no.ntnu.idatt1005.plate.controller.MainController;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
+
+import no.ntnu.idatt1005.plate.controller.global.MainController;
+
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 
 /**

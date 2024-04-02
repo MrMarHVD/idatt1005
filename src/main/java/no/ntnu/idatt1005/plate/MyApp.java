@@ -1,6 +1,6 @@
 package no.ntnu.idatt1005.plate;
 
-import no.ntnu.idatt1005.plate.controller.MainController;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

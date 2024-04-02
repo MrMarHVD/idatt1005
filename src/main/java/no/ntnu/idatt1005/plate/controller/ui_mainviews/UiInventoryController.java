@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller;
+package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -10,9 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.global.PopupManager;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.controller.inventory.IngredientListCell;
-import org.w3c.dom.Text;
 
 /**
  * Controller class for the inventory view
@@ -36,6 +37,7 @@ public class UiInventoryController {
    */
   @FXML
   private ToolbarController toolbarController;
+
 
   /**
    * Text field or inputting what to search for.
@@ -72,12 +74,6 @@ public class UiInventoryController {
    */
   @FXML
   private TextField quantityFieldAdd;
-
-  /**
-   * Text field for the unit of the new ingredient to be added.
-   */
-  @FXML
-  private TextField unitField;
 
   /**
    * TextField for inserting the quantity to add to the selected ingredient.
@@ -168,7 +164,7 @@ public class UiInventoryController {
     });
     removeSelectedButton.setOnMouseClicked(event -> removeSelectedIngredient());
     addIngredientButton.setOnMouseClicked(event -> addNewIngredient(addIngredientNameField.getText(),
-        Integer.parseInt(quantityFieldAdd.getText()), unitField.getText()));
+        Float.parseFloat(quantityFieldAdd.getText())));
   }
 
   /**
@@ -362,27 +358,40 @@ public class UiInventoryController {
   }
 
   @FXML
-  private void addNewIngredient(String name, float quantity, String unit) {
+  private void addNewIngredient(String name, float quantity) {
     try {
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ii.ingredient_id "
-              + "FROM inventory_ingredient ii "
-              + "RIGHT JOIN ingredient i ON i.ingredient_id = ii.ingredient_id "
-              + "WHERE i.name = '" + name + "'"
-      );
+          "SELECT i.ingredient_id "
+              + "FROM ingredient i "
+              + "WHERE i.name = '" + name + "'");
 
-    // If the ingredient exists, update quantity
-    if (rs.next()) {
-      int ingredientId = rs.getInt("ingredient_id");
-      MainController.sqlConnector.executeSqlUpdate(
-          "UPDATE inventory_ingredient ii "
-              + "SET ii.quantity = ii.quantity + '" + quantity + "'"
-              + "WHERE ii.ingredient_id = '" + ingredientId + "'"
-      );
-    } else {
-      this.updateIngredient(name, quantity);
-    }
+
+
+      if (rs.next()) {
+        int ingredientId = rs.getInt("ingredient_id");
+
+        // Check if there already exists a corresponding ingredient in inventory
+        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+            "SELECT ii.ingredient_id "
+                + "FROM inventory_ingredient ii "
+                + "WHERE ii.ingredient_id = " + ingredientId
+        );
+
+        // If a corresponding ingredient exists, throw exception.
+        if (rsInventory.next()) {throw new IllegalArgumentException(""
+            + "Cannot add a new ingredient if it already exists in inventory. Please "
+            + "update existing ingredient instead."); }
+
+        MainController.sqlConnector.executeSqlUpdate(
+            "INSERT INTO inventory_ingredient (ingredient_id, quantity) "
+                + "VALUES (" + ingredientId + ", " + quantity + "); "
+        );
+      } else {
+        System.out.println("Test");
+      }
+
   } catch (Exception e) {
+      PopupManager.displayError("Error", "Failed to add ingredient", e.getMessage());
     e.printStackTrace();
   }
   }
