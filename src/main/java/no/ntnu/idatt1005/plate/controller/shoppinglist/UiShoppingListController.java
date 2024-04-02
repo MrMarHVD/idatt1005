@@ -1,26 +1,19 @@
 package no.ntnu.idatt1005.plate.controller.shoppinglist;
 
-import static java.lang.Integer.parseInt;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import no.ntnu.idatt1005.plate.controller.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
-import org.iq80.snappy.Main;
-
 
 /**
  * Controller class for the shopping list view.
@@ -30,7 +23,7 @@ public class UiShoppingListController {
   @FXML
   private ListView<HBox> listView;
 
-  private List<Integer> selectedItems = new ArrayList<>();
+  private final List<Integer> selectedItems = new ArrayList<>();
 
 
   @FXML
@@ -76,7 +69,7 @@ public class UiShoppingListController {
   }
 
   /**
-   * makes a string title case.
+   * makes a string title case. Used for comparing strings in the database.
    *
    * @param str the string to be title cased.
    * @return the title cased string.
@@ -89,7 +82,7 @@ public class UiShoppingListController {
   }
 
   /**
-   * add items to the shopping list, or update the quantity if the item already exists.
+   * add selected items to the shopping list, or update the quantity if the item already exists.
    */
   public void addItems() {
     try {
@@ -101,7 +94,7 @@ public class UiShoppingListController {
       int ingredientId = rs.getInt("ingredient_id");
 
       if (ingredientId == 0) {
-        if (itemName.equals("")) {
+        if (itemName.isEmpty()) {
           details_label.setText("No item name entered");
           return;
         } else if (itemName.length() > 16) {
@@ -161,7 +154,7 @@ public class UiShoppingListController {
             selectedItems.add(ingredientId);
             System.out.println(selectedItems);
           } else {
-            selectedItems.remove(selectedItems.indexOf(ingredientId));
+            selectedItems.remove(ingredientId);
             System.out.println(selectedItems);
           }
         });
@@ -194,19 +187,20 @@ public class UiShoppingListController {
   }
 
   /**
-   * Add selected items from shopping list to inventory
+   * Add selected items from shopping list to inventory, and remove them from the shopping list.
    */
   @FXML
   private void buyItems() {
     try {
-      if (selectedItems.size() == 0) {
+      if (selectedItems.isEmpty()) {
         details_label.setText("No items selected");
         return;
       }
 
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT ingredient_id, quantity FROM shopping_list_items WHERE ingredient_id IN ("
-          + selectedItems.toString().substring(1, selectedItems.toString().length() - 1)
-          + ")");
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT ingredient_id, quantity FROM shopping_list_items WHERE ingredient_id IN ("
+              + selectedItems.toString().substring(1, selectedItems.toString().length() - 1)
+              + ")");
       while (rs.next()) {
         System.out.println(rs.getInt("ingredient_id"));
         int ingredientId = rs.getInt("ingredient_id");
@@ -231,7 +225,7 @@ public class UiShoppingListController {
       updateItems();
       selectedItems.clear();
     } catch (Exception e) {
-      e.getMessage();
+      System.out.println(e.getMessage());
     }
   }
 
@@ -241,17 +235,18 @@ public class UiShoppingListController {
   @FXML
   private void clearList() {
     try {
-      if (selectedItems.size() == 0) {
+      if (selectedItems.isEmpty()) {
         details_label.setText("No items selected");
         return;
       }
-      MainController.sqlConnector.executeSqlUpdate("DELETE FROM shopping_list_items WHERE ingredient_id IN ("
-          + selectedItems.toString().substring(1, selectedItems.toString().length() - 1)
-          + ")");
+      MainController.sqlConnector.executeSqlUpdate(
+          "DELETE FROM shopping_list_items WHERE ingredient_id IN ("
+              + selectedItems.toString().substring(1, selectedItems.toString().length() - 1)
+              + ")");
       updateItems();
       selectedItems.clear();
     } catch (Exception e) {
-      e.getMessage();
+      System.out.println(e.getMessage());
     }
 
   }
