@@ -113,7 +113,11 @@
                 <TextField fx:id="itemNameField" promptText="item name" />
                 <TextField fx:id="itemAmountField" promptText="item amount" />
                 <Button mnemonicParsing="false" onAction="#addItems" prefHeight="26.0" prefWidth="469.0" text="add item" />
-                <ListView fx:id="listView" prefHeight="404.0" prefWidth="448.0" />
+                        <HBox prefHeight="297.0" prefWidth="448.0">
+                           <children>
+                              <ListView fx:id="listView" prefHeight="188.0" prefWidth="449.0" />
+                           </children>
+                        </HBox>
               </VBox>
             </HBox>
           </content>
@@ -135,8 +139,8 @@
     </BorderPane>
       <AnchorPane prefHeight="75.0" prefWidth="900.0">
          <children>
-            <Button fx:id="buyItemsButton" onAction="#buyItems" layoutX="46.0" layoutY="7.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="153.0" text="Add items to inventory" />
-            <Button fx:id="clearListButton" onAction="#clearList" layoutX="223.0" layoutY="7.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="84.0" text="Clear list" />
+            <Button fx:id="buyItemsButton" layoutX="46.0" layoutY="7.0" mnemonicParsing="false" onAction="#buyItems" prefHeight="43.0" prefWidth="153.0" text="Add items to inventory" />
+            <Button fx:id="clearListButton" layoutX="223.0" layoutY="7.0" mnemonicParsing="false" onAction="#clearList" prefHeight="43.0" prefWidth="84.0" text="Remove list" />
          </children>
       </AnchorPane>
   </children>
