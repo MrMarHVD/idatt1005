@@ -41,9 +41,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefWidth="900.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.ui_mainviews.UiHomeController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.ui_mainviews.UiHomeController">
   <children>
-    <BorderPane prefHeight="612.0" prefWidth="900.0">
+    <BorderPane prefHeight="600.0" prefWidth="1063.0">
       <top>
         <VBox prefHeight="91.0" prefWidth="900.0" BorderPane.alignment="CENTER">
           <children>
@@ -91,11 +91,11 @@
         </VBox>
       </top>
       <left>
-        <VBox prefHeight="421.0" prefWidth="244.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="509.0" prefWidth="331.0" BorderPane.alignment="CENTER">
           <children>
-            <ScrollPane prefWidth="244.0" VBox.vgrow="ALWAYS">
+            <ScrollPane prefHeight="509.0" prefWidth="323.0" VBox.vgrow="ALWAYS">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="421.0" prefWidth="245.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="421.0" prefWidth="329.0">
                   <children>
                     <fx:include fx:id="calendar" source="calendar/Calendar.fxml" />
                   </children>
@@ -106,11 +106,11 @@
         </VBox>
       </left>
       <center>
-        <VBox prefHeight="452.0" prefWidth="656.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+        <VBox prefHeight="509.0" prefWidth="567.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
           <children>
-            <ScrollPane prefHeight="521.0" prefWidth="656.0">
+            <ScrollPane>
               <content>
-                <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="520.0" prefWidth="656.0">
+                <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0">
                   <children>
                     <fx:include source="home/TodaysMeal.fxml" />
                   </children>
