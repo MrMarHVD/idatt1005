@@ -2,6 +2,7 @@ package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 
@@ -23,16 +24,10 @@ public class UiSettingsController {
   private ToolbarController toolbarController;
 
   @FXML
-  private RadioButton carnivoreButton;
+  private ToggleButton darkModeButton;
 
   @FXML
-  private RadioButton vegetarianButton;
-
-  @FXML
-  private RadioButton veganButton;
-
-  @FXML
-  private RadioButton pescetarianButton;
+  private ToggleButton vegetarianButton;
 
   /**
    * Initialize the controller.
@@ -56,29 +51,14 @@ public class UiSettingsController {
 
   }
 
-
-  // methods for buttons when pressed
-  // TODO: store the value of the button in the database or user file or something
-  public void carnivoreButtonPressed() {
-    boolean isCarnivore = carnivoreButton.isSelected();
-    System.out.println("carnivore: " + isCarnivore);
+  public void darkModeButtonPressed() {
+    boolean isCarnivore = darkModeButton.isSelected();
+    System.out.println("dark mode: " + isCarnivore);
   }
 
   public void vegetarianButtonPressed() {
     boolean isVegetarian = vegetarianButton.isSelected();
     System.out.println("vegetarian: " + isVegetarian);
   }
-
-  public void veganButtonPressed() {
-    boolean isVegan = veganButton.isSelected();
-    System.out.println("vegan: " + isVegan);
-  }
-
-  public void pescetarianButtonPressed() {
-    boolean isPescetarian = pescetarianButton.isSelected();
-    System.out.println("pescetarian: " + isPescetarian);
-  }
-
-
 
 }
