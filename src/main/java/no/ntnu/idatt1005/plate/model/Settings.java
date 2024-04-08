@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -11,30 +12,31 @@ import java.util.Properties;
  */
 public class Settings {
 
-  private static final String CONFIG_DIR = System.getProperty("user.home") + File.separator + ".plate";
+  private static final String CONFIG_DIR =
+      System.getProperty("user.home") + File.separator + ".plate";
   private static final String CONFIG_FILE = CONFIG_DIR + File.separator + "config.properties";
 
   public Settings() {
     File dir = new File(CONFIG_DIR);
     if (!dir.exists()) {
-        dir.mkdirs();
+      dir.mkdirs();
     }
 
     File configFile = new File(CONFIG_FILE);
     if (!configFile.exists()) {
-        try {
-            configFile.createNewFile();
-            Properties prop = new Properties();
-            prop.setProperty("darkMode", "false");
-            prop.setProperty("vegetarian", "false");
-            try (FileOutputStream fos = new FileOutputStream(configFile)) {
-                prop.store(fos, null);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+      try {
+        configFile.createNewFile();
+        Properties prop = new Properties();
+        prop.setProperty("darkMode", "false");
+        prop.setProperty("vegetarian", "false");
+        try (FileOutputStream fos = new FileOutputStream(configFile)) {
+          prop.store(fos, null);
         }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
-}
+  }
 
   public void saveSettings(boolean darkMode, boolean vegetarian) {
     Properties prop = new Properties();
@@ -42,11 +44,11 @@ public class Settings {
     prop.setProperty("vegetarian", String.valueOf(vegetarian));
 
     try (FileOutputStream fos = new FileOutputStream(CONFIG_FILE)) {
-        prop.store(fos, null);
+      prop.store(fos, null);
     } catch (IOException e) {
-        e.printStackTrace();
+      e.printStackTrace();
     }
-}
+  }
 
   public boolean getDarkMode() {
     Properties prop = new Properties();
@@ -69,6 +71,4 @@ public class Settings {
     boolean vegetarian = Boolean.parseBoolean(prop.getProperty("vegetarian"));
     return vegetarian;
   }
-
-
 }

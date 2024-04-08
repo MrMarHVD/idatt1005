@@ -1,7 +1,6 @@
 package no.ntnu.idatt1005.plate.controller.shoppinglist;
 
 
-
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -55,6 +55,8 @@ public class UiShoppingListController {
 
   @FXML
   private Label details_label;
+
+  private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
   /**
    * Initialize the controller.
@@ -142,6 +144,8 @@ public class UiShoppingListController {
   public void updateItems() {
     try {
       listView.getItems().clear();
+      checkBoxes.clear();
+      boolean nextRowGray = false;
 
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
           "SELECT ingredient.ingredient_id, name, quantity, unit FROM shopping_list_items JOIN ingredient ON shopping_list_items.ingredient_id = ingredient.ingredient_id");
@@ -167,9 +171,18 @@ public class UiShoppingListController {
             System.out.println(selectedItems);
           }
         });
+        checkBoxes.add(checkBox);
 
         Label label = new Label(item);
         HBox hBox = new HBox();
+        if (nextRowGray) {
+          hBox.setStyle("-fx-background-color: #e0e0e033;");
+        } else {
+          hBox.setStyle("-fx-background-color: #ffffff00;");
+        }
+        nextRowGray = !nextRowGray;
+        hBox.setAlignment(Pos.CENTER);
+
         hBox.getChildren().add(label);
         hBox.getChildren().add(checkBox);
 
@@ -258,6 +271,34 @@ public class UiShoppingListController {
       System.out.println(e.getMessage());
     }
 
+  }
+
+  /**
+   * Select all items in the shopping list.
+   */
+  public void selectAllItems() {
+    for (CheckBox checkBox : checkBoxes) {
+      checkBox.setSelected(true);
+    }
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT ingredient_id FROM shopping_list_items");
+      while (rs.next()) {
+        selectedItems.add(rs.getInt("ingredient_id"));
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  /**
+   * Unselect all items in the shopping list.
+   */
+  public void unselectAllItems() {
+    for (CheckBox checkBox : checkBoxes) {
+      checkBox.setSelected(false);
+    }
+    selectedItems.clear();
   }
 
 }
