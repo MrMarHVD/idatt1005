@@ -6,13 +6,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-
 import no.ntnu.idatt1005.plate.controller.cookbook.GridPaneGenerator;
 import no.ntnu.idatt1005.plate.controller.cookbook.RecipeListCell;
-import no.ntnu.idatt1005.plate.controller.inventory.IngredientListCell;
-
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-
+import no.ntnu.idatt1005.plate.controller.inventory.IngredientListCell;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import javafx.fxml.FXML;
 
@@ -26,7 +23,7 @@ import java.util.List;
  */
 public class UiRecipeViewController {
 
-  String recipeName;
+  private String recipeName;
 
   /**
    * The main controller for this class.
@@ -57,6 +54,11 @@ public class UiRecipeViewController {
   @FXML
   private GridPane recommendedRecipes;
 
+  /**
+   * The list view for displaying ingredients in the recipe
+   * and their relevant properties.
+   * TODO: Add a custom cell factory for the list view.
+   */
 
   @FXML
   private TextArea instructionsArea;
@@ -65,12 +67,11 @@ public class UiRecipeViewController {
    * Initialize the controller.
    */
   @FXML
-  public void initialize() {
+  private void initialize() {
 
     this.setMainController(mainController);
-    ingredientsListView.setCellFactory(param -> new IngredientListCell());
-    showInstructions(1, false);
-    displayIngredients();
+    ingredientsListView.setCellFactory(param -> new RecipeListCell());
+
   }
 
   /**
@@ -86,63 +87,45 @@ public class UiRecipeViewController {
     }
   }
 
-  /**
-   * Set the recipe name.
-   *
-   * @param name the name of the recipe.
-   */
-  public void setRecipeName(String name) { this.recipeName = name; }
+  public void setRecipeName(String name) {
+    this.recipeName = name;
+  }
 
   /**
    * Queries all ingredients in the recipe and displays them.
    */
-  private void displayIngredients() {
-    //ist<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
-    //ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList(allIngredients);
-    //ingredientListView.setItems(observableIngredients);
-    //ingredientListView.setCellFactory(param -> new IngredientListCell());
-    List<Integer> fullInventory = new ArrayList<Integer>();
-
-    try {
-      ResultSet inventoryIngredients = MainController.sqlConnector.executeSqlSelect(
-              "SELECT i.ingredient_id "
-                      + "FROM ingredient i "
-                      + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id;");
-      while (inventoryIngredients.next()) {
-        fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
-    ingredientsListView.setItems(observableIngredients);
-    ingredientsListView.setCellFactory(param -> new RecipeListCell());
+  public void displayIngredients() {
   }
 
   /**
-   * Method to show a recipes instructions
-   * @param recipeId
-   * @param empty
+   * Method to show a recipes instructions in the text area.
    */
-  public void showInstructions(Integer recipeId, boolean empty) {
-    if (recipeId != null && !empty) {
-      try {
-        ResultSet recipeInstructions = MainController.sqlConnector.executeSqlSelect(
-                "SELECT instruction, name FROM recipe WHERE recipe_id = " + recipeId + ";"
-        );
-        System.out.println("showing instructions");
+  public void displayInstructions() {
+    if (recipeName == null) {
+      instructionsArea.setText("recipe name is null"); // Clear the text area if recipeId is null.
+      return;
+    }
 
-        if (recipeInstructions.next()) {
-          String instruction = recipeInstructions.getString("instruction");
-          instructionsArea.setText(instruction != null ? instruction : "None");
+    try {
+      // Query to fetch the recipe's instructions using the recipeId.
+      ResultSet recipeInstructions = mainController.sqlConnector.executeSqlSelect(
+          "SELECT instruction " +
+              "FROM recipe " +
+              "WHERE name = '" + recipeName + "';"
+      );
 
-          System.out.println("showing instructions");
-        }
-      } catch (SQLException e) {
-        System.out.println(e.getMessage());
+      if (recipeInstructions.next()) {
+        String instructions = recipeInstructions.getString("instruction");
+        instructionsArea.setText(instructions != null ? instructions : "No instructions provided.");
+      } else {
+        instructionsArea.setText("Recipe not found.");
       }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      instructionsArea.setText("Error retrieving instructions.");
     }
   }
+
 
 
 
