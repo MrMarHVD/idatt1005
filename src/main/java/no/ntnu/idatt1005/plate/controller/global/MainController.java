@@ -9,6 +9,7 @@ import no.ntnu.idatt1005.plate.MyApp;
 import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiCookbookController;
 import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiHomeController;
 import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiInventoryController;
+import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiRecipeViewController;
 import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiSettingsController;
 import no.ntnu.idatt1005.plate.controller.shoppinglist.UiShoppingListController;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
@@ -177,6 +178,28 @@ public class MainController {
 
     } catch (Exception e) {
 
+      e.printStackTrace();
+    }
+  }
+
+
+  public void goToRecipe() {
+    try {
+      FXMLLoader recipeLoader = new FXMLLoader(getClass().getResource("/fxml/UiRecipeView.fxml"));
+      Parent recipeView = recipeLoader.load();
+
+      // Instantiate the recipe controller
+      UiRecipeViewController recipeController = recipeLoader.getController();
+
+      // Set the main controller for the recipe controller
+      recipeController.setMainController(this);
+
+      Scene scene = new Scene(recipeView);
+      Stage currentStage = MyApp.getPrimaryStage();
+      currentStage.setScene(scene);
+      currentStage.show();
+    }
+    catch (Exception e) {
       e.printStackTrace();
     }
   }

@@ -142,7 +142,7 @@
                     <Font size="19.0" />
                   </font>
                 </Label>
-                <TextArea prefHeight="236.0" prefWidth="370.0" />
+                <TextArea prefHeight="236.0" prefWidth="370.0" fx:id="instructionsArea" wrapText="true" prefColumnCount="1"/>
               </children></VBox>
             <VBox prefHeight="429.0" prefWidth="181.0">
               <children>
@@ -165,7 +165,7 @@
                     </Label>
                   </children>
                 </HBox>
-                <ListView fx:id="ingredients" prefHeight="446.0" prefWidth="171.0" />
+                <ListView fx:id="ingredientsListView" prefHeight="446.0" prefWidth="171.0" />
               </children></VBox>
           </children>
         </HBox>

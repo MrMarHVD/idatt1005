@@ -257,7 +257,7 @@ public class UiInventoryController {
           + "SELECT i.ingredient_id "
           + "FROM ingredient i "
           + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
-          + "ORDER BY i.name DESC;");
+          + "ORDER BY i.name ASC;");
       while (inventoryIngredients.next()) {
         fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
       }
@@ -282,7 +282,7 @@ public class UiInventoryController {
           + "FROM ingredient i "
           + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
           + "LEFT JOIN category c ON i.category_id = c.id "
-          + "ORDER BY c.name DESC;");
+          + "ORDER BY c.name ASC;");
       while (inventoryIngredients.next()) {
         fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
       }
@@ -402,5 +402,6 @@ public class UiInventoryController {
       PopupManager.displayError("Error", "Failed to add ingredient", e.getMessage());
     e.printStackTrace();
   }
+    this.displayIngredients();
   }
 }

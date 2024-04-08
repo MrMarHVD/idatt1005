@@ -2,11 +2,10 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="57.0" prefWidth="246.0" style="-fx-border-color:black" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.calendar.DayBlockController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.calendar.DayBlockController">
    <children>
       <VBox prefHeight="92.0" prefWidth="74.0">
          <children>
@@ -14,16 +13,10 @@
             <Label fx:id="dayLabel" prefHeight="54.0" prefWidth="87.0" text="Day" />
          </children>
       </VBox>
-      <Separator orientation="VERTICAL" prefHeight="200.0" />
-      <VBox prefHeight="92.0" prefWidth="60.0">
+      <Separator orientation="VERTICAL" prefHeight="38.0" prefWidth="14.0" />
+      <VBox prefHeight="38.0" prefWidth="234.0">
          <children>
-            <Label fx:id="recipeLabel" prefHeight="70.0" prefWidth="57.0" text="Recipe" />
-         </children>
-      </VBox>
-      <Separator orientation="VERTICAL" prefHeight="200.0" />
-      <VBox prefHeight="72.0" prefWidth="58.0">
-         <children>
-            <ImageView fitHeight="72.0" fitWidth="79.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="recipeLabel" prefHeight="38.0" prefWidth="253.0" text="Recipe" />
          </children>
       </VBox>
    </children>
