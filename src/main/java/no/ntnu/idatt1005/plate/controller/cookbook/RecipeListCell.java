@@ -78,12 +78,12 @@ public class RecipeListCell extends ListCell<Integer> {
       try {
         // Fetch ingredient details from the database
         ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
-                "SELECT i.name, ii.quantity as quantity, ii.unit as unit, a.name as allergen, c.name as category " +
-                        "FROM ingredient i " +
-                        "LEFT JOIN allergen a ON i.allergen_id = a.id " +
-                        "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id " +
-                        "LEFT JOIN category c ON i.category_id = c.id " +
-                        "WHERE i.ingredient_id = " + recipeId + ";"
+                "SELECT i.name AS ingredient_name, a.name AS allergen_name" +
+                "FROM ingredient i" +
+                "LEFT JOIN allergen a ON i.allergen_id = a.id" +
+                "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id" +
+                "JOIN recipe r ON ri.recipe_id = r.recipe_id" +
+                "WHERE r.name = '" + recipeId + "';"
         );
 
         if (ingredientDetails.next()) {
