@@ -15,7 +15,6 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import javafx.fxml.FXML;
-import no.ntnu.idatt1005.plate.model.Ingredient;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,13 +57,6 @@ public class UiRecipeViewController {
   @FXML
   private GridPane recommendedRecipes;
 
-  /**
-   * The list view for displaying ingredients in the recipe
-   * and their relevant properties.
-   * TODO: Add a custom cell factory for the list view.
-   */
-  @FXML
-  private ListView<Ingredient> ingredients;
 
   @FXML
   private TextArea instructionsArea;

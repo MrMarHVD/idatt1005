@@ -3,6 +3,7 @@ package no.ntnu.idatt1005.plate.controller.calendar;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 
 /**
@@ -34,6 +35,12 @@ public class DayBlockController {
    */
   @FXML
   private Button recipeButton;
+
+  /**
+   * Radio button indicating whether the current day is selected.
+   */
+  @FXML
+  private RadioButton selectedButton;
 
   /**
    * Initialize the controller.
@@ -78,6 +85,28 @@ public class DayBlockController {
   }
 
   /**
+   * Get the button for whether this day is selected.
+   *
+   * @return the radio button whose status represents whether the day is selected or not.
+   */
+  public RadioButton getSelectedButton() {
+    return this.selectedButton;
+  }
+
+  /**
+   * Get whether this day is selected.
+   *
+   * @return the Boolean of whether the day is selected.
+   */
+  public boolean getSelected() {
+    return this.selectedButton.isSelected();
+  }
+
+  public String getDate() {
+    return this.dateLabel.getText();
+  }
+
+  /**
    * Set the day of the week for this DayBlock.
    *
    * @param day the day of the week.
@@ -95,5 +124,4 @@ public class DayBlockController {
   public void setDate(String date) {
     this.dateLabel.setText(date);
   }
-
 }

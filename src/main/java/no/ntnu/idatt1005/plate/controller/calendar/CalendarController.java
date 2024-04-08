@@ -5,6 +5,10 @@ import java.time.LocalDate;
 
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.model.Calendar;
 
@@ -12,41 +16,55 @@ import java.time.DayOfWeek;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.w3c.dom.Text;
 
 /**
  * This class is the controller for the Calendar view in the user interface.
  */
 public class CalendarController {
 
+  /**
+   * The main controller for the application.
+   */
   @FXML
   private MainController mainController;
 
+  /**
+   * Each of the controllers for the seven day blocks.
+   */
   @FXML
   private DayBlockController mondayController;
-
   @FXML
   private DayBlockController tuesdayController;
-
   @FXML
   private DayBlockController wednesdayController;
-
   @FXML
   private DayBlockController thursdayController;
-
   @FXML
   private DayBlockController fridayController;
-
   @FXML
   private DayBlockController saturdayController;
-
   @FXML
   private DayBlockController sundayController;
 
+  @FXML
+  private ComboBox<String> recipeComboBox;
+
+  @FXML
+  private TextField recipeSearchField;
+
+  @FXML
+  private Button searchButton;
+
+  @FXML
+  private Button changeRecipeButton;
 
   /**
    * This method initializes the Calendar view with the correct recipes for each day.
    */
   public void initialize() {
+    this.groupRadioButtons();
+    this.addActionListeners();
     LocalDate today = LocalDate.now();
     LocalDate thisMonday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
@@ -72,6 +90,59 @@ public class CalendarController {
     }
   }
 
+  /**
+   * Add action listeners to the buttons for searching for-and changing recipes.
+   */
+  private void addActionListeners() {
+
+    // Button for searching for recipes
+    this.searchButton.setOnAction(e -> {
+      this.recipeComboBox.getItems().clear();
+      String search = this.recipeSearchField.getText();
+      ArrayList<String> results = Calendar.searchRecipes(search);
+      for (int i = 0; i < results.size(); i++) {
+        this.recipeComboBox.getItems().add(results.get(i));
+      }
+    });
+
+    // Button for changing recipe
+    this.changeRecipeButton.setOnAction(e -> {
+          String recipe = this.recipeComboBox.getValue();
+          if (recipe != null) {
+            for (DayBlockController dayBlockController : new DayBlockController[]{
+                mondayController, tuesdayController, wednesdayController, thursdayController,
+                fridayController, saturdayController, sundayController}) {
+              if (dayBlockController.getSelectedButton().isSelected()) {
+                String date = dayBlockController.getDate();
+
+            Calendar.changeRecipe(Date.valueOf(date), recipe);
+            this.initialize();
+          }
+        }
+    }});
+  }
+
+
+  /**
+   * Group the radio buttons for each of the seven days of the week.
+   */
+  private void groupRadioButtons() {
+    ToggleGroup group = new ToggleGroup();
+
+    this.mondayController.getSelectedButton().setToggleGroup(group);
+    this.tuesdayController.getSelectedButton().setToggleGroup(group);
+    this.wednesdayController.getSelectedButton().setToggleGroup(group);
+    this.thursdayController.getSelectedButton().setToggleGroup(group);
+    this.fridayController.getSelectedButton().setToggleGroup(group);
+    this.saturdayController.getSelectedButton().setToggleGroup(group);
+    this.sundayController.getSelectedButton().setToggleGroup(group);
+  }
+
+  /**
+   * Set the main controller for each of the day block controllers.
+   *
+   * @param mainController the main controller.
+   */
   public void setMainController(MainController mainController) {
     this.mainController = mainController;
 

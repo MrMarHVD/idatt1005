@@ -4,6 +4,7 @@ package no.ntnu.idatt1005.plate.model;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
@@ -111,6 +112,47 @@ public class Calendar {
       System.err.println("Error: ResultSet is null");
     }
     return recipe;
+  }
+
+  public static void changeRecipe(Date date, String recipe) {
+    SqlConnector sqlConnector = new SqlConnector();
+    String selectQuery = "SELECT recipe_id FROM recipe WHERE name = '" + recipe + "';";
+    ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
+    int recipeId = 0;
+    try {
+      if (rs != null) {
+        recipeId = rs.getInt("recipe_id");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    String updateQuery = "UPDATE day SET recipe_id = " + recipeId + " WHERE date = '" + date + "';";
+    sqlConnector.executeSqlUpdate(updateQuery);
+  }
+
+  /**
+   * Search the database for recipes with a name that contains the search string.
+   *
+   * @param search the string to search the database for.
+   * @return an arraylist containing the names of the recipes that match the search string.
+   */
+  public static ArrayList<String> searchRecipes (String search) {
+    ArrayList<String> recipes = new ArrayList<>();
+    SqlConnector sqlConnector = new SqlConnector();
+    String selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%';";
+    ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
+    if (rs != null) {
+      try {
+        while (rs.next()) {
+          recipes.add(rs.getString("name"));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } else {
+      System.err.println("Error: ResultSet is null");
+    }
+    return recipes;
   }
 
 
