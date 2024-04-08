@@ -100,7 +100,9 @@ public class ToolbarController {
 
   @FXML
   public void onSettingsButtonPressed(ActionEvent event) {
-    // TODO: Implement this method
+    if (this.mainController != null) {
+      this.mainController.goToSettings();
+    }
   }
 
 }
