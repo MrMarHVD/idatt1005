@@ -14,7 +14,7 @@ import org.iq80.snappy.Main;
 
 /**
  * ListCell class which manages the cells in the ingredient list,
- * specifically in the inventory.
+ * specifically ingredients in a recipe within the recipe view.
  */
 public class RecipeListCell extends ListCell<Integer> {
 

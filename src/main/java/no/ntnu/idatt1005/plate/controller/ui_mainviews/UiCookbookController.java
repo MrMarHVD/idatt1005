@@ -94,7 +94,7 @@ public class UiCookbookController {
 
       System.out.println("Going to recipe: " + recipe);
       if (this.mainController != null) {
-        this.mainController.goToRecipe();
+        this.mainController.goToRecipe(recipe);
       }
     });
   }

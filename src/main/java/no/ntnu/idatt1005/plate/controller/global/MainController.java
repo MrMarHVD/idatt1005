@@ -40,7 +40,6 @@ public class MainController {
       UiHomeController homeController = homeLoader.getController();
       homeController.setMainController(this);
 
-      //String css = this.getStyle("styles/appStyle1.css");
       Scene scene = new Scene(homeView);
       //scene.getStylesheets().add(css);
       stage.setScene(scene);
@@ -182,14 +181,14 @@ public class MainController {
     }
   }
 
-
-  public void goToRecipe() {
+  public void goToRecipe(String recipe) {
     try {
       FXMLLoader recipeLoader = new FXMLLoader(getClass().getResource("/fxml/UiRecipeView.fxml"));
       Parent recipeView = recipeLoader.load();
 
       // Instantiate the recipe controller
       UiRecipeViewController recipeController = recipeLoader.getController();
+      recipeController.setRecipeName(recipe);
 
       // Set the main controller for the recipe controller
       recipeController.setMainController(this);
@@ -204,15 +203,6 @@ public class MainController {
     }
   }
 
-  /**
-   * Get a style file based on the name of the css file.
-   *
-   * @param name name of the files
-   * @return the path
-   */
-  private String getStyle(String name) {
-    return MyApp.class.getClassLoader().getResource(name).toExternalForm();
-  }
 
 
 }

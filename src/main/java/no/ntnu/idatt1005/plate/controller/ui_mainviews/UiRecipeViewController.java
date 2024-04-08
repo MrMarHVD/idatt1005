@@ -27,6 +27,8 @@ import java.util.List;
  */
 public class UiRecipeViewController {
 
+  String recipeName;
+
   /**
    * The main controller for this class.
    */
@@ -71,7 +73,7 @@ public class UiRecipeViewController {
    * Initialize the controller.
    */
   @FXML
-  private void initialize() {
+  public void initialize() {
 
     this.setMainController(mainController);
     ingredientsListView.setCellFactory(param -> new IngredientListCell());
@@ -91,6 +93,13 @@ public class UiRecipeViewController {
       toolbarController.setMainController(mainController);
     }
   }
+
+  /**
+   * Set the recipe name.
+   *
+   * @param name the name of the recipe.
+   */
+  public void setRecipeName(String name) { this.recipeName = name; }
 
   /**
    * Queries all ingredients in the recipe and displays them.

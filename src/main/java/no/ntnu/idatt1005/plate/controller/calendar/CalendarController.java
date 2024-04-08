@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 
 import javafx.fxml.FXML;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.model.Calendar;
 
 import java.time.DayOfWeek;
@@ -16,6 +17,9 @@ import java.util.Arrays;
  * This class is the controller for the Calendar view in the user interface.
  */
 public class CalendarController {
+
+  @FXML
+  private MainController mainController;
 
   @FXML
   private DayBlockController mondayController;
@@ -37,6 +41,7 @@ public class CalendarController {
 
   @FXML
   private DayBlockController sundayController;
+
 
   /**
    * This method initializes the Calendar view with the correct recipes for each day.
@@ -63,6 +68,18 @@ public class CalendarController {
 
       String recipe = Calendar.getDayRecipes().get(date.toString());
       dayBlockControllers.get(i).setRecipe(recipe);
+      dayBlockControllers.get(i).setActionOnRecipeButtonClicked(recipe); // Assign action to go to recipe
     }
+  }
+
+  public void setMainController(MainController mainController) {
+    this.mainController = mainController;
+    this.mondayController.setMainController(mainController);
+    this.tuesdayController.setMainController(mainController);
+    this.wednesdayController.setMainController(mainController);
+    this.thursdayController.setMainController(mainController);
+    this.fridayController.setMainController(mainController);
+    this.saturdayController.setMainController(mainController);
+    this.sundayController.setMainController(mainController);
   }
 }
