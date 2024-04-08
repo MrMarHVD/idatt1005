@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import no.ntnu.idatt1005.plate.controller.cookbook.GridPaneGenerator;
 import no.ntnu.idatt1005.plate.controller.cookbook.RecipeListCell;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.global.PopupManager;
 import no.ntnu.idatt1005.plate.controller.inventory.IngredientListCell;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import javafx.fxml.FXML;
@@ -95,6 +96,30 @@ public class UiRecipeViewController {
    * Queries all ingredients in the recipe and displays them.
    */
   public void displayIngredients() {
+    if (recipeName == null) {
+      PopupManager.displayError("Error", "Recipe name is null", "Recipe name is null.");
+    }
+    try {
+      ResultSet ingredients = mainController.sqlConnector.executeSqlSelect(
+          "SELECT recipe_ingredients.ingredient_id " +
+              "FROM recipe_ingredients " +
+              "JOIN recipe ON recipe_ingredients.recipe_id = recipe.recipe_id " +
+              "WHERE recipe.name = '" + recipeName + "';"
+
+      );
+
+      List<Integer> ingredientList = new ArrayList<>();
+      while (ingredients.next()) {
+        ingredientList.add(ingredients.getInt("ingredient_id"));
+      }
+
+      ObservableList<Integer> observableList = FXCollections.observableArrayList(ingredientList);
+      ingredientsListView.setItems(observableList);
+      ingredientsListView.setCellFactory(param -> new IngredientListCell());
+    } catch (SQLException e) {
+      e.printStackTrace();
+      PopupManager.displayError("Error", "Error retrieving ingredients", "Error retrieving ingredients.");
+    }
   }
 
   /**

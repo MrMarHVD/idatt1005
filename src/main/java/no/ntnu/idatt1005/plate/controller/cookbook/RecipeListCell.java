@@ -91,7 +91,7 @@ public class RecipeListCell extends ListCell<Integer> {
                 "LEFT JOIN allergen a ON i.allergen_id = a.id" +
                 "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id" +
                 "JOIN recipe r ON ri.recipe_id = r.recipe_id" +
-                "WHERE r.name = '" + recipeId + "';"
+                "WHERE r.recipe_id = '" + recipeId + "';"
         );
 
         if (ingredientDetails.next()) {
