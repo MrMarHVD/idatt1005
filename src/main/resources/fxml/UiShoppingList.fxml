@@ -103,8 +103,8 @@
       <center>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
           <content>
-            <HBox prefHeight="423.0" prefWidth="450.0" style="-fx-border-color: black" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-              <VBox prefHeight="421.0" prefWidth="460.0">
+            <HBox prefHeight="423.0" prefWidth="450.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+              <VBox prefHeight="419.0" prefWidth="460.0">
                 <Label minHeight="48" prefHeight="48.0" prefWidth="422.0" text="Your Shopping List">
                   <font>
                     <Font size="18.0" />

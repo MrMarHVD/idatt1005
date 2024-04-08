@@ -97,7 +97,7 @@
         </VBox>
       </top>
       <center>
-        <VBox maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-border-color:black" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="701.0">
+        <VBox maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="701.0">
           <children>
             <HBox prefHeight="100.0" prefWidth="200.0" alignment="CENTER">
               <children>

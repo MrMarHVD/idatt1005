@@ -124,7 +124,7 @@
       <center>
         <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="477.0" prefWidth="654.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="670.0" style="-fx-border-color:black">
+                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="670.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;">
                      <children>
                         <VBox prefHeight="93.0" prefWidth="366.0">
                            <children>

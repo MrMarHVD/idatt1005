@@ -1,6 +1,7 @@
 package no.ntnu.idatt1005.plate.controller.calendar;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
@@ -15,10 +16,10 @@ public class DayBlockController {
   private Label dateLabel;
 
   @FXML
-  private Label recipeLabel;
+  private Button recipeButton;
 
   public void setRecipe(String recipeName) {
-    this.recipeLabel.setText(recipeName);
+    this.recipeButton.setText(recipeName);
   }
 
   public void setDay(String day) {

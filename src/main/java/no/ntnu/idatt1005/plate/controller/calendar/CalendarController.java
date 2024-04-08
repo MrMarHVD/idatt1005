@@ -45,7 +45,9 @@ public class CalendarController {
     LocalDate today = LocalDate.now();
     LocalDate thisMonday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
-    ArrayList<DayBlockController> dayBlockControllers = new ArrayList<>(Arrays.asList(mondayController, tuesdayController, wednesdayController, thursdayController, fridayController, saturdayController, sundayController));
+    ArrayList<DayBlockController> dayBlockControllers = new ArrayList<>(Arrays.asList(
+        mondayController, tuesdayController, wednesdayController, thursdayController,
+        fridayController, saturdayController, sundayController));
 
 
     for (int i = 0; i < 7; i++) {
@@ -54,7 +56,8 @@ public class CalendarController {
         Calendar.insertDay(Date.valueOf(date));
       }
 
-      String day = date.getDayOfWeek().toString().charAt(0) + date.getDayOfWeek().toString().substring(1).toLowerCase();
+      String day = date.getDayOfWeek().toString().charAt(0) +
+          date.getDayOfWeek().toString().substring(1).toLowerCase();
       dayBlockControllers.get(i).setDay(day);
       dayBlockControllers.get(i).setDate(date.toString());
 
