@@ -23,11 +23,10 @@ public class MyApp extends Application {
   /**
    * Start method
    *
-   * @param primaryStage
-   * @throws Exception
+   * @param primaryStage the primary stage
    */
   @Override
-  public void start(Stage primaryStage) throws Exception {
+  public void start(Stage primaryStage) {
 
     primaryStage.setResizable(true);
 

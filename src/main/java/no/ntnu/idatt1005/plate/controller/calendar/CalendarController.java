@@ -74,6 +74,8 @@ public class CalendarController {
 
   public void setMainController(MainController mainController) {
     this.mainController = mainController;
+
+    // Assign main controller to the day block controllers to enable navigation to recipes
     this.mondayController.setMainController(mainController);
     this.tuesdayController.setMainController(mainController);
     this.wednesdayController.setMainController(mainController);
