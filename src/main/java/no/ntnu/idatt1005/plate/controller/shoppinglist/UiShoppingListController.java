@@ -56,6 +56,8 @@ public class UiShoppingListController {
   @FXML
   private Label details_label;
 
+  private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+
   /**
    * Initialize the controller.
    */
@@ -142,6 +144,7 @@ public class UiShoppingListController {
   public void updateItems() {
     try {
       listView.getItems().clear();
+      checkBoxes.clear();
 
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
           "SELECT ingredient.ingredient_id, name, quantity, unit FROM shopping_list_items JOIN ingredient ON shopping_list_items.ingredient_id = ingredient.ingredient_id");
@@ -167,6 +170,8 @@ public class UiShoppingListController {
             System.out.println(selectedItems);
           }
         });
+        checkBoxes.add(checkBox);
+
 
         Label label = new Label(item);
         HBox hBox = new HBox();
@@ -258,6 +263,34 @@ public class UiShoppingListController {
       System.out.println(e.getMessage());
     }
 
+  }
+
+  /**
+   * Select all items in the shopping list.
+   */
+  public void selectAllItems() {
+    for (CheckBox checkBox : checkBoxes) {
+      checkBox.setSelected(true);
+    }
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT ingredient_id FROM shopping_list_items");
+      while (rs.next()) {
+        selectedItems.add(rs.getInt("ingredient_id"));
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  /**
+   * Unselect all items in the shopping list.
+   */
+  public void unselectAllItems() {
+    for (CheckBox checkBox : checkBoxes) {
+      checkBox.setSelected(false);
+    }
+    selectedItems.clear();
   }
 
 }
