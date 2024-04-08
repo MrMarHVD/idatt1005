@@ -76,6 +76,7 @@ public class UiCookbookController {
 
   /**
    * Add a recipe button for the given recipe.
+   *
    * @param recipe the recipe to add a button for.
    */
   public void addRecipeButton(String recipe) {

@@ -12,12 +12,21 @@ import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
  */
 public class UiHomeController {
 
+  /**
+   * The main controller for this class.
+   */
   @FXML
   private MainController mainController;
 
+  /**
+   * The toolbar controller for this class.
+   */
   @FXML
   private ToolbarController toolbarController;
 
+  /**
+   * The calendar controller for the calendar in the left sidebar.
+   */
   @FXML
   private CalendarController calendarController;
 

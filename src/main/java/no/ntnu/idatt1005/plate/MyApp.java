@@ -37,7 +37,7 @@ public class MyApp extends Application {
     // Set the primaryStage such that i can be accessed from other classes
     MyApp.primaryStage = primaryStage;
 
-    // Set the theme for the app.
+    // Set the theme for the app.TODO: Write about themes in report
     Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
 
     // Load initial view (home view)
