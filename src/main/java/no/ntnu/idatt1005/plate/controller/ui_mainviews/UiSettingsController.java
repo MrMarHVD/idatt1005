@@ -1,10 +1,10 @@
 package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleButton;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.model.Settings;
 
 /**
  * Controller class for the inventory view
@@ -34,8 +34,6 @@ public class UiSettingsController {
    */
   public void initialize() {
     this.setMainController(mainController);
-
-    // TODO: load the user's settings from the database or user file or something and set the buttons accordingly
   }
 
   /**
@@ -51,14 +49,11 @@ public class UiSettingsController {
 
   }
 
-  public void darkModeButtonPressed() {
-    boolean isCarnivore = darkModeButton.isSelected();
-    System.out.println("dark mode: " + isCarnivore);
-  }
-
-  public void vegetarianButtonPressed() {
-    boolean isVegetarian = vegetarianButton.isSelected();
-    System.out.println("vegetarian: " + isVegetarian);
+  /**
+   * Saves the settings to the config file.
+   */
+  public void saveSettings() {
+    Settings.saveSettings(darkModeButton.isSelected(), vegetarianButton.isSelected());
   }
 
 }

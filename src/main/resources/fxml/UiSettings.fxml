@@ -33,6 +33,7 @@
 -->
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -84,7 +85,7 @@
       <fx:include fx:id="toolbar" source="toolbar/Toolbar.fxml" />
       <VBox prefHeight="269.0" prefWidth="900.0">
          <children>
-            <ToggleButton fx:id="darkModeButton" onAction="#darkModeButtonPressed" mnemonicParsing="false" text="Dark mode">
+            <ToggleButton fx:id="darkModeButton" mnemonicParsing="false" text="Dark mode">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
@@ -92,7 +93,7 @@
                   <Insets left="400.0" top="20.0" />
                </VBox.margin>
             </ToggleButton>
-            <ToggleButton fx:id="vegetarianButton" onAction="#vegetarianButtonPressed" mnemonicParsing="false" text="Vegetarian">
+            <ToggleButton fx:id="vegetarianButton" mnemonicParsing="false" text="Vegetarian">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
@@ -102,5 +103,10 @@
             </ToggleButton>
          </children>
       </VBox>
+      <Button mnemonicParsing="false" text="Save" onAction="#saveSettings">
+         <VBox.margin>
+            <Insets left="800.0" top="200.0" />
+         </VBox.margin>
+      </Button>
    </children>
 </VBox>
