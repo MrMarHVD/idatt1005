@@ -105,7 +105,7 @@
           <content>
             <HBox prefHeight="423.0" prefWidth="450.0" style="-fx-border-color: black" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
               <VBox prefHeight="421.0" prefWidth="460.0">
-                <Label minHeight="48" prefHeight="48.0" prefWidth="422.0" text="Your Shopping List">
+                <Label minHeight="48" prefHeight="48.0" prefWidth="422.0" text=" Shopping List">
                   <font>
                     <Font size="18.0" />
                   </font>
@@ -119,8 +119,8 @@
                         </HBox>
                         <HBox prefHeight="28.0" prefWidth="448.0">
                            <children>
-                              <Button fx:id="selectAll" mnemonicParsing="false" onAction="#selectAllItems" prefHeight="28.0" prefWidth="112.5" text="Select all"></Button>
-                              <Button fx:id="clearSelection" mnemonicParsing="false" onAction="#unselectAllItems" prefHeight="28.0" prefWidth="112.5" text="Clear selection"></Button>
+                              <Button fx:id="selectAll" mnemonicParsing="false" onAction="#selectAllItems" prefHeight="28.0" prefWidth="100" text="Select all"></Button>
+                              <Button fx:id="clearSelection" mnemonicParsing="false" onAction="#unselectAllItems" prefHeight="28.0" prefWidth="125" text="Clear selection"></Button>
                            </children>
                         </HBox>
                         <HBox prefHeight="320.0" prefWidth="448.0">
@@ -149,8 +149,8 @@
     </BorderPane>
       <AnchorPane prefHeight="75.0" prefWidth="900.0">
          <children>
-            <Button fx:id="buyItemsButton" layoutX="46.0" layoutY="7.0" mnemonicParsing="false" onAction="#buyItems" prefHeight="43.0" prefWidth="153.0" text="Add items to inventory" />
-            <Button fx:id="clearListButton" layoutX="223.0" layoutY="7.0" mnemonicParsing="false" onAction="#clearList" prefHeight="43.0" prefWidth="84.0" text="Remove list" />
+            <Button fx:id="buyItemsButton" layoutX="46.0" layoutY="7.0" mnemonicParsing="false" onAction="#buyItems" prefHeight="43.0" prefWidth="155.0" text="Add to inventory" />
+            <Button fx:id="clearListButton" layoutX="223.0" layoutY="7.0" mnemonicParsing="false" onAction="#clearList" prefHeight="43.0" prefWidth="90.0" text="Remove" />
          </children>
       </AnchorPane>
   </children>
