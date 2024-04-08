@@ -162,7 +162,7 @@ public class MainController {
   public void goToSettings() {
     try {
       FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("/fxml/UiSettings.fxml"));
-      Parent shoppingListView = settingsLoader.load();
+      Parent settingsView = settingsLoader.load();
 
       // Instantiate the shopping list controller
       UiSettingsController settingsController = settingsLoader.getController();
@@ -170,9 +170,11 @@ public class MainController {
       // Set the main controller for the shopping list controller
       settingsController.setMainController(this);
 
-      Scene scene = new Scene(shoppingListView);
+      Scene scene = new Scene(settingsView);
       Stage currentStage = MyApp.getPrimaryStage();
       currentStage.setScene(scene);
+      settingsController.updateView();
+
       currentStage.show();
 
 

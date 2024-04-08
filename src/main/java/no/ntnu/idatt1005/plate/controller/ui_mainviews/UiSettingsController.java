@@ -1,5 +1,8 @@
 package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
+import atlantafx.base.theme.CupertinoDark;
+import atlantafx.base.theme.CupertinoLight;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
@@ -34,6 +37,15 @@ public class UiSettingsController {
    */
   public void initialize() {
     this.setMainController(mainController);
+    Settings settings = new Settings();
+    darkModeButton.setSelected(settings.getDarkMode());
+    vegetarianButton.setSelected(settings.getVegetarian());
+  }
+
+  public void updateView() {
+    Settings settings = new Settings();
+    darkModeButton.setSelected(settings.getDarkMode());
+    vegetarianButton.setSelected(settings.getVegetarian());
   }
 
   /**
@@ -53,7 +65,18 @@ public class UiSettingsController {
    * Saves the settings to the config file.
    */
   public void saveSettings() {
-    Settings.saveSettings(darkModeButton.isSelected(), vegetarianButton.isSelected());
+    Settings settings = new Settings();
+    settings.saveSettings(darkModeButton.isSelected(), vegetarianButton.isSelected());
+    updateTheme();
+  }
+
+  private void updateTheme() {
+    Settings settings = new Settings();
+    if (settings.getDarkMode()) {
+      Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+    } else {
+      Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+    }
   }
 
 }
