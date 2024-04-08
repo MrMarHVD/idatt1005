@@ -157,7 +157,7 @@ VALUES
     (131, 'Porridge', NULL, 6, 'dL'),
     (132, 'Garlic', NULL, 1, 'kg'),
     (133, 'Garlic Bread', 3, 6, 'qty'),
-    (134, 'Fries', NULL, 6,'kg')
+    (134, 'Fries', NULL, 6,'kg');
 -- Oppskrifter
 INSERT INTO recipe(recipe_id, name, instruction) VALUES (1, 'Margherita Pizza', 'Classic Margherita Pizza with tomato sauce, mozzarella, and fresh basil. Roll out pizza dough, add sauce and toppings, and bake.');
 INSERT INTO recipe(recipe_id, name, instruction) VALUES (2, 'Classic Grilled Cheese Sandwich', 'A simple and delicious grilled cheese sandwich made with butter, bread, and melted cheese. Butter both sides of bread, add cheese, and grill until golden brown.');
