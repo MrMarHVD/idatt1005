@@ -12,7 +12,7 @@
             <Button fx:id="cookbook" mnemonicParsing="false" onAction="#onCookbookButtonPressed" prefHeight="50.0" prefWidth="100.0" text="Cookbook" />
             <Button fx:id="inventory" mnemonicParsing="false" onAction="#onInventoryButtonPressed" prefHeight="50.0" prefWidth="100.0" text="Inventory" />
             <Button fx:id="shoppingList" mnemonicParsing="false" onAction="#onShoppingListButtonPressed" prefHeight="50.0" prefWidth="100.0" text="Shopping List" />
-            <Button fx:id="settings" alignment="CENTER" contentDisplay="LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Settings" />
+            <Button fx:id="settings" alignment="CENTER" contentDisplay="LEFT" mnemonicParsing="false" onAction="#onSettingsButtonPressed" prefHeight="50.0" prefWidth="100.0" text="Settings" />
          </children>
       </HBox>
    </items>

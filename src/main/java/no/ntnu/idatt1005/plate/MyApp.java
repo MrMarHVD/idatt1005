@@ -6,6 +6,7 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import no.ntnu.idatt1005.plate.model.Settings;
 
 
 /**
@@ -38,7 +39,12 @@ public class MyApp extends Application {
     MyApp.primaryStage = primaryStage;
 
     // Set the theme for the app.
-    Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+    Settings settings = new Settings();
+    if (settings.getDarkMode()) {
+      Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+    } else {
+      Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+    }
 
     // Load initial view (home view)
     mainController.loadInitialView(MyApp.getPrimaryStage());
