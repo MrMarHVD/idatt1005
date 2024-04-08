@@ -1,9 +1,13 @@
 package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
+import atlantafx.base.theme.CupertinoDark;
+import atlantafx.base.theme.CupertinoLight;
+import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.model.Settings;
 
 /**
  * Controller class for the inventory view
@@ -23,24 +27,25 @@ public class UiSettingsController {
   private ToolbarController toolbarController;
 
   @FXML
-  private RadioButton carnivoreButton;
+  private ToggleButton darkModeButton;
 
   @FXML
-  private RadioButton vegetarianButton;
-
-  @FXML
-  private RadioButton veganButton;
-
-  @FXML
-  private RadioButton pescetarianButton;
+  private ToggleButton vegetarianButton;
 
   /**
    * Initialize the controller.
    */
   public void initialize() {
     this.setMainController(mainController);
+    Settings settings = new Settings();
+    darkModeButton.setSelected(settings.getDarkMode());
+    vegetarianButton.setSelected(settings.getVegetarian());
+  }
 
-    // TODO: load the user's settings from the database or user file or something and set the buttons accordingly
+  public void updateView() {
+    Settings settings = new Settings();
+    darkModeButton.setSelected(settings.getDarkMode());
+    vegetarianButton.setSelected(settings.getVegetarian());
   }
 
   /**
@@ -56,29 +61,22 @@ public class UiSettingsController {
 
   }
 
-
-  // methods for buttons when pressed
-  // TODO: store the value of the button in the database or user file or something
-  public void carnivoreButtonPressed() {
-    boolean isCarnivore = carnivoreButton.isSelected();
-    System.out.println("carnivore: " + isCarnivore);
+  /**
+   * Saves the settings to the config file.
+   */
+  public void saveSettings() {
+    Settings settings = new Settings();
+    settings.saveSettings(darkModeButton.isSelected(), vegetarianButton.isSelected());
+    updateTheme();
   }
 
-  public void vegetarianButtonPressed() {
-    boolean isVegetarian = vegetarianButton.isSelected();
-    System.out.println("vegetarian: " + isVegetarian);
+  private void updateTheme() {
+    Settings settings = new Settings();
+    if (settings.getDarkMode()) {
+      Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+    } else {
+      Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+    }
   }
-
-  public void veganButtonPressed() {
-    boolean isVegan = veganButton.isSelected();
-    System.out.println("vegan: " + isVegan);
-  }
-
-  public void pescetarianButtonPressed() {
-    boolean isPescetarian = pescetarianButton.isSelected();
-    System.out.println("pescetarian: " + isPescetarian);
-  }
-
-
 
 }
