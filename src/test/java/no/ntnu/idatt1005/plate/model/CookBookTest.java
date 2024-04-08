@@ -17,9 +17,9 @@ class CookBookTest {
 
   @BeforeAll
   static void setUp() {
-    breakfast = new CookBook("Breakfast", 1, 2, 3 );
-    lunch = new CookBook("Lunch", 4, 5, 6);
-    JsonWriter.writeCookbookToJson(Arrays.asList(breakfast, lunch), "TestCookbooks");
+    //breakfast = new CookBook("Breakfast", 1, 2, 3 );
+    //lunch = new CookBook("Lunch", 4, 5, 6);
+    //JsonWriter.writeCookbookToJson(Arrays.asList(breakfast, lunch), "TestCookbooks");
   }
 
   @Nested

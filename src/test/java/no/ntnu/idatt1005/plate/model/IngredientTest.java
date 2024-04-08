@@ -21,9 +21,9 @@ class IngredientTest {
     flour = new Ingredient("flour", "grams", "carbohydrate");
     sugar = new Ingredient("sugar", "grams", "carbohydrate");
     butter = new Ingredient("butter", "grams", "dairy");
-    JsonWriter.writeIngredientsToJson(Arrays.asList(
-            eggs, flour, sugar, butter
-    ), "testIngredients");
+    //JsonWriter.writeIngredientsToJson(Arrays.asList(
+    //        eggs, flour, sugar, butter
+    //), "testIngredients");
   }
 
   @Nested

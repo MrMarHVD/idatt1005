@@ -50,7 +50,7 @@ class RecipeTest {
             )
     );
 
-    JsonWriter.writeRecipesToJson(Arrays.asList(pancake, scrambledEggs, oatmeal), "testRecipes");
+    //JsonWriter.writeRecipesToJson(Arrays.asList(pancake, scrambledEggs, oatmeal), "testRecipes");
   }
 
   @Nested
