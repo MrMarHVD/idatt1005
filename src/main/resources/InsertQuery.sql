@@ -3,6 +3,10 @@ INSERT INTO allergen(id, name) VALUES (1,'Nuts');
 INSERT INTO allergen(id, name) VALUES (2,'Eggs');
 INSERT INTO allergen(id, name) VALUES (3,'Gluten');
 INSERT INTO allergen(id, name) VALUES (4,'Laktose');
+INSERT INTO allergen(id, name) VALUES (5, 'Soy');
+INSERT INTO allergen(id, name) VALUES (6, 'Shellfish');
+INSERT INTO allergen(id, name) VALUES (7, 'Fish');
+INSERT INTO allergen(id, name) VALUES (8, 'Sesame');
 
 -- Kategorier
 INSERT INTO category(id, name) VALUES (1, 'Vegetable');
@@ -13,6 +17,9 @@ INSERT INTO category(id, name) VALUES (5, 'Dairy');
 INSERT INTO category(id, name) VALUES (6, 'Bakery');
 INSERT INTO category(id, name) VALUES (7, 'Condiment');
 INSERT INTO category(id, name) VALUES (8, 'Spice');
+INSERT INTO category(id, name) VALUES (9, 'Grains');
+INSERT INTO category(id, name) VALUES (10, 'Legumes');
+INSERT INTO category(id, name) VALUES (11, 'Nuts and Seeds');
 
 -- Ingredienser
 INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (1, 'Apple', NULL, 2, 'kg');
@@ -36,7 +43,120 @@ INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALU
 INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (19, 'Cheese', NULL, 5, 'kg');
 INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (20, 'Pizza dough', 3, 6, 'kg');
 INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (21, 'Pizza sauce', NULL, 7, 'dL');
-
+INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (22, 'Tomato', NULL, 1, 'kg');
+INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (23, 'Lettuce', NULL, 1, 'kg');
+INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (24, 'Potato', NULL, 1, 'kg');
+INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit)
+VALUES
+    (25, 'Carrot', NULL, 1, 'kg'),
+    (26, 'Broccoli', NULL, 1, 'kg'),
+    (27, 'Spinach', NULL, 1, 'kg'),
+    (28, 'Cauliflower', NULL, 1, 'kg'),
+    (29, 'Celery', NULL, 1, 'kg'),
+    (30, 'Bell Pepper', NULL, 1, 'kg'),
+    (31, 'Zucchini', NULL, 1, 'kg'),
+    (32, 'Asparagus', NULL, 1, 'kg'),
+    (33, 'Mushroom', NULL, 1, 'kg'),
+    (34, 'Lemon', NULL, 2, 'qty'),
+    (35, 'Lime', NULL, 2, 'qty'),
+    (36, 'Grapefruit', NULL, 2, 'qty'),
+    (37, 'Pineapple', NULL, 2, 'qty'),
+    (38, 'Banana', NULL, 2, 'qty'),
+    (39, 'Pear', NULL, 2, 'qty'),
+    (40, 'Peach', NULL, 2, 'qty'),
+    (41, 'Plum', NULL, 2, 'qty'),
+    (42, 'Grapes', NULL, 2, 'kg'),
+    (43, 'Cherry', NULL, 2, 'kg'),
+    (44, 'Blueberry', NULL, 4, 'kg'),
+    (45, 'Raspberry', NULL, 4, 'kg'),
+    (46, 'Strawberry', NULL, 4, 'kg'),
+    (47, 'Blackberry', NULL, 4, 'kg'),
+    (48, 'Yogurt', 4, 5, 'dL'),
+    (49, 'Sour cream', 4, 5, 'dL'),
+    (50, 'Cream cheese', 4, 5, 'g'),
+    (51, 'Whipping cream', 4, 5, 'dL'),
+    (52, 'Cottage cheese', 4, 5, 'g'),
+    (53, 'Cheddar cheese', NULL, 5, 'kg'),
+    (54, 'Mozzarella cheese', NULL, 5, 'kg'),
+    (55, 'Parmesan cheese', NULL, 5, 'kg'),
+    (56, 'Feta cheese', NULL, 5, 'kg'),
+    (57, 'Swiss cheese', NULL, 5, 'kg'),
+    (58, 'American cheese', NULL, 5, 'kg'),
+    (59, 'Brie cheese', NULL, 5, 'kg'),
+    (60, 'Camembert cheese', NULL, 5, 'kg'),
+    (61, 'Almonds', 1, 11, 'kg'),
+    (62, 'Cashews', 1, 11, 'kg'),
+    (63, 'Peanuts', 1, 11, 'kg'),
+    (64, 'Hazelnuts', 1, 11, 'kg'),
+    (65, 'Walnuts', 1, 11, 'kg'),
+    (66, 'Macadamia nuts', 1, 11, 'kg'),
+    (67, 'Pistachios', 1, 11, 'kg'),
+    (68, 'Sunflower seeds', NULL, 11, 'kg'),
+    (69, 'Pumpkin seeds', NULL, 11, 'kg'),
+    (70, 'Sesame seeds', 8, 11, 'kg'),
+    (71, 'Flax seeds', NULL, 11, 'kg'),
+    (72, 'Chia seeds', NULL, 11, 'kg'),
+    (73, 'Quinoa', NULL, 9, 'kg'),
+    (74, 'Brown rice', NULL, 9, 'kg'),
+    (75, 'White rice', NULL, 9, 'kg'),
+    (76, 'Barley', NULL, 9, 'kg'),
+    (77, 'Oats', NULL, 9, 'kg'),
+    (78, 'Salad', NULL, 1, 'kg'),
+    (79, 'Cabbage', NULL, 1, 'kg'),
+    (80, 'Kale', NULL, 1, 'kg'),
+    (81, 'Arugula', NULL, 1, 'kg'),
+    (82, 'Romaine lettuce', NULL, 1, 'kg'),
+    (83, 'Iceberg lettuce', NULL, 1, 'kg'),
+    (84, 'Endive', NULL, 1, 'kg'),
+    (85, 'Radish', NULL, 1, 'kg'),
+    (86, 'Beetroot', NULL, 1, 'kg'),
+    (87, 'Parsnip', NULL, 1, 'kg'),
+    (88, 'Turnip', NULL, 1, 'kg'),
+    (89, 'Salmon', 7, 3, 'kg'),
+    (90, 'Tuna', 7, 3, 'kg'),
+    (91, 'Trout', 7, 3, 'kg'),
+    (92, 'Halibut', 7, 3, 'kg'),
+    (93, 'Cod', 7, 3, 'kg'),
+    (94, 'Sardine', 7, 3, 'kg'),
+    (95, 'Haddock', 7, 3, 'kg'),
+    (96, 'Mackerel', 7, 3, 'kg'),
+    (97, 'Herring', 7, 3, 'kg'),
+    (98, 'Shrimp', 6, 3, 'kg'),
+    (99, 'Crab', 6, 3, 'kg'),
+    (100, 'Lobster', 6, 3, 'kg'),
+    (101, 'Mussels', 6, 3, 'kg'),
+    (102, 'Clams', 6, 3, 'kg'),
+    (103, 'Oysters', 6, 3, 'kg'),
+    (104, 'Scallops', 6, 3, 'kg'),
+    (105, 'Octopus', 6, 3, 'kg'),
+    (106, 'Squid', 6, 3, 'kg'),
+    (107, 'Anchovy', 7, 3, 'kg'),
+    (108, 'Caviar', 6, 3, 'kg'),
+    (109, 'Tofu', NULL, 10, 'kg'),
+    (110, 'Soybeans', 5, 10, 'kg'),
+    (111, 'Mango', NULL, 2, 'qty'),
+    (112, 'Catfish', 7, 3, 'kg'),
+    (113, 'Ground beef', NULL, 3, 'kg'),
+    (114, 'Ground chicken', NULL, 3, 'kg'),
+    (115, 'Ground turkey', NULL, 3, 'kg'),
+    (116, 'Veggie burger patties', NULL, 10, 'qty'),
+    (117, 'Burger buns', NULL, 6, 'qty'),
+    (118, 'Lettuce', NULL, 1, 'kg'),
+    (119, 'Tomato', NULL, 1, 'kg'),
+    (120, 'Onion', NULL, 1, 'kg'),
+    (121, 'Pickles', NULL, 1, 'kg'),
+    (122, 'Ketchup', NULL, 7, 'dL'),
+    (123, 'Mustard', NULL, 7, 'dL'),
+    (124, 'Mayonnaise', 2, 7, 'dL'),
+    (125, 'Cheese slices', NULL, 5, 'qty'),
+    (126, 'Bacon', NULL, 3, 'kg'),
+    (127, 'Mushrooms', NULL, 1, 'kg'),
+    (128, 'Pasta', NULL, 9, 'kg'),
+    (129, 'Spaghetti', NULL, 9, 'kg'),
+    (130, 'Meatballs', NULL, 3, 'kg'),
+    (131, 'Porridge', NULL, 6, 'dL'),
+    (132, 'Garlic', NULL, 1, 'kg'),
+    (133, 'Garlic Bread', 3, 6, 'qty');
 -- Oppskrifter
 INSERT INTO recipe(recipe_id, name, instruction) VALUES (1, 'Margherita Pizza', 'Classic Margherita Pizza with tomato sauce, mozzarella, and fresh basil. Roll out pizza dough, add sauce and toppings, and bake.');
 INSERT INTO recipe(recipe_id, name, instruction) VALUES (2, 'Classic Grilled Cheese Sandwich', 'A simple and delicious grilled cheese sandwich made with butter, bread, and melted cheese. Butter both sides of bread, add cheese, and grill until golden brown.');
