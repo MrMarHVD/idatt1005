@@ -175,7 +175,7 @@ public class MainController {
     }
   }
 
-  public void goToRecipe() {
+  public void goToRecipe(String recipe) {
     try {
       FXMLLoader recipeLoader = new FXMLLoader(getClass().getResource("/fxml/UiRecipeView.fxml"));
       Parent recipeView = recipeLoader.load();
@@ -186,10 +186,21 @@ public class MainController {
       // Set the main controller for the recipe controller
       recipeController.setMainController(this);
 
+      if (recipe != null) {
+        recipeController.setRecipeName(recipe);
+        System.out.println(recipe);
+      }
+      else {
+        System.out.println("Null");
+      }
+
       Scene scene = new Scene(recipeView);
       Stage currentStage = MyApp.getPrimaryStage();
       currentStage.setScene(scene);
       currentStage.show();
+      recipeController.displayInstructions();
+      recipeController.displayIngredients();
+
     }
     catch (Exception e) {
       e.printStackTrace();
