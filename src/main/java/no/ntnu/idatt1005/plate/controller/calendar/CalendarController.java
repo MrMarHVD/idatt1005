@@ -65,6 +65,7 @@ public class CalendarController {
   public void initialize() {
     this.groupRadioButtons();
     this.addActionListeners();
+    this.initializeComboBox();
     LocalDate today = LocalDate.now();
     LocalDate thisMonday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
@@ -87,6 +88,23 @@ public class CalendarController {
       String recipe = Calendar.getDayRecipes().get(date.toString());
       dayBlockControllers.get(i).setRecipe(recipe);
       dayBlockControllers.get(i).setActionOnRecipeButtonClicked(recipe); // Assign action to go to recipe
+    }
+  }
+
+  /**
+   * Initialize the combo box with the first 20 (or less) recipes in the database.
+   */
+  private void initializeComboBox() {
+    int maxRecipes = 20;
+    ArrayList<String> results = Calendar.searchRecipes("");
+    if (results.size() > maxRecipes) {
+      for (int i = 0; i < maxRecipes; i++) {
+        this.recipeComboBox.getItems().add(results.get(i));
+      }
+    } else {
+      for (int i = 0; i < results.size(); i++) {
+        this.recipeComboBox.getItems().add(results.get(i));
+      }
     }
   }
 

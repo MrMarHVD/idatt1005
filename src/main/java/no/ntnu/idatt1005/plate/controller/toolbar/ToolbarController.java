@@ -37,6 +37,7 @@ public class ToolbarController {
    */
   @FXML private Button settings;
 
+
   /**
    * Initialize the controller.
    */
