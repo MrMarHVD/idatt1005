@@ -10,6 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.data.SqlConnector;
 import no.ntnu.idatt1005.plate.model.Calendar;
 
 import java.time.DayOfWeek;
@@ -59,6 +60,8 @@ public class CalendarController {
   @FXML
   private Button changeRecipeButton;
 
+  private final Calendar calendar = new Calendar(new SqlConnector());
+
   /**
    * This method initializes the Calendar view with the correct recipes for each day.
    */
@@ -76,8 +79,8 @@ public class CalendarController {
 
     for (int i = 0; i < 7; i++) {
       LocalDate date = thisMonday.plusDays(i);
-      if (!Calendar.dayExists(Date.valueOf(date))) {
-        Calendar.insertDay(Date.valueOf(date));
+      if (!calendar.dayExists(Date.valueOf(date))) {
+        calendar.insertDay(Date.valueOf(date));
       }
 
       String day = date.getDayOfWeek().toString().charAt(0) +
@@ -85,7 +88,7 @@ public class CalendarController {
       dayBlockControllers.get(i).setDay(day);
       dayBlockControllers.get(i).setDate(date.toString());
 
-      String recipe = Calendar.getDayRecipes().get(date.toString());
+      String recipe = calendar.getDayRecipes().get(date.toString());
       dayBlockControllers.get(i).setRecipe(recipe);
       dayBlockControllers.get(i).setActionOnRecipeButtonClicked(recipe); // Assign action to go to recipe
     }
@@ -96,7 +99,7 @@ public class CalendarController {
    */
   private void initializeComboBox() {
     int maxRecipes = 20;
-    ArrayList<String> results = Calendar.searchRecipes("");
+    ArrayList<String> results = calendar.searchRecipes("");
     if (results.size() > maxRecipes) {
       for (int i = 0; i < maxRecipes; i++) {
         this.recipeComboBox.getItems().add(results.get(i));
@@ -117,7 +120,7 @@ public class CalendarController {
     this.searchButton.setOnAction(e -> {
       this.recipeComboBox.getItems().clear();
       String search = this.recipeSearchField.getText();
-      ArrayList<String> results = Calendar.searchRecipes(search);
+      ArrayList<String> results = calendar.searchRecipes(search);
       for (int i = 0; i < results.size(); i++) {
         this.recipeComboBox.getItems().add(results.get(i));
       }
@@ -133,7 +136,7 @@ public class CalendarController {
               if (dayBlockController.getSelectedButton().isSelected()) {
                 String date = dayBlockController.getDate();
 
-            Calendar.changeRecipe(Date.valueOf(date), recipe);
+            calendar.changeRecipe(Date.valueOf(date), recipe);
             this.initialize();
           }
         }

@@ -27,6 +27,22 @@ public class SqlConnector {
   }
 
   /**
+   * Constructor for testing SqlConnector class, points to a different database.
+   *
+   * @param dbFileName the path to the database file
+   */
+  public SqlConnector(String dbFileName) {
+    try {
+      if (con == null) {
+        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
+      }
+      resetDatabase();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  /**
    * Close the connection to the database.
    */
   public void close() {
