@@ -80,7 +80,7 @@ public class RecipeListCell extends ListCell<Integer> {
    */
   @Override
   protected void updateItem(Integer ingredientId, boolean empty) {
-    super.updateItem(ingredientId, empty);g
+    super.updateItem(ingredientId, empty);
 
     if (ingredientId == null || empty) {
       setGraphic(null);
@@ -89,9 +89,9 @@ public class RecipeListCell extends ListCell<Integer> {
         // Fetch ingredient details from the database
         ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
 
-                "SELECT i.name AS name, a.name AS allergen, ri.quantity AS quantity, c.name AS category " +
+                "SELECT i.name AS name, i.unit AS unit, a.name AS allergen, ri.quantity AS quantity, c.name AS category " +
                 "FROM ingredient i " +
-                "JOIN allergen a ON i.allergen_id = a.id " +
+                "LEFT JOIN allergen a ON i.allergen_id = a.id " +
                 "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id " +
                 "JOIN category c ON i.category_id = c.id " +
                 "WHERE ri.ingredient_id = '" + ingredientId + "';"
