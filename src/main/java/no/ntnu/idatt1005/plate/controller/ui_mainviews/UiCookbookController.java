@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -34,6 +36,8 @@ public class UiCookbookController {
    */
   @FXML private GridPane gridPane;
 
+  @FXML private TextField searchField;
+
   /**
    * The default recipe button.
    */
@@ -58,6 +62,10 @@ public class UiCookbookController {
     } catch (Exception e) {
       e.getMessage();
     }
+
+    searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+      searchCookbook(newValue);
+    });
 
   }
 
@@ -99,6 +107,25 @@ public class UiCookbookController {
     });
   }
 
+  /**
+   * Search the cookbook for the given input.
+   * @param input
+   */
+  private void searchCookbook(String input) {
+    recipeButtons.clear();
+    if (gridPane != null) {
+      gridPane.getChildren().clear();
+    }
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe WHERE name LIKE '%" + input + "%'");
+      while (rs.next()) {
+        String name = rs.getString("name");
+        addRecipeButton(name);
+      }
+    } catch (Exception e) {
+      e.getMessage();
+    }
+  }
   /**
    * Update the recipe buttons in the grid with the current list of recipe buttons.
    */
