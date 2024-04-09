@@ -1,49 +1,49 @@
 package no.ntnu.idatt1005.plate.model;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Properties;
 
-/**
- * This class handles the settings of the application.
- */
 public class Settings {
+  
+  
+  private static final String DARK_MODE = "dark_mode";
+  
+  private static final String VEGETARIAN = "vegetarian";
 
-  private static final String CONFIG_DIR =
-      System.getProperty("user.home") + File.separator + ".plate";
-  private static final String CONFIG_FILE = CONFIG_DIR + File.separator + "config.properties";
+  private final Path configFile;
 
-  public Settings() {
-    File dir = new File(CONFIG_DIR);
-    if (!dir.exists()) {
-      dir.mkdirs();
-    }
+  public Settings(Path configDir) {
+    this.configFile = configDir.resolve("config.properties");
 
-    File configFile = new File(CONFIG_FILE);
-    if (!configFile.exists()) {
-      try {
-        configFile.createNewFile();
+    try {
+      if (!Files.exists(configDir)) {
+        Files.createDirectories(configDir);
+      }
+
+      if (!Files.exists(this.configFile)) {
+        Files.createFile(this.configFile);
         Properties prop = new Properties();
-        prop.setProperty("darkMode", "false");
-        prop.setProperty("vegetarian", "false");
-        try (FileOutputStream fos = new FileOutputStream(configFile)) {
+        prop.setProperty(DARK_MODE, "false");
+        prop.setProperty(VEGETARIAN, "false");
+        try (OutputStream fos = Files.newOutputStream(this.configFile)) {
           prop.store(fos, null);
         }
-      } catch (IOException e) {
-        e.printStackTrace();
       }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
   public void saveSettings(boolean darkMode, boolean vegetarian) {
     Properties prop = new Properties();
-    prop.setProperty("darkMode", String.valueOf(darkMode));
-    prop.setProperty("vegetarian", String.valueOf(vegetarian));
+    prop.setProperty(DARK_MODE, String.valueOf(darkMode));
+    prop.setProperty(VEGETARIAN, String.valueOf(vegetarian));
 
-    try (FileOutputStream fos = new FileOutputStream(CONFIG_FILE)) {
+    try (OutputStream fos = Files.newOutputStream(configFile)) {
       prop.store(fos, null);
     } catch (IOException e) {
       e.printStackTrace();
@@ -52,23 +52,21 @@ public class Settings {
 
   public boolean getDarkMode() {
     Properties prop = new Properties();
-    try {
-      prop.load(new FileInputStream(CONFIG_FILE));
+    try (InputStream fis = Files.newInputStream(configFile)) {
+      prop.load(fis);
     } catch (IOException e) {
       e.printStackTrace();
     }
-    boolean darkMode = Boolean.parseBoolean(prop.getProperty("darkMode"));
-    return darkMode;
+    return Boolean.parseBoolean(prop.getProperty(DARK_MODE));
   }
 
   public boolean getVegetarian() {
     Properties prop = new Properties();
-    try {
-      prop.load(new FileInputStream(CONFIG_FILE));
+    try (InputStream fis = Files.newInputStream(configFile)) {
+      prop.load(fis);
     } catch (IOException e) {
       e.printStackTrace();
     }
-    boolean vegetarian = Boolean.parseBoolean(prop.getProperty("vegetarian"));
-    return vegetarian;
+    return Boolean.parseBoolean(prop.getProperty(VEGETARIAN));
   }
 }

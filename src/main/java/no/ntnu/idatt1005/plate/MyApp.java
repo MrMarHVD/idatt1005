@@ -8,6 +8,10 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import no.ntnu.idatt1005.plate.model.Settings;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 /**
  * Use this class to start the application.
@@ -39,7 +43,8 @@ public class MyApp extends Application {
 
 
     // Set the theme for the app.
-    Settings settings = new Settings();
+    Path configDir = Paths.get(System.getProperty("user.home")).resolve(".plate");
+    Settings settings = new Settings(configDir);
     if (settings.getDarkMode()) {
       Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
     } else {

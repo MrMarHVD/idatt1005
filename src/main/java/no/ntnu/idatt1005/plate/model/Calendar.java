@@ -14,8 +14,11 @@ import no.ntnu.idatt1005.plate.data.SqlConnector;
  */
 public class Calendar {
 
+  private SqlConnector sqlConnector;
 
-  private Calendar() {
+
+  public Calendar(SqlConnector sqlConnector) {
+    this.sqlConnector = sqlConnector;
   }
 
 
@@ -26,9 +29,8 @@ public class Calendar {
    * @param date the date to check
    * @return true if the day exists, false if not
    */
-  public static boolean dayExists(Date date) {
+  public boolean dayExists(Date date) {
     String query = "SELECT * FROM day WHERE date = '" + date + "';";
-    SqlConnector sqlConnector = new SqlConnector();
     ResultSet rs = sqlConnector.executeSqlSelect(query);
 
     try {
@@ -38,7 +40,6 @@ public class Calendar {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    System.out.println("Day: " + date + " does not exist in db");
     return false;
   }
 
@@ -47,11 +48,7 @@ public class Calendar {
    *
    * @param date the date to insert
    */
-  public static void insertDay(Date date) {
-    SqlConnector sqlConnector = new SqlConnector();
-
-    // gets a random recipe from the database
-    // this should be moved to a separate utils class
+  public void insertDay(Date date) {
     String selectQuery = "SELECT recipe_id FROM recipe ORDER BY ABS(RANDOM()) LIMIT 1;";
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
     int recipeId = 0;
@@ -65,17 +62,15 @@ public class Calendar {
 
     String query = "INSERT INTO day(date, recipe_id) VALUES ('" + date + "', " + recipeId + ");";
     sqlConnector.executeSqlUpdate(query);
-    System.out.println("Day: " + date + " added to calendar with recipe: " + recipeId);
   }
 
   /**
-   * This method gets the recipes for each day in the calendar.
+   * This method gets the recipes for each day in the day table.
    *
    * @return a map with the date as key and the recipe as value
    */
-  public static Map<String, String> getDayRecipes() {
+  public Map<String, String> getDayRecipes() {
     Map<String, String> dayRecipes = new HashMap<>();
-    SqlConnector sqlConnector = new SqlConnector();
     String selectQuery = "SELECT * FROM day JOIN recipe ON day.recipe_id = recipe.recipe_id";
 
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
@@ -97,9 +92,8 @@ public class Calendar {
     return dayRecipes;
   }
 
-  public static String getRecipe (Date date) {
+  public String getRecipe (Date date) {
     String recipe = "";
-    SqlConnector sqlConnector = new SqlConnector();
     String selectQuery = "SELECT * FROM day JOIN recipe ON day.recipe_id = recipe.recipe_id WHERE date = '" + date + "';";
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
     if (rs != null) {
@@ -114,8 +108,7 @@ public class Calendar {
     return recipe;
   }
 
-  public static void changeRecipe(Date date, String recipe) {
-    SqlConnector sqlConnector = new SqlConnector();
+  public void changeRecipe(Date date, String recipe) {
     String selectQuery = "SELECT recipe_id FROM recipe WHERE name = '" + recipe + "';";
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
     int recipeId = 0;
@@ -136,9 +129,8 @@ public class Calendar {
    * @param search the string to search the database for.
    * @return an arraylist containing the names of the recipes that match the search string.
    */
-  public static ArrayList<String> searchRecipes (String search) {
+  public ArrayList<String> searchRecipes (String search) {
     ArrayList<String> recipes = new ArrayList<>();
-    SqlConnector sqlConnector = new SqlConnector();
     String selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%';";
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
     if (rs != null) {
