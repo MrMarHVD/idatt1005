@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 /**
@@ -154,6 +156,52 @@ public class Calendar {
     }
     return recipes;
   }
+
+  /**
+   * Get a list of missing ingredients from the inventory based on an input
+   * recipe.
+   *
+   * @param recipe the input recipe.
+   * @return a list of missing ingredients.
+   */
+  public static List<Integer> getMissingIngredients(String recipe) {
+    List<Integer> missingIngredients = new ArrayList<>();
+    try {
+      // Fetch the list of ingredients required for the recipe
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT ingredient_id, quantity " +
+              "FROM recipe_ingredients " +
+              "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
+      );
+
+
+      while (rs.next()) {
+        int ingredientId = rs.getInt("ingredient_id");
+        float requiredQuantity = rs.getFloat("quantity");
+
+        // Check if the ingredient is available in the inventory in the required quantity
+        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+            "SELECT quantity " +
+                "FROM inventory_ingredient " +
+                "WHERE ingredient_id = " + ingredientId
+        );
+
+        if (rsInventory.next()) {
+          float availableQuantity = rsInventory.getFloat("quantity");
+          if (availableQuantity < requiredQuantity) {
+            missingIngredients.add(ingredientId);
+          }
+        } else {
+          missingIngredients.add(ingredientId);
+        }
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    } return missingIngredients;
+  }
+
+
 
 
 }
