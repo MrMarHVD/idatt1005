@@ -2,6 +2,7 @@ package no.ntnu.idatt1005.plate.controller.inventory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.ColumnConstraints;
@@ -39,7 +40,6 @@ public class IngredientListCell extends ListCell<Integer> {
    * The category of the ingredient.
    */
   private final Label category = new Label();
-
   public IngredientListCell() {
 
     // Set the column constraints for the grid such that the columns are equally wide.
@@ -60,6 +60,8 @@ public class IngredientListCell extends ListCell<Integer> {
     grid.add(quantities, 1, 0);
     grid.add(allergens, 2, 0);
     grid.add(category, 3, 0);
+    grid.setAlignment(Pos.CENTER_LEFT);
+
   }
 
 
@@ -88,6 +90,7 @@ protected void updateItem(Integer ingredientId, boolean empty) {
                     "WHERE i.ingredient_id = " + ingredientId + ";"
             );
 
+
             if (ingredientDetails.next()) {
                 // Set the name, allergens, and category labels
                 name.setText(ingredientDetails.getString("name"));
@@ -101,7 +104,12 @@ protected void updateItem(Integer ingredientId, boolean empty) {
 
                 String category = ingredientDetails.getString("category");
                 this.category.setText(category != null ? category : "None");
-
+                int index = getIndex();
+                if (index % 2 == 0) {
+                  grid.setStyle("-fx-background-color: #ffffff00;");
+                } else {
+                  grid.setStyle("-fx-background-color: #e0e0e033;");
+                }
                 setGraphic(grid);
             }
         } catch (SQLException e) {

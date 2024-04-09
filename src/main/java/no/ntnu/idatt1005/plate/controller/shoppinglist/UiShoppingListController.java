@@ -162,8 +162,8 @@ public class UiShoppingListController {
           if (checkBox.isSelected()) {
             selectedItems.add(ingredientId);
             System.out.println(selectedItems);
-          } else {
-            selectedItems.remove(ingredientId);
+          } else if (selectedItems.contains(ingredientId)) {
+            selectedItems.remove(Integer.valueOf(ingredientId));
             System.out.println(selectedItems);
           }
         });
