@@ -19,7 +19,7 @@
     </Label>
     <TextField fx:id="itemNameField" promptText="item name"/>
     <TextField fx:id="itemAmountField" promptText="item amount"/>
-    <Button mnemonicParsing="false" onAction="#addItems" prefHeight="26.0" prefWidth="469.0" text="add item"/>
+    <Button mnemonicParsing="false" onAction="#addSelectedItems" prefHeight="26.0" prefWidth="469.0" text="add item"/>
     <ListView fx:id="listView" prefHeight="404.0" prefWidth="448.0"/>
   </VBox>
 </HBox>

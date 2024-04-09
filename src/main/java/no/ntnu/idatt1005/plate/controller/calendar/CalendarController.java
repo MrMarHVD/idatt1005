@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 
 import java.util.List;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,11 +23,14 @@ import java.time.DayOfWeek;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
+import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
  * This class is the controller for the Calendar view in the user interface.
  */
 public class CalendarController {
+
+  private Date selectedDate;
 
   /**
    * The main controller for the application.
@@ -52,18 +56,47 @@ public class CalendarController {
   @FXML
   private DayBlockController sundayController;
 
+  /**
+   * The ComboBox showing a list of recipes based on search.
+   */
   @FXML
   private ComboBox<String> recipeComboBox;
 
+  /**
+   * The search field for recipes.
+   */
   @FXML
   private TextField recipeSearchField;
 
+  /**
+   * The button to perform search.
+   */
   @FXML
   private Button searchButton;
 
+  /**
+   * The button to change the recipe of the selected day to the selected recipe.
+   */
   @FXML
   private Button changeRecipeButton;
 
+  /**
+   * The button to add all missing ingredients to the shopping list.
+   */
+  @FXML
+  private Button addAllMissingButton;
+
+  /**
+   * The button to add all missing ingredients from the recipe planned for the selected day
+   * to the shopping list.
+   */
+  @FXML
+  private Button addMissingFromSelectedButton;
+
+  /**
+   * The list view showing the missing ingredients for the recipe corresponding to the
+   * selected day.
+   */
   @FXML
   private ListView<Integer> missingListView;
 
@@ -73,6 +106,7 @@ public class CalendarController {
   public void initialize() {
     this.groupRadioButtons();
     this.addRadioButtonActionListeners();
+    this.addShoppingListButtonActionListeners();
     this.initializeComboBox();
     //this.missingListView.setCellFactory(param -> new MissingIngredientListCell());
     LocalDate today = LocalDate.now();
@@ -129,6 +163,7 @@ public class CalendarController {
       dayBlockController.getSelectedButton().setOnAction(e -> {
         if (dayBlockController.getSelectedButton().isSelected()) {
           String date = dayBlockController.getDate();
+          this.selectedDate = Date.valueOf(date); // Ensure that the selected date is stored
           String recipeName = Calendar.getDayRecipes().get(date);
 
           List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
@@ -138,9 +173,6 @@ public class CalendarController {
 
           // Set the ObservableList as the items of the ListView
           missingListView.setItems(observableIngredients);
-          for (Integer ingredientId : missingIngredients) {
-            System.out.println(ingredientId);
-          }
 
           // Set the cell factory of the ListView to use MissingIngredientListCell
           missingListView.setCellFactory(param -> new MissingIngredientListCell(recipeName));
@@ -148,6 +180,16 @@ public class CalendarController {
         }
       });
     }
+  }
+
+  private void addShoppingListButtonActionListeners() {
+    this.addMissingFromSelectedButton.setOnAction(event -> {
+      String recipeName = Calendar.getDayRecipes().get(this.selectedDate.toString());
+      Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(recipeName);
+      for (int ingredientId : missingIngredients.keySet()) {
+        ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
+      }
+    });
   }
 
 

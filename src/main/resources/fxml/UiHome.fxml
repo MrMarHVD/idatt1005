@@ -91,7 +91,7 @@
         </VBox>
       </top>
       <left>
-        <VBox prefHeight="509.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
+        <VBox prefHeight="509.0" prefWidth="900.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
           <children>
             <ScrollPane prefHeight="508.0" prefWidth="475.0" VBox.vgrow="ALWAYS">
               <content>

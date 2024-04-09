@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="503.0" prefWidth="679.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.calendar.CalendarController">
+<AnchorPane prefHeight="503.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.calendar.CalendarController">
    <children>
-      <HBox prefHeight="503.0" prefWidth="679.0">
+      <HBox prefHeight="503.0" prefWidth="894.0">
          <children>
             <VBox prefHeight="503.0" prefWidth="338.0">
                <children>
@@ -70,8 +70,9 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="503.0" prefWidth="317.0">
+            <VBox prefHeight="503.0" prefWidth="404.0">
                <children>
+                  <Label prefHeight="15.0" prefWidth="296.0" text="Ingredients you need to buy" textAlignment="CENTER" />
                   <HBox prefHeight="35.0" prefWidth="311.0">
                      <children>
                         <Label prefHeight="35.0" prefWidth="156.0" text="Ingredient">
@@ -87,6 +88,18 @@
                      </children>
                   </HBox>
                   <ListView fx:id="missingListView" prefHeight="478.0" prefWidth="311.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="503.0" prefWidth="286.0">
+               <children>
+                  <Region prefHeight="44.0" prefWidth="175.0" />
+                  <Label prefHeight="28.0" prefWidth="221.0" text="To Shopping List">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="addMissingFromSelectedButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" text="Add missing from selected" />
+                  <Button fx:id="addAllMissingButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="212.0" text="Add all missing ingredients" />
                </children>
             </VBox>
          </children>

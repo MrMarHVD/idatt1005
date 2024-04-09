@@ -204,6 +204,50 @@ public class Calendar {
     return missingIngredients;
   }
 
+  /**
+   * Get a list of missing ingredients and the missing quantity
+   * from the inventory based on an input
+   * recipe.
+   *
+   * @param recipe the input recipe.
+   * @return a list of missing ingredients.
+   */
+  public static Map<Integer, Float> getMissingIngredientsWithQuantity(String recipe) {
+    Map<Integer, Float> missingIngredients = new HashMap<>();
+    try {
+      // Fetch the list of ingredients required for the recipe
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT ingredient_id, quantity " +
+              "FROM recipe_ingredients " +
+              "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
+      );
+
+      while (rs.next()) {
+        int ingredientId = rs.getInt("ingredient_id");
+        float requiredQuantity = rs.getFloat("quantity");
+
+        // Check if the ingredient is available in the inventory in the required quantity
+        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+            "SELECT quantity " +
+                "FROM inventory_ingredient " +
+                "WHERE ingredient_id = " + ingredientId
+        );
+
+        if (rsInventory.next()) {
+          float availableQuantity = rsInventory.getFloat("quantity");
+          if (availableQuantity < requiredQuantity) {
+            missingIngredients.put(ingredientId, requiredQuantity - availableQuantity);
+          }
+        } else {
+          missingIngredients.put(ingredientId, requiredQuantity);
+        }
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return missingIngredients;
+  }
 
 
 
