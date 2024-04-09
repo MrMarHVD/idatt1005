@@ -106,6 +106,7 @@ public class CalendarController {
   public void initialize() {
     this.groupRadioButtons();
     this.addRadioButtonActionListeners();
+    this.addRecipeButtonActionListeners();
     this.addShoppingListButtonActionListeners();
     this.initializeComboBox();
     //this.missingListView.setCellFactory(param -> new MissingIngredientListCell());
@@ -180,6 +181,40 @@ public class CalendarController {
         }
       });
     }
+  }
+
+  /**
+   * Initialize action listeners for the buttons relating to search
+   *  and changing the current recipe of the selected day.
+   */
+  private void addRecipeButtonActionListeners() {
+
+    // Button for searching for recipes
+    this.searchButton.setOnAction(e -> {
+      this.recipeComboBox.getItems().clear();
+      String search = this.recipeSearchField.getText();
+      ArrayList<String> results = Calendar.searchRecipes(search);
+      for (int i = 0; i < results.size(); i++) {
+        this.recipeComboBox.getItems().add(results.get(i));
+      }
+    });
+
+    // Button for changing recipe
+    this.changeRecipeButton.setOnAction(e -> {
+      String recipe = this.recipeComboBox.getValue();
+      if (recipe != null) {
+        for (DayBlockController dayBlockController : new DayBlockController[]{
+            mondayController, tuesdayController, wednesdayController, thursdayController,
+            fridayController, saturdayController, sundayController}) {
+          if (dayBlockController.getSelectedButton().isSelected()) {
+            String date = dayBlockController.getDate();
+
+            Calendar.changeRecipe(Date.valueOf(date), recipe);
+            this.initialize();
+          }
+        }
+      }});
+
   }
 
   /**
