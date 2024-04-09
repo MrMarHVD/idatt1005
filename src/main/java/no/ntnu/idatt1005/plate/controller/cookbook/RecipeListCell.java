@@ -80,7 +80,7 @@ public class RecipeListCell extends ListCell<Integer> {
    */
   @Override
   protected void updateItem(Integer ingredientId, boolean empty) {
-    super.updateItem(ingredientId, empty);
+    super.updateItem(ingredientId, empty);g
 
     if (ingredientId == null || empty) {
       setGraphic(null);
