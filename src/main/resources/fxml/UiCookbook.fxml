@@ -105,7 +105,7 @@
                 <Region prefWidth="10.0"/>
                 <VBox prefHeight="83.0" prefWidth="228.0" alignment="CENTER">
                   <children>
-                    <TextField promptText="Search for recipes.."/>
+                    <TextField promptText="Search for recipes.." fx:id="searchField"/>
                   </children>
                 </VBox>
                 <Region HBox.hgrow="ALWAYS"/>
