@@ -51,6 +51,8 @@ public class UiCookbookController {
    */
   private ArrayList<Button> recipeButtons = new ArrayList<>();
 
+  private boolean isSortedAsc = false;
+
   /**
    * Initialize the controller.
    */
@@ -71,9 +73,15 @@ public class UiCookbookController {
     });
 
     sortButton.setOnAction(event -> {
-      sortByName();
+      if (isSortedAsc) {
+        sortDesc();
+        sortButton.setText("A - Z");
+      } else {
+        sortAsc();
+        sortButton.setText("Z - A");
+      }
+      isSortedAsc = !isSortedAsc;
     });
-
   }
 
   /**
@@ -137,13 +145,29 @@ public class UiCookbookController {
   /**
    * Sort the cookbook by name.
    */
-  private void sortByName() {
+  private void sortAsc() {
     recipeButtons.clear();
     if (gridPane != null) {
       gridPane.getChildren().clear();
     }
     try {
       ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe ORDER BY name");
+      while (rs.next()) {
+        String name = rs.getString("name");
+        addRecipeButton(name);
+      }
+    } catch (Exception e) {
+      e.getMessage();
+    }
+  }
+
+  private void sortDesc() {
+    recipeButtons.clear();
+    if (gridPane != null) {
+      gridPane.getChildren().clear();
+    }
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe ORDER BY name DESC");
       while (rs.next()) {
         String name = rs.getString("name");
         addRecipeButton(name);
