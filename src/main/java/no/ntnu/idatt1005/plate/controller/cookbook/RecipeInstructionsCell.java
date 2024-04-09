@@ -42,6 +42,7 @@ public class RecipeInstructionsCell extends ListCell<Integer> {
     grid.getColumnConstraints().add(column1);
     grid.setHgap(10);
     grid.setVgap(10);
+
   }
 
   /**

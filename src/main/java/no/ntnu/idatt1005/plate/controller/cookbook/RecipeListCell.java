@@ -49,22 +49,25 @@ public class RecipeListCell extends ListCell<Integer> {
   /**
    * The category of the ingredient.
    */
-  private final Label category = new Label();
+  //private final Label category = new Label();
 
   public RecipeListCell() {
 
     // Set the column constraints for the grid such that the columns are equally wide.
-    int noOfColumns = 2; // Change this if you want to change the number of columns.
+    int noOfColumns = 3; // Change this if you want to change the number of columns.
     ColumnConstraints column1 = new ColumnConstraints();
     column1.setPercentWidth((float) (100 / noOfColumns));
     ColumnConstraints column2 = new ColumnConstraints();
     column2.setPercentWidth((float) (100 / noOfColumns));
+    ColumnConstraints column3 = new ColumnConstraints();
+    column3.setPercentWidth((float) (100 / noOfColumns));
 
-    grid.getColumnConstraints().addAll(column1, column2);
+    grid.getColumnConstraints().addAll(column1, column2, column3);
     grid.setHgap(10);
     grid.setVgap(10);
     grid.add(name, 0, 0);
     grid.add(quantities, 1, 0);
+    grid.add(allergens, 2, 0);
   }
 
 
@@ -72,26 +75,26 @@ public class RecipeListCell extends ListCell<Integer> {
   /**
    * Updates the item in the cell (automatic).
    *
-   * @param recipeId the new ingredient.
+   * @param ingredientId the new ingredient.
    * @param empty whether the cell is to be empty.
    */
   @Override
-  protected void updateItem(Integer recipeId, boolean empty) {
-    super.updateItem(recipeId, empty);
+  protected void updateItem(Integer ingredientId, boolean empty) {
+    super.updateItem(ingredientId, empty);
 
-    if (recipeId == null || empty) {
+    if (ingredientId == null || empty) {
       setGraphic(null);
     } else {
       try {
         // Fetch ingredient details from the database
         ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
 
-                "SELECT i.name AS ingredient_name, a.name AS allergen_name" +
-                "FROM ingredient i" +
-                "LEFT JOIN allergen a ON i.allergen_id = a.id" +
-                "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id" +
-                "JOIN recipe r ON ri.recipe_id = r.recipe_id" +
-                "WHERE r.recipe_id = '" + recipeId + "';"
+                "SELECT i.name AS name, a.name AS allergen, ri.quantity AS quantity, c.name AS category " +
+                "FROM ingredient i " +
+                "JOIN allergen a ON i.allergen_id = a.id " +
+                "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id " +
+                "JOIN category c ON i.category_id = c.id " +
+                "WHERE ri.ingredient_id = '" + ingredientId + "';"
         );
 
         if (ingredientDetails.next()) {
@@ -105,8 +108,8 @@ public class RecipeListCell extends ListCell<Integer> {
           String allergen = ingredientDetails.getString("allergen");
           allergens.setText(allergen != null ? allergen : "None");
 
-          String category = ingredientDetails.getString("category");
-          this.category.setText(category != null ? category : "None");
+          //String category = ingredientDetails.getString("category");
+          //this.category.setText(category != null ? category : "None");
 
           setGraphic(grid);
         }

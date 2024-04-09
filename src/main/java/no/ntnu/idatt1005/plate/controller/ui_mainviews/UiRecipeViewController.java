@@ -115,7 +115,7 @@ public class UiRecipeViewController {
 
       ObservableList<Integer> observableList = FXCollections.observableArrayList(ingredientList);
       ingredientsListView.setItems(observableList);
-      ingredientsListView.setCellFactory(param -> new IngredientListCell());
+      ingredientsListView.setCellFactory(param -> new RecipeListCell());
     } catch (SQLException e) {
       e.printStackTrace();
       PopupManager.displayError("Error", "Error retrieving ingredients", "Error retrieving ingredients.");
