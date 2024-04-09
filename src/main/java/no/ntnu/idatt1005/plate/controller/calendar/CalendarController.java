@@ -69,12 +69,6 @@ public class CalendarController {
   private TextField recipeSearchField;
 
   /**
-   * The button to perform search.
-   */
-  @FXML
-  private Button searchButton;
-
-  /**
    * The button to change the recipe of the selected day to the selected recipe.
    */
   @FXML
@@ -184,20 +178,20 @@ public class CalendarController {
   }
 
   /**
-   * Initialize action listeners for the buttons relating to search
-   *  and changing the current recipe of the selected day.
+   * Initialize action listeners for functions relating to search and changing recipe
+   * for the selected day.
    */
   private void addRecipeButtonActionListeners() {
 
     // Button for searching for recipes
-    this.searchButton.setOnAction(e -> {
-      this.recipeComboBox.getItems().clear();
-      String search = this.recipeSearchField.getText();
-      ArrayList<String> results = Calendar.searchRecipes(search);
-      for (int i = 0; i < results.size(); i++) {
-        this.recipeComboBox.getItems().add(results.get(i));
-      }
-    });
+
+    this.recipeSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+          this.recipeComboBox.getItems().clear();
+          ArrayList<String> results = Calendar.searchRecipes(newValue);
+          for (int i = 0; i < results.size(); i++) {
+            this.recipeComboBox.getItems().add(results.get(i));
+          }
+        });
 
     // Button for changing recipe
     this.changeRecipeButton.setOnAction(e -> {

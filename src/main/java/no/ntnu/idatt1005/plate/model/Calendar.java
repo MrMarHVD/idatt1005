@@ -174,7 +174,6 @@ public class Calendar {
               "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
       );
 
-
       while (rs.next()) {
         int ingredientId = rs.getInt("ingredient_id");
         float requiredQuantity = rs.getFloat("quantity");

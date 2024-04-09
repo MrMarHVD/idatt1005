@@ -59,7 +59,7 @@
                               </HBox>
                               <HBox prefHeight="89.0" prefWidth="368.0">
                                  <children>
-                                    <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="178.0" text="Search" />
+
                                     <Button fx:id="changeRecipeButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="162.0" text="Change recipe" />
                                     <Region prefHeight="50.0" prefWidth="50.0" />
                                  </children>
