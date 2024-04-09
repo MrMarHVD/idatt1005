@@ -7,6 +7,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
  * ListCell class which manages the cells in the ingredient list,
@@ -41,6 +42,11 @@ public class MissingIngredientListCell extends ListCell<Integer> {
    */
   private final Label quantity = new Label();
 
+  /**
+   * Label showing whether or not the ingredient in question is in the shopping list already.
+   */
+  private final Label inShoppingList = new Label();
+
 
 
   /**
@@ -51,17 +57,20 @@ public class MissingIngredientListCell extends ListCell<Integer> {
   public MissingIngredientListCell(String recipeName) {
     this.recipeName = recipeName;
     // Set the column constraints for the grid such that the columns are equally wide.
-    int noOfColumns = 2; // Change this if you want to change the number of columns.
+    int noOfColumns = 3; // Change this if you want to change the number of columns.
     ColumnConstraints column1 = new ColumnConstraints();
     column1.setPercentWidth((float) (100 / noOfColumns));
     ColumnConstraints column2 = new ColumnConstraints();
     column2.setPercentWidth((float) (100 / noOfColumns));
+    ColumnConstraints column3 = new ColumnConstraints();
+    column3.setPercentWidth((float) (100 / noOfColumns));
 
-    grid.getColumnConstraints().addAll(column1, column2);
+    grid.getColumnConstraints().addAll(column1, column2, column3);
     grid.setHgap(10);
     grid.setVgap(10);
     grid.add(name, 0, 0);
     grid.add(quantity, 1, 0);
+    grid.add(inShoppingList, 2, 0);
   }
 
 
@@ -82,7 +91,8 @@ public class MissingIngredientListCell extends ListCell<Integer> {
         // Fetch ingredient details from the database
         ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
 
-            "SELECT i.name AS name, i.unit AS unit, SUM(ri.quantity - IFNULL(ii.quantity, 0)) AS quantity " +
+            "SELECT i.name AS name, i.ingredient_id AS ingredient_id, " +
+                "i.unit AS unit, SUM(ri.quantity - IFNULL(ii.quantity, 0)) AS quantity " +
                 "FROM ingredient i " +
                 "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id " +
                 "LEFT JOIN inventory_ingredient ii ON i.ingredient_id = ii.ingredient_id " +
@@ -99,6 +109,12 @@ public class MissingIngredientListCell extends ListCell<Integer> {
           String unit = ingredientDetails.getString("unit");
           this.quantity.setText(quantity != null ? (quantity + " " + unit) : "None");
 
+          // Check if the ingredient is already in the shopping list
+          if (ShoppingList.inShoppingList(ingredientDetails.getInt("ingredient_id"))) {
+            this.inShoppingList.setText("Yes");
+          } else {
+            this.inShoppingList.setText("No");
+          }
 
           setGraphic(grid);
         }

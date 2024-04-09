@@ -85,6 +85,11 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
+                        <Label prefHeight="51.0" prefWidth="116.0" text="In SL?">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
                      </children>
                   </HBox>
                   <ListView fx:id="missingListView" prefHeight="478.0" prefWidth="311.0" />
