@@ -24,6 +24,7 @@ import org.iq80.snappy.Main;
  */
 public class MissingIngredientListCell extends ListCell<Integer> {
 
+  private final String recipeName;
 
   /**
    * The grid.
@@ -47,8 +48,8 @@ public class MissingIngredientListCell extends ListCell<Integer> {
    */
   //private final Label category = new Label();
 
-  public MissingIngredientListCell() {
-
+  public MissingIngredientListCell(String recipeName) {
+    this.recipeName = recipeName;
     // Set the column constraints for the grid such that the columns are equally wide.
     int noOfColumns = 2; // Change this if you want to change the number of columns.
     ColumnConstraints column1 = new ColumnConstraints();
@@ -68,7 +69,6 @@ public class MissingIngredientListCell extends ListCell<Integer> {
   /**
    * Updates the item in the cell (automatic).
    *
-   * @param ingredientId the new ingredient.
    * @param empty whether the cell is to be empty.
    */
   @Override
@@ -82,10 +82,13 @@ public class MissingIngredientListCell extends ListCell<Integer> {
         // Fetch ingredient details from the database
         ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
 
-                "SELECT i.name AS name, i.unit AS unit, ri.quantity AS quantity " +
+            "SELECT i.name AS name, i.unit AS unit, SUM(ri.quantity - IFNULL(ii.quantity, 0)) AS quantity " +
                 "FROM ingredient i " +
                 "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id " +
-                "WHERE ri.ingredient_id = '" + ingredientId + "';"
+                "LEFT JOIN inventory_ingredient ii ON i.ingredient_id = ii.ingredient_id " +
+                "WHERE ri.recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + this.recipeName + "') " +
+                "AND i.ingredient_id = " + ingredientId + " " +
+                "GROUP BY i.name, i.unit;"
         );
 
         if (ingredientDetails.next()) {

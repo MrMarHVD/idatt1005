@@ -198,7 +198,10 @@ public class Calendar {
 
     } catch (Exception e) {
       e.printStackTrace();
-    } return missingIngredients;
+    } for (int i = 0; i < missingIngredients.size(); i++) {
+      System.out.println(missingIngredients.get(i));
+    }
+    return missingIngredients;
   }
 
 

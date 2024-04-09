@@ -74,7 +74,7 @@ public class CalendarController {
     this.groupRadioButtons();
     this.addRadioButtonActionListeners();
     this.initializeComboBox();
-    this.missingListView.setCellFactory(param -> new MissingIngredientListCell());
+    //this.missingListView.setCellFactory(param -> new MissingIngredientListCell());
     LocalDate today = LocalDate.now();
     LocalDate thisMonday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
@@ -117,6 +117,9 @@ public class CalendarController {
     }
   }
 
+  /**
+   * Add action listeners to the radio buttons for each day of the week.
+   */
   private void addRadioButtonActionListeners() {
     DayBlockController[] dayBlockControllers = new DayBlockController[]{
         mondayController, tuesdayController, wednesdayController, thursdayController,
@@ -126,18 +129,21 @@ public class CalendarController {
       dayBlockController.getSelectedButton().setOnAction(e -> {
         if (dayBlockController.getSelectedButton().isSelected()) {
           String date = dayBlockController.getDate();
-          String recipe = Calendar.getDayRecipes().get(date);
+          String recipeName = Calendar.getDayRecipes().get(date);
 
-          List<Integer> missingIngredients = Calendar.getMissingIngredients(recipe);
+          List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
 
           // Create an ObservableList with the IDs of the missing ingredients
           ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(missingIngredients);
 
           // Set the ObservableList as the items of the ListView
           missingListView.setItems(observableIngredients);
+          for (Integer ingredientId : missingIngredients) {
+            System.out.println(ingredientId);
+          }
 
           // Set the cell factory of the ListView to use MissingIngredientListCell
-          missingListView.setCellFactory(param -> new MissingIngredientListCell());
+          missingListView.setCellFactory(param -> new MissingIngredientListCell(recipeName));
 
         }
       });
