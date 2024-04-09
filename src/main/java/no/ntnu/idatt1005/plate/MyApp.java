@@ -6,6 +6,7 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import no.ntnu.idatt1005.plate.model.Settings;
 
 
 /**
@@ -23,11 +24,10 @@ public class MyApp extends Application {
   /**
    * Start method
    *
-   * @param primaryStage
-   * @throws Exception
+   * @param primaryStage the primary stage
    */
   @Override
-  public void start(Stage primaryStage) throws Exception {
+  public void start(Stage primaryStage) {
 
     primaryStage.setResizable(true);
 
@@ -37,8 +37,14 @@ public class MyApp extends Application {
     // Set the primaryStage such that i can be accessed from other classes
     MyApp.primaryStage = primaryStage;
 
+
     // Set the theme for the app.
-    Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+    Settings settings = new Settings();
+    if (settings.getDarkMode()) {
+      Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+    } else {
+      Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+    }
 
     // Load initial view (home view)
     mainController.loadInitialView(MyApp.getPrimaryStage());

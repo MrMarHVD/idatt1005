@@ -12,15 +12,31 @@ public class ToolbarController {
    */
   @FXML private MainController mainController;
 
+  /**
+   * The button for going to the home view.
+   */
   @FXML private Button home;
 
+  /**
+   * The button for going to the cookbook view.
+   */
   @FXML private Button cookbook;
 
+  /**
+   * The button for going to the inventory view.
+   */
   @FXML private Button inventory;
 
+  /**
+   * The button for going to the shopping list view.
+   */
   @FXML private Button shoppingList;
 
+  /**
+   * The button for going to the settings view.
+   */
   @FXML private Button settings;
+
 
   /**
    * Initialize the controller.
@@ -84,7 +100,9 @@ public class ToolbarController {
 
   @FXML
   public void onSettingsButtonPressed(ActionEvent event) {
-    // TODO: Implement this method
+    if (this.mainController != null) {
+      this.mainController.goToSettings();
+    }
   }
 
 }

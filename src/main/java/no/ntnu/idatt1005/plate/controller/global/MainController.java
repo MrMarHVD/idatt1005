@@ -40,7 +40,6 @@ public class MainController {
       UiHomeController homeController = homeLoader.getController();
       homeController.setMainController(this);
 
-      //String css = this.getStyle("styles/appStyle1.css");
       Scene scene = new Scene(homeView);
       //scene.getStylesheets().add(css);
       stage.setScene(scene);
@@ -162,7 +161,7 @@ public class MainController {
   public void goToSettings() {
     try {
       FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("/fxml/UiSettings.fxml"));
-      Parent shoppingListView = settingsLoader.load();
+      Parent settingsView = settingsLoader.load();
 
       // Instantiate the shopping list controller
       UiSettingsController settingsController = settingsLoader.getController();
@@ -170,9 +169,11 @@ public class MainController {
       // Set the main controller for the shopping list controller
       settingsController.setMainController(this);
 
-      Scene scene = new Scene(shoppingListView);
+      Scene scene = new Scene(settingsView);
       Stage currentStage = MyApp.getPrimaryStage();
       currentStage.setScene(scene);
+      settingsController.updateView();
+
       currentStage.show();
 
 
@@ -182,8 +183,7 @@ public class MainController {
     }
   }
 
-
-  public void goToRecipe() {
+  public void goToRecipe(String recipe) {
     try {
       FXMLLoader recipeLoader = new FXMLLoader(getClass().getResource("/fxml/UiRecipeView.fxml"));
       Parent recipeView = recipeLoader.load();
@@ -194,25 +194,29 @@ public class MainController {
       // Set the main controller for the recipe controller
       recipeController.setMainController(this);
 
+      if (recipe != null) {
+        recipeController.setRecipeName(recipe);
+        System.out.println(recipe);
+      }
+      else {
+        System.out.println("Null");
+      }
+
       Scene scene = new Scene(recipeView);
       Stage currentStage = MyApp.getPrimaryStage();
       currentStage.setScene(scene);
       currentStage.show();
+      recipeController.displayInstructions();
+      recipeController.displayIngredients();
+
     }
     catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  /**
-   * Get a style file based on the name of the css file.
-   *
-   * @param name name of the files
-   * @return the path
-   */
-  private String getStyle(String name) {
-    return MyApp.class.getClassLoader().getResource(name).toExternalForm();
-  }
+
+
 
 
 }

@@ -7,12 +7,16 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+
+import no.ntnu.idatt1005.plate.controller.global.MainController;
+
 import javafx.scene.layout.Priority;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiInventoryController;
-import no.ntnu.idatt1005.plate.model.Ingredient;
+
 import org.iq80.snappy.Main;
 import org.w3c.dom.Text;
+
 
 /**
  * ListCell class which manages the cells in the ingredient list,

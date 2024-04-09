@@ -104,8 +104,8 @@ public class SqlConnector {
    * @return true if any table is missing, false otherwise.
    */
   private boolean anyTableMissing() {
-    return !tableExists("ingredient") || !tableExists("allergen") || !tableExists("category")
-        || !tableExists("recipe_ingredients") || !tableExists("recipe") || !tableExists("day");
+    return (!tableExists("ingredient") || !tableExists("allergen") || !tableExists("category")
+        || !tableExists("recipe_ingredients") || !tableExists("recipe") || !tableExists("day"));
   }
 
   /**

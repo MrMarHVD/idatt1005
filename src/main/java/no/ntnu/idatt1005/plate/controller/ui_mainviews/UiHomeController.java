@@ -12,12 +12,21 @@ import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
  */
 public class UiHomeController {
 
+  /**
+   * The main controller for this class.
+   */
   @FXML
   private MainController mainController;
 
+  /**
+   * The toolbar controller for this class.
+   */
   @FXML
   private ToolbarController toolbarController;
 
+  /**
+   * The calendar controller for the calendar in the left sidebar.
+   */
   @FXML
   private CalendarController calendarController;
 
@@ -35,17 +44,18 @@ public class UiHomeController {
    * Initialize the controller.
    */
   public void initialize() {
-    this.setMainController(mainController);
+
   }
 
   /**
-   * Set the main controller for this class and the toolbar controller.
+   * Set the main controller for this class, the calendar controller, and the toolbar controller.
    *
    * @param mainController the main controller.
    */
   public void setMainController(MainController mainController) {
     this.mainController = mainController;
     this.toolbarController.setMainController(mainController);
+    this.calendarController.setMainController(mainController);
   }
 
   // Define an event handler method for your button
