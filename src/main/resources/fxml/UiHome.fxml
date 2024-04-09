@@ -91,9 +91,9 @@
         </VBox>
       </top>
       <left>
-        <VBox style="-fx-border-color: black; -fx-border-width: 0.5; -fx-border-radius: 5;" prefHeight="509.0" prefWidth="341.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="509.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-width: 0.5; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
           <children>
-            <ScrollPane prefHeight="509.0" prefWidth="349.0" VBox.vgrow="ALWAYS">
+            <ScrollPane prefHeight="508.0" prefWidth="475.0" VBox.vgrow="ALWAYS">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="421.0" prefWidth="329.0">
                   <children>
@@ -105,21 +105,6 @@
           </children>
         </VBox>
       </left>
-      <center>
-        <VBox prefHeight="509.0" prefWidth="541.0" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
-          <children>
-            <ScrollPane prefHeight="502.0" prefWidth="551.0">
-              <content>
-                <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="500.0" prefWidth="538.0">
-                  <children>
-                    <fx:include source="home/TodaysMeal.fxml" />
-                  </children>
-                </AnchorPane>
-              </content>
-            </ScrollPane>
-          </children>
-        </VBox>
-      </center>
     </BorderPane>
   </children>
 </VBox>
