@@ -220,6 +220,8 @@ public class CalendarController {
    * to the shopping list.
    */
   private void addShoppingListButtonActionListeners() {
+
+    // Create action listener for button which adds missing ingredients from the selected recipe
     this.addMissingFromSelectedButton.setOnAction(event -> {
       String recipeName = Calendar.getDayRecipes().get(this.selectedDate.toString());
       Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(recipeName);
@@ -232,7 +234,22 @@ public class CalendarController {
       }
     });
 
-    // TODO: action listener for adding all missing ingredients to shopping list
+    // Create action listener for button which adds all missing ingredients to shopping list.
+    this.addAllMissingButton.setOnAction(event -> {
+      for (DayBlockController dayBlockController : new DayBlockController[]{
+          mondayController, tuesdayController, wednesdayController, thursdayController,
+          fridayController, saturdayController, sundayController}) {
+        String date = dayBlockController.getDate();
+        String recipeName = Calendar.getDayRecipes().get(date);
+        Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(recipeName);
+        for (int ingredientId : missingIngredients.keySet()) {
+          // Add to shopping list only if not there already.
+          if (!ShoppingList.inShoppingList(ingredientId)) {
+            ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
+          }
+        }
+      }
+    });
   }
 
 

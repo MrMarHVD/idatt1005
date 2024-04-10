@@ -46,7 +46,7 @@ public class Inventory {
   /**
    * Search for ingredients in the inventory.
    *
-   * @param search thhe search query.
+   * @param search the search query.
    * @return the result set of the query.
    */
   public static ResultSet searchIngredients(String search) {
