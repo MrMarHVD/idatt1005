@@ -21,9 +21,15 @@ public class PopupManager {
     alert.showAndWait();
   }
 
-  public static void displayError(String title,  String content) {
+  /**
+   * Display a basic error.
+   *
+   * @param header the header of the popup message.
+   * @param content the content of the popup message.
+   */
+  public static void displayError(String header,  String content) {
     Alert alert = new Alert(AlertType.ERROR);
-    alert.setTitle(title);
+    alert.setHeaderText(header);
     alert.setContentText(content);
     alert.showAndWait();
   }

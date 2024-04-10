@@ -2,6 +2,7 @@ package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -17,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
  * Controller class for the recipe view
@@ -70,6 +72,15 @@ public class UiRecipeViewController {
   private Label recipeNameLabel;
 
   /**
+   * Buttons for saving, or discarding changes made to current recipe.
+   */
+  @FXML
+  private Button saveChangesButton;
+
+  @FXML
+  private Button discardChangesButton;
+
+  /**
    * Initialize the controller.
    */
   @FXML
@@ -78,6 +89,16 @@ public class UiRecipeViewController {
     this.setMainController(mainController);
     ingredientsListView.setCellFactory(param -> new RecipeListCell());
 
+  }
+
+  /**
+   * Initialise the display of the recipe view.
+   */
+  public void initializeDisplay() {
+    this.displayIngredients();
+    this.displayInstructions();
+    this.displayName();
+    this.initializeButtonHandlers();
   }
 
   /**
@@ -156,17 +177,29 @@ public class UiRecipeViewController {
     }
   }
 
-  public void initializeDisplay() {
-    displayIngredients();
-    displayInstructions();
-    displayName();
+  /**
+   * Initialise button handlers for the recipe.
+   */
+  private void initializeButtonHandlers() {
+
+    // Define action listener for the save changes button
+    this.saveChangesButton.setOnAction(event -> {
+      Recipe.updateInstructions(this.recipeName, this.instructionsArea.getText());
+    });
+
+    // Define action listener for the discard changes button
+    this.discardChangesButton.setOnAction(event -> {
+      this.instructionsArea.setText(Recipe.getInstructions(this.recipeName));
+    });
+
   }
 
+  /**
+   * Display the name of the recipe in the top label.
+   */
   private void displayName() {
     this.recipeNameLabel.setText(this.recipeName);
   }
-
-
 
 
 }

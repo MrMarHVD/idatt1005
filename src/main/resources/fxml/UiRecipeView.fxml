@@ -106,8 +106,8 @@
             <TextField fx:id="instructions" />
             <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Button" />
             <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Button" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="178.0" text="Save changes" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="171.0" text="Discard changes" />
+            <Button fx:id="saveChangesButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="178.0" text="Save changes" />
+            <Button fx:id="discardChangesButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="171.0" text="Discard changes" />
           </children>
         </VBox>
       </right>
