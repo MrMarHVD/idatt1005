@@ -41,11 +41,11 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -100,14 +100,14 @@
         </VBox>
       </top>
       <right>
-        <VBox prefHeight="437.0" prefWidth="102.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="503.0" prefWidth="141.0" BorderPane.alignment="CENTER">
           <children>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Add Recipe" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="199.0" text="Add Recipe" />
             <TextField fx:id="instructions" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Button" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Button" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Button" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Button" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="Button" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Button" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="178.0" text="Save changes" />
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="171.0" text="Discard changes" />
           </children>
         </VBox>
       </right>
@@ -136,13 +136,18 @@
             </VBox>
             <VBox prefHeight="429.0" prefWidth="361.0">
               <children>
-                <ImageView fitHeight="240.0" fitWidth="370.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="recipeNameLabel" prefHeight="37.0" prefWidth="341.0" text="Recipe">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                        <Region prefHeight="101.0" prefWidth="320.0" />
                 <Label prefHeight="30.0" prefWidth="371.0" text="Instructions">
                   <font>
                     <Font size="19.0" />
                   </font>
                 </Label>
-                <TextArea fx:id="instructionsArea" prefColumnCount="1" prefHeight="236.0" prefWidth="370.0" wrapText="true" />
+                <TextArea fx:id="instructionsArea" prefColumnCount="1" prefHeight="336.0" prefWidth="320.0" wrapText="true" />
               </children></VBox>
             <VBox prefHeight="503.0" prefWidth="382.0">
               <children>

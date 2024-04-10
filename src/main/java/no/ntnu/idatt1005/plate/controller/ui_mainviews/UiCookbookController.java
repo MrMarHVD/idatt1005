@@ -115,7 +115,7 @@ public class UiCookbookController {
     updateRecipeButtons();
     button.setOnAction(event -> {
 
-      System.out.println("Going to recipe: " + recipe);
+      System.out.println("Going to recipe: " + recipe); // TODO: Remove this line (and other similar lines) when done testing
       if (this.mainController != null) {
         this.mainController.goToRecipe(recipe);
       }

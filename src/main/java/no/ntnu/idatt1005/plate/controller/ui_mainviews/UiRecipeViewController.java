@@ -2,6 +2,7 @@ package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -63,6 +64,12 @@ public class UiRecipeViewController {
   private TextArea instructionsArea;
 
   /**
+   * The label for the name of the recipe.
+   */
+  @FXML
+  private Label recipeNameLabel;
+
+  /**
    * Initialize the controller.
    */
   @FXML
@@ -93,7 +100,7 @@ public class UiRecipeViewController {
   /**
    * Queries all ingredients in the recipe and displays them.
    */
-  public void displayIngredients() {
+  private void displayIngredients() {
     if (recipeName == null) {
       PopupManager.displayErrorFull("Error", "Recipe name is null", "Recipe name is null.");
     }
@@ -123,7 +130,7 @@ public class UiRecipeViewController {
   /**
    * Method to show a recipes instructions in the text area.
    */
-  public void displayInstructions() {
+  private void displayInstructions() {
     if (recipeName == null) {
       instructionsArea.setText("recipe name is null"); // Clear the text area if recipeId is null.
       return;
@@ -147,6 +154,16 @@ public class UiRecipeViewController {
       e.printStackTrace();
       instructionsArea.setText("Error retrieving instructions.");
     }
+  }
+
+  public void initializeDisplay() {
+    displayIngredients();
+    displayInstructions();
+    displayName();
+  }
+
+  private void displayName() {
+    this.recipeNameLabel.setText(this.recipeName);
   }
 
 
