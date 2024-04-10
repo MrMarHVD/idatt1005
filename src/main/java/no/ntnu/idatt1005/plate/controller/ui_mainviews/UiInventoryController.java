@@ -14,6 +14,7 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.global.PopupManager;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.controller.inventory.IngredientListCell;
+import no.ntnu.idatt1005.plate.model.Inventory;
 
 /**
  * Controller class for the inventory view
@@ -149,19 +150,9 @@ public class UiInventoryController {
     updateIngredientButton.setOnMouseClicked(event -> {
       Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
       if (selectedIngredientId != null) {
-        try {
-          ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-              "SELECT name FROM ingredient WHERE ingredient_id = " + selectedIngredientId
-          );
-          if (rs.next()) {
-            String ingredientName = rs.getString("name");
-
+        String ingredientName = Inventory.selectIngredient(selectedIngredientId);
             // Update the ingredient selected with the new quantity.
             this.updateIngredient(ingredientName, Float.parseFloat(quantityFieldUpdate.getText()));
-          }
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
       }
     });
     removeSelectedButton.setOnMouseClicked(event -> removeSelectedIngredient());
@@ -207,10 +198,7 @@ public class UiInventoryController {
     List<Integer> fullInventory = new ArrayList<Integer>();
 
     try {
-      ResultSet inventoryIngredients = MainController.sqlConnector.executeSqlSelect(
-          "SELECT i.ingredient_id "
-              + "FROM ingredient i "
-              + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id;");
+      ResultSet inventoryIngredients = Inventory.selectAllInventoryIngredients();
       while (inventoryIngredients.next()) {
         fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
       }
@@ -230,11 +218,7 @@ public class UiInventoryController {
   private void searchIngredients(String input) {
     List<Integer> fullInventory = new ArrayList<Integer>();
     try {
-      ResultSet searchResults = MainController.sqlConnector.executeSqlSelect(""
-          + "SELECT i.ingredient_id "
-          + "FROM ingredient i "
-          + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
-          + "WHERE i.name LIKE '%" + input + "%';");
+      ResultSet searchResults = Inventory.searchIngredients(input);
       while (searchResults.next()) {
         fullInventory.add(searchResults.getInt("ingredient_id"));
       }
@@ -253,11 +237,7 @@ public class UiInventoryController {
     List<Integer> fullInventory = new ArrayList<Integer>();
 
     try {
-      ResultSet inventoryIngredients = MainController.sqlConnector.executeSqlSelect(""
-          + "SELECT i.ingredient_id "
-          + "FROM ingredient i "
-          + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
-          + "ORDER BY i.name ASC;");
+      ResultSet inventoryIngredients = Inventory.sortByName();
       while (inventoryIngredients.next()) {
         fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
       }
@@ -277,17 +257,12 @@ public class UiInventoryController {
     List<Integer> fullInventory = new ArrayList<Integer>();
 
     try {
-      ResultSet inventoryIngredients = MainController.sqlConnector.executeSqlSelect(""
-          + "SELECT i.ingredient_id "
-          + "FROM ingredient i "
-          + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
-          + "LEFT JOIN category c ON i.category_id = c.id "
-          + "ORDER BY c.name ASC;");
+      ResultSet inventoryIngredients = Inventory.sortByCategory();
       while (inventoryIngredients.next()) {
         fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
       }
     } catch (Exception e) {
-      PopupManager.displayError("Error", "Failed to sort", e.getMessage());
+      PopupManager.displayErrorFull("Error", "Failed to sort", e.getMessage());
       e.printStackTrace();
     }
     ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
@@ -317,9 +292,7 @@ public class UiInventoryController {
    */
   private void deleteIngredient(int ingredientId) {
     try {
-      MainController.sqlConnector.executeSqlUpdate(""
-          + "DELETE FROM inventory_ingredient "
-          + "WHERE ingredient_id = " + ingredientId + ";");
+      Inventory.deleteIngredient(ingredientId);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -333,30 +306,7 @@ public class UiInventoryController {
    */
   @FXML
   private void updateIngredient(String name, float quantity) {
-    try {
-      // Get the ingredient_id of the ingredient with the given name
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient_id FROM ingredient WHERE name = '" + name + "'"
-      );
-
-      if (rs.next()) {
-        int ingredientId = rs.getInt("ingredient_id");
-
-        // Check if the ingredient exists in the inventory_ingredient table
-        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
-            "SELECT ingredient_id FROM inventory_ingredient WHERE ingredient_id = " + ingredientId
-        );
-
-        if (rsInventory.next()) {
-          // If the ingredient exists, update its quantity
-          MainController.sqlConnector.executeSqlUpdate(
-              "UPDATE inventory_ingredient SET quantity = quantity + " + quantity + " WHERE ingredient_id = " + ingredientId
-          );
-        }
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    Inventory.updateIngredient(name, quantity);
   }
 
   /**
@@ -369,39 +319,7 @@ public class UiInventoryController {
    */
   @FXML
   private void addNewIngredient(String name, float quantity) {
-    try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT i.ingredient_id "
-              + "FROM ingredient i "
-              + "WHERE i.name = '" + name + "'");
-
-      if (rs.next()) {
-        int ingredientId = rs.getInt("ingredient_id");
-
-        // Check if there already exists a corresponding ingredient in inventory
-        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
-            "SELECT ii.ingredient_id "
-                + "FROM inventory_ingredient ii "
-                + "WHERE ii.ingredient_id = " + ingredientId
-        );
-
-        // If a corresponding ingredient exists, throw exception.
-        if (rsInventory.next()) {throw new IllegalArgumentException(""
-            + "Cannot add a new ingredient if it already exists in inventory. Please "
-            + "update existing ingredient instead."); }
-
-        MainController.sqlConnector.executeSqlUpdate(
-            "INSERT INTO inventory_ingredient (ingredient_id, quantity) "
-                + "VALUES (" + ingredientId + ", " + quantity + "); "
-        );
-      } else {
-        System.out.println("Test");
-      }
-
-  } catch (Exception e) {
-      PopupManager.displayError("Error", "Failed to add ingredient", e.getMessage());
-    e.printStackTrace();
-  }
+    Inventory.addNewIngredient(name, quantity);
     this.displayIngredients();
   }
 }

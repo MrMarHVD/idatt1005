@@ -6,11 +6,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import no.ntnu.idatt1005.plate.controller.cookbook.GridPaneGenerator;
 import no.ntnu.idatt1005.plate.controller.cookbook.RecipeListCell;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.global.PopupManager;
-import no.ntnu.idatt1005.plate.controller.inventory.IngredientListCell;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import javafx.fxml.FXML;
 
@@ -97,7 +95,7 @@ public class UiRecipeViewController {
    */
   public void displayIngredients() {
     if (recipeName == null) {
-      PopupManager.displayError("Error", "Recipe name is null", "Recipe name is null.");
+      PopupManager.displayErrorFull("Error", "Recipe name is null", "Recipe name is null.");
     }
     try {
       ResultSet ingredients = mainController.sqlConnector.executeSqlSelect(
@@ -118,7 +116,7 @@ public class UiRecipeViewController {
       ingredientsListView.setCellFactory(param -> new RecipeListCell());
     } catch (SQLException e) {
       e.printStackTrace();
-      PopupManager.displayError("Error", "Error retrieving ingredients", "Error retrieving ingredients.");
+      PopupManager.displayErrorFull("Error", "Error retrieving ingredients", "Error retrieving ingredients.");
     }
   }
 
