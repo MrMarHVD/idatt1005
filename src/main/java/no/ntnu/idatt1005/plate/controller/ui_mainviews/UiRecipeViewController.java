@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import no.ntnu.idatt1005.plate.model.Calendar;
 import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
@@ -88,6 +89,9 @@ public class UiRecipeViewController {
   private TextField quantityTextField;
 
   @FXML
+  private Label quantityLabel;
+
+  @FXML
   private ComboBox<String> selectIngredientComboBox;
 
   @FXML
@@ -123,8 +127,10 @@ public class UiRecipeViewController {
   public void initializeDisplay() {
     this.displayIngredients();
     this.displayInstructions();
+    this.initializeComboBox();
     this.displayName();
     this.initializeButtonHandlers();
+    this.initializeSelectionHandlers();
   }
 
   /**
@@ -218,8 +224,12 @@ public class UiRecipeViewController {
       this.instructionsArea.setText(Recipe.getInstructions(this.recipeName));
     });
 
+    // Define action listener for button to create new recipe. Create, and go to the new recipe.
     this.newRecipeButton.setOnAction(event -> {
       Recipe.createRecipe(this.recipeNameTextField.getText());
+      if (this.mainController != null) {
+        this.mainController.goToRecipe(this.recipeNameTextField.getText());
+      }
     });
 
     // Define action listener for the delete recipe button
@@ -227,6 +237,35 @@ public class UiRecipeViewController {
       Recipe.deleteRecipe(this.recipeName);
     });
 
+  }
+
+  /**
+   * Initialize action handlers for ComboBoxes and text fields.
+   */
+  private void initializeSelectionHandlers() {
+    this.ingredientTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+      this.selectIngredientComboBox.getItems().clear();
+      ArrayList<String> results = Recipe.searchIngredients(newValue);
+      for (int i = 0; i < results.size(); i++) {
+        this.selectIngredientComboBox.getItems().add(results.get(i));
+      }
+    });
+
+    // Add listener to ComboBox such that the unit is updated upon selection.
+    this.selectIngredientComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+      String unit = Recipe.getIngredientUnit(newValue);
+      this.quantityLabel.setText(unit);
+    });
+  }
+
+  /**
+   * Initialise the ComboBox such that all ingredients are shown upon entering the recipe view.
+   */
+  private void initializeComboBox() {
+    ArrayList<String> results = Recipe.searchIngredients("");
+    for (int i = 0; i < results.size(); i++) {
+      this.selectIngredientComboBox.getItems().add(results.get(i));
+    }
   }
 
   /**

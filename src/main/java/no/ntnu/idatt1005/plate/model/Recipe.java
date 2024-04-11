@@ -1,5 +1,7 @@
 package no.ntnu.idatt1005.plate.model;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.global.PopupManager;
 
@@ -64,6 +66,43 @@ public class Recipe {
     } catch (Exception e) {
       PopupManager.displayError("Create error", "Could not create recipe");
     }
+  }
+
+  /**
+   * Search the database for ingredients with a name that contains the search string.
+   *
+   * @param search the search input.
+   * @return a list of all the matching ingredients.
+   */
+  public static ArrayList<String> searchIngredients(String search) {
+    ArrayList<String> ingredients = new ArrayList<>();
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM ingredient WHERE name LIKE '%" + search + "%'");
+      while (rs.next()) {
+        String name = rs.getString("name");
+        ingredients.add(name);
+      }
+    } catch (Exception e) {
+      e.getMessage();
+    }
+    return ingredients;
+  }
+
+  /**
+   * Get the unit of a given ingredient.
+   *
+   * @param ingredientName the name of the ingredient.
+   * @return the unit of the ingredient.
+   */
+  public static String getIngredientUnit(String ingredientName) {
+    String unit = null;
+    try {
+      unit = MainController.sqlConnector.executeSqlSelect(
+          "SELECT unit FROM ingredient WHERE name = '" + ingredientName + "';").getString("unit");
+    } catch (Exception e) {
+      PopupManager.displayError("Selection error", e.getMessage());
+    }
+    return unit;
   }
 
 }
