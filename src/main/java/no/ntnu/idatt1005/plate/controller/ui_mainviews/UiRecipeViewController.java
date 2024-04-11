@@ -237,6 +237,13 @@ public class UiRecipeViewController {
       Recipe.deleteRecipe(this.recipeName);
     });
 
+    this.addIngredientButton.setOnAction(event -> {
+      String ingredient = this.selectIngredientComboBox.getSelectionModel().getSelectedItem();
+      float quantity = Float.parseFloat(this.quantityTextField.getText());
+      Recipe.addIngredientToRecipe(this.recipeName, ingredient, quantity);
+      this.displayIngredients();
+    });
+
   }
 
   /**

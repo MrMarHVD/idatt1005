@@ -105,4 +105,18 @@ public class Recipe {
     return unit;
   }
 
+  // TODO: add method which checks whether the ingredient the user has tried to add, is already in the recipe. If so, add quantity instead.
+  public static void addIngredientToRecipe(String recipeName, String ingredientName, float quantity) {
+    try {
+      int recipeId = MainController.sqlConnector.executeSqlSelect(
+          "SELECT recipe_id FROM recipe WHERE name = '" + recipeName + "';").getInt("recipe_id");
+      int ingredientId = MainController.sqlConnector.executeSqlSelect(
+          "SELECT ingredient_id FROM ingredient WHERE name = '" + ingredientName + "';").getInt("ingredient_id");
+      MainController.sqlConnector.executeSqlUpdate(
+          "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, quantity) VALUES (" + recipeId + ", " + ingredientId + ", " + quantity + ");");
+    } catch (Exception e) {
+      PopupManager.displayError("Insert error", "Could not insert ingredient");
+    }
+  }
+
 }
