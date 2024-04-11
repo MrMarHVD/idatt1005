@@ -3,6 +3,7 @@ package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -70,6 +71,31 @@ public class UiRecipeViewController {
    */
   @FXML
   private Label recipeNameLabel;
+
+  @FXML
+  private Button addRecipeButton;
+
+  @FXML
+  private Button deleteRecipeButton;
+
+  @FXML
+  private TextField ingredientTextField;
+
+  @FXML
+  private Button addIngredientButton;
+
+  @FXML
+  private TextField quantityTextField;
+
+  @FXML
+  private ComboBox<String> selectIngredientComboBox;
+
+  @FXML
+  private Button newRecipeButton;
+
+  @FXML
+  private TextField recipeNameTextField;
+
 
   /**
    * Buttons for saving, or discarding changes made to current recipe.
@@ -190,6 +216,15 @@ public class UiRecipeViewController {
     // Define action listener for the discard changes button
     this.discardChangesButton.setOnAction(event -> {
       this.instructionsArea.setText(Recipe.getInstructions(this.recipeName));
+    });
+
+    this.newRecipeButton.setOnAction(event -> {
+      Recipe.createRecipe(this.recipeNameTextField.getText());
+    });
+
+    // Define action listener for the delete recipe button
+    this.deleteRecipeButton.setOnAction(event -> {
+      Recipe.deleteRecipe(this.recipeName);
     });
 
   }

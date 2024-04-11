@@ -46,7 +46,7 @@ INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALU
 INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (22, 'Tomato', NULL, 1, 'kg');
 INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (23, 'Lettuce', NULL, 1, 'kg');
 INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit) VALUES (24, 'Potato', NULL, 1, 'kg');
-INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit);
+INSERT INTO ingredient(ingredient_id, name, allergen_id, category_id, unit)
 VALUES
     (25, 'Carrot', NULL, 1, 'kg'),
     (26, 'Broccoli', NULL, 1, 'kg'),

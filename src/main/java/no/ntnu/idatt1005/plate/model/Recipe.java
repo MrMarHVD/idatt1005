@@ -16,6 +16,8 @@ public class Recipe {
    */
   public static void updateInstructions(String recipeName, String instructions) {
     try {
+      // Escape line breaks in the instructions string
+
       MainController.sqlConnector.executeSqlUpdate(
           "UPDATE recipe SET instruction = '" + instructions + "' WHERE name = '" + recipeName + "';");
     } catch (Exception e) {
@@ -39,6 +41,29 @@ public class Recipe {
       PopupManager.displayError("Selection error", e.getMessage());
     }
     return instructions;
+  }
+
+  /**
+   * Delete the selected recipe from the database.
+   *
+   * @param recipeName the name of the recipe to delete.
+   */
+  public static void deleteRecipe(String recipeName) {
+    try {
+      MainController.sqlConnector.executeSqlUpdate(
+          "DELETE FROM recipe WHERE name = '" + recipeName + "';");
+    } catch (Exception e) {
+      PopupManager.displayError("Delete error", "Could not delete recipe");
+    }
+  }
+
+  public static void createRecipe(String recipeName) {
+    try {
+      MainController.sqlConnector.executeSqlUpdate(
+          "INSERT INTO recipe (name) VALUES ('" + recipeName + "');");
+    } catch (Exception e) {
+      PopupManager.displayError("Create error", "Could not create recipe");
+    }
   }
 
 }
