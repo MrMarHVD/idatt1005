@@ -100,6 +100,9 @@ public class UiRecipeViewController {
   @FXML
   private TextField recipeNameTextField;
 
+  @FXML
+  private TextField portionTextField;
+
 
   /**
    * Buttons for saving, or discarding changes made to current recipe.
@@ -117,7 +120,7 @@ public class UiRecipeViewController {
   private void initialize() {
 
     this.setMainController(mainController);
-    ingredientsListView.setCellFactory(param -> new RecipeListCell());
+    ingredientsListView.setCellFactory(param -> new RecipeListCell(this));
 
   }
 
@@ -167,11 +170,16 @@ public class UiRecipeViewController {
 
       ObservableList<Integer> observableList = FXCollections.observableArrayList(ingredientList);
       ingredientsListView.setItems(observableList);
-      ingredientsListView.setCellFactory(param -> new RecipeListCell());
+      ingredientsListView.setCellFactory(param -> new RecipeListCell(this));
     } catch (SQLException e) {
       e.printStackTrace();
-      PopupManager.displayErrorFull("Error", "Error retrieving ingredients", "Error retrieving ingredients.");
+      PopupManager.displayErrorFull("Error",
+          "Error retrieving ingredients", "Error retrieving ingredients.");
     }
+  }
+
+  public TextField getPortionTextField() {
+    return portionTextField;
   }
 
   /**
@@ -258,6 +266,10 @@ public class UiRecipeViewController {
     this.selectIngredientComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
       String unit = Recipe.getIngredientUnit(newValue);
       this.quantityLabel.setText(unit);
+    });
+
+    this.portionTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+      this.displayIngredients();
     });
   }
 

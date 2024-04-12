@@ -7,6 +7,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiRecipeViewController;
 
 /**
  * ListCell class which manages the cells in the ingredient list,
@@ -24,6 +25,11 @@ import org.iq80.snappy.Main;
 >>>>>>> feature/cookbook
  */
 public class RecipeListCell extends ListCell<Integer> {
+
+  /**
+   * Controller for this list cell.
+   */
+  private final UiRecipeViewController controller;
 
 
   /**
@@ -51,7 +57,8 @@ public class RecipeListCell extends ListCell<Integer> {
    */
   //private final Label category = new Label();
 
-  public RecipeListCell() {
+  public RecipeListCell(UiRecipeViewController controller) {
+    this.controller = controller;
 
     // Set the column constraints for the grid such that the columns are equally wide.
     int noOfColumns = 3; // Change this if you want to change the number of columns.
@@ -103,7 +110,13 @@ public class RecipeListCell extends ListCell<Integer> {
 
           String quantity = ingredientDetails.getString("quantity");
           String unit = ingredientDetails.getString("unit");
-          quantities.setText(quantity != null ? (quantity + " " + unit) : "None");
+
+          if (this.controller.getPortionTextField().getText().matches("[+-]?([0-9]*[.])?[0-9]+")) {
+            quantities.setText(quantity != null ? ((Float.parseFloat(quantity) *
+                Float.parseFloat(this.controller.getPortionTextField().getText())) + " " + unit) : "None");
+          } else {
+            quantities.setText(quantity != null ? ((quantity + " " + unit)) : "None");
+          }
 
           String allergen = ingredientDetails.getString("allergen");
           allergens.setText(allergen != null ? allergen : "None");
