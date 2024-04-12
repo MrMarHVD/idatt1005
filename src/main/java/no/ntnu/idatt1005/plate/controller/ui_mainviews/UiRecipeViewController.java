@@ -158,13 +158,7 @@ public class UiRecipeViewController {
       PopupManager.displayErrorFull("Error", "Recipe name is null", "Recipe name is null.");
     }
     try {
-      ResultSet ingredients = mainController.sqlConnector.executeSqlSelect(
-          "SELECT recipe_ingredients.ingredient_id " +
-              "FROM recipe_ingredients " +
-              "JOIN recipe ON recipe_ingredients.recipe_id = recipe.recipe_id " +
-              "WHERE recipe.name = '" + recipeName + "';"
-
-      );
+      ResultSet ingredients = Recipe.selectIngredientsInRecipe(recipeName);
 
       List<Integer> ingredientList = new ArrayList<>();
       while (ingredients.next()) {
@@ -235,8 +229,10 @@ public class UiRecipeViewController {
     // Define action listener for the delete recipe button
     this.deleteRecipeButton.setOnAction(event -> {
       Recipe.deleteRecipe(this.recipeName);
+      this.mainController.goToCookbook();
     });
 
+    // Define action listener for the add ingredient button
     this.addIngredientButton.setOnAction(event -> {
       String ingredient = this.selectIngredientComboBox.getSelectionModel().getSelectedItem();
       float quantity = Float.parseFloat(this.quantityTextField.getText());

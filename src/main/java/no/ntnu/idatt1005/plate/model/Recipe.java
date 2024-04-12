@@ -119,4 +119,19 @@ public class Recipe {
     }
   }
 
+  public static ResultSet selectIngredientsInRecipe(String recipeName) {
+    ResultSet ingredients = null;
+
+    try {
+      ingredients = MainController.sqlConnector.executeSqlSelect(
+          "SELECT recipe_ingredients.ingredient_id " +
+              "FROM recipe_ingredients " +
+              "JOIN recipe ON recipe_ingredients.recipe_id = recipe.recipe_id " +
+              "WHERE recipe.name = '" + recipeName + "';");
+    } catch (Exception e) {
+      PopupManager.displayError("Selection error", "Could not select ingredients");
+    }
+    return ingredients;
+  }
+
 }
