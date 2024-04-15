@@ -268,8 +268,9 @@ public class UiRecipeViewController {
    * Initialize action handlers for ComboBoxes and text fields.
    */
   private void initializeSelectionHandlers() {
-    this.quantityTextField.setTextFormatter(Formatter.getFloatFormatter());
 
+    // Set text formatter for the quantity text field to prevent invalid input.
+    this.quantityTextField.setTextFormatter(Formatter.getFloatFormatter());
 
     this.ingredientTextField.textProperty().addListener((observable, oldValue, newValue) -> {
       this.selectIngredientComboBox.getItems().clear();
