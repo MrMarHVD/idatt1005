@@ -119,6 +119,17 @@ public class Recipe {
     }
   }
 
+  public static void removeIngredientFromRecipe(String recipeName, int ingredientId) {
+    try {
+      int recipeId = MainController.sqlConnector.executeSqlSelect(
+          "SELECT recipe_id FROM recipe WHERE name = '" + recipeName + "';").getInt("recipe_id");
+      MainController.sqlConnector.executeSqlUpdate(
+          "DELETE FROM recipe_ingredients WHERE recipe_id = " + recipeId + " AND ingredient_id = " + ingredientId + ";");
+    } catch (Exception e) {
+      PopupManager.displayError("Delete error", "Could not delete ingredient");
+    }
+  }
+
   public static ResultSet selectIngredientsInRecipe(String recipeName) {
     ResultSet ingredients = null;
 

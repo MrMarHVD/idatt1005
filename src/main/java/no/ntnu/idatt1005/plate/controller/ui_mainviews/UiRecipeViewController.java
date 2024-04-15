@@ -83,6 +83,9 @@ public class UiRecipeViewController {
   private TextField ingredientTextField;
 
   @FXML
+  private Button removeIngredientButton;
+
+  @FXML
   private Button addIngredientButton;
 
   @FXML
@@ -246,6 +249,14 @@ public class UiRecipeViewController {
       float quantity = Float.parseFloat(this.quantityTextField.getText());
       Recipe.addIngredientToRecipe(this.recipeName, ingredient, quantity);
       this.displayIngredients();
+    });
+
+    // Define action listener for the remove ingredient button
+    this.removeIngredientButton.setOnAction(event -> {
+      int ingredientId = this.ingredientsListView.getSelectionModel().getSelectedItem();
+      Recipe.removeIngredientFromRecipe(this.recipeName, ingredientId);
+      this.displayIngredients();
+
     });
 
   }

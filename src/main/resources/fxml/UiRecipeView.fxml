@@ -127,6 +127,7 @@
                            </children>
                         </HBox>
                   <Button fx:id="addIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Add Ingredient" />
+                        <Button fx:id="removeIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="141.0" text="Remove Ingredient" />
                      </children>
                   </VBox>
                   <Region prefHeight="133.0" prefWidth="141.0" />
