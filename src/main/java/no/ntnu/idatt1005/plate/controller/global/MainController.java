@@ -6,12 +6,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import no.ntnu.idatt1005.plate.MyApp;
 
-import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiCookbookController;
-import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiHomeController;
-import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiInventoryController;
-import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiRecipeViewController;
-import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiSettingsController;
-import no.ntnu.idatt1005.plate.controller.shoppinglist.UiShoppingListController;
+import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiCookbookController;
+import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiHomeController;
+import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiInventoryController;
+import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiRecipeViewController;
+import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiSettingsController;
+import no.ntnu.idatt1005.plate.controller.ui.shoppinglist.UiShoppingListController;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 // TODO: improve error handling (i.e. no printStackTrace)

@@ -1,8 +1,6 @@
-package no.ntnu.idatt1005.plate.controller.calendar;
+package no.ntnu.idatt1005.plate.controller.ui.calendar;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 

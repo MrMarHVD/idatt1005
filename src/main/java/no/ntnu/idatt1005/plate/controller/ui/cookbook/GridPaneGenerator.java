@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.cookbook;
+package no.ntnu.idatt1005.plate.controller.ui.cookbook;
 
 import java.util.List;
 import javafx.scene.image.Image;

@@ -1,5 +1,6 @@
-package no.ntnu.idatt1005.plate.controller.ui_mainviews;
+package no.ntnu.idatt1005.plate.controller.ui.mainviews;
 
+import java.util.function.UnaryOperator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -8,18 +9,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.layout.GridPane;
-import no.ntnu.idatt1005.plate.controller.cookbook.RecipeListCell;
+import no.ntnu.idatt1005.plate.controller.ui.cookbook.RecipeListCell;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.global.PopupManager;
-import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
+import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 import javafx.fxml.FXML;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import no.ntnu.idatt1005.plate.model.Calendar;
 import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
@@ -265,6 +266,15 @@ public class UiRecipeViewController {
    * Initialize action handlers for ComboBoxes and text fields.
    */
   private void initializeSelectionHandlers() {
+    UnaryOperator<Change> floatFilter = change -> {
+      String newText = change.getControlNewText();
+      if (newText.isEmpty() || newText.matches("\\d*\\.?\\d*")) {
+        return change;
+      }
+      return null;
+    };
+
+
     this.ingredientTextField.textProperty().addListener((observable, oldValue, newValue) -> {
       this.selectIngredientComboBox.getItems().clear();
       ArrayList<String> results = Recipe.searchIngredients(newValue);

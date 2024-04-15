@@ -3,7 +3,7 @@ package no.ntnu.idatt1005.plate.model;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.global.PopupManager;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
  * This is a class for managing SQL-queries relating to the recipe view.

@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.toolbar;
+package no.ntnu.idatt1005.plate.controller.ui.toolbar;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.cookbook;
+package no.ntnu.idatt1005.plate.controller.ui.cookbook;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +7,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiRecipeViewController;
+import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiRecipeViewController;
 
 /**
  * ListCell class which manages the cells in the ingredient list,
