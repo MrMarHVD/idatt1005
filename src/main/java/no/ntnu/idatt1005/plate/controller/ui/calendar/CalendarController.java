@@ -195,14 +195,12 @@ public class CalendarController {
       dayBlockController.getSelectedButton().setOnAction(e -> {
         if (dayBlockController.getSelectedButton().isSelected()) {
           String date = dayBlockController.getDate();
-<<<<<<< HEAD
+
           this.selectedDate = Date.valueOf(date); // Ensure that the selected date is stored
           String recipeName = Calendar.getDayRecipes().get(date);
 
-          this.populateMissingIngredientListView(recipeName);
-=======
           this.populateListView(date);
->>>>>>> 2b0e68f (Added refresh function such that ingredients are displayed anew in missing ingredient list view when the user has added them to the shopping list.)
+
         }
       });
     }
@@ -289,11 +287,9 @@ public class CalendarController {
           ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
         }
       }
-<<<<<<< HEAD
-      this.populateMissingIngredientListView(recipeName);
-=======
+
       this.populateListView(this.selectedDate.toString());
->>>>>>> 2b0e68f (Added refresh function such that ingredients are displayed anew in missing ingredient list view when the user has added them to the shopping list.)
+
     });
 
     // Create action listener for button which adds all missing ingredients to shopping list.
