@@ -1,5 +1,7 @@
 package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +21,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.model.Settings;
 
 public class UiCookbookController {
 
@@ -53,16 +56,21 @@ public class UiCookbookController {
 
   private boolean isSortedAsc = false;
 
+  private final Path configDir = Paths.get(System.getProperty("user.home")).resolve(".plate");
+  private final Settings settings = new Settings(configDir);
+
   /**
    * Initialize the controller.
    */
   public void initialize() {
     this.setMainController(mainController);
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe");
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name, vegetarian FROM recipe");
       while (rs.next()) {
-        String name = rs.getString("name");
-        addRecipeButton(name);
+        if(rs.getInt("vegetarian") == 1 && settings.getVegetarian() || !settings.getVegetarian()) {
+          String name = rs.getString("name");
+          addRecipeButton(name);
+        }
       }
     } catch (Exception e) {
       e.getMessage();
@@ -132,10 +140,12 @@ public class UiCookbookController {
       gridPane.getChildren().clear();
     }
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe WHERE name LIKE '%" + input + "%'");
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name, vegetarian FROM recipe WHERE name LIKE '%" + input + "%'");
       while (rs.next()) {
-        String name = rs.getString("name");
-        addRecipeButton(name);
+        if(rs.getInt("vegetarian") == 1 && settings.getVegetarian() || !settings.getVegetarian()) {
+          String name = rs.getString("name");
+          addRecipeButton(name);
+        }
       }
     } catch (Exception e) {
       e.getMessage();
@@ -151,10 +161,12 @@ public class UiCookbookController {
       gridPane.getChildren().clear();
     }
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe ORDER BY name");
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name, vegetarian FROM recipe ORDER BY name");
       while (rs.next()) {
-        String name = rs.getString("name");
-        addRecipeButton(name);
+        if(rs.getInt("vegetarian") == 1 && settings.getVegetarian() || !settings.getVegetarian()) {
+          String name = rs.getString("name");
+          addRecipeButton(name);
+        }
       }
     } catch (Exception e) {
       e.getMessage();
@@ -167,10 +179,12 @@ public class UiCookbookController {
       gridPane.getChildren().clear();
     }
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe ORDER BY name DESC");
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name, vegetarian FROM recipe ORDER BY name DESC");
       while (rs.next()) {
-        String name = rs.getString("name");
-        addRecipeButton(name);
+        if(rs.getInt("vegetarian") == 1 && settings.getVegetarian() || !settings.getVegetarian()) {
+          String name = rs.getString("name");
+          addRecipeButton(name);
+        }
       }
     } catch (Exception e) {
       e.getMessage();

@@ -38,7 +38,7 @@ class CalendarTest {
     void testInsertDay() {
 
         //act
-        calendar.insertDay(date);
+        calendar.insertDay(date, false);
 
         //assert
       assertTrue(calendar.dayExists(date));
@@ -108,7 +108,7 @@ class CalendarTest {
         String search = "Pizza";
 
         //act
-        String recipe = calendar.searchRecipes(search).get(0);
+        String recipe = calendar.searchRecipes(search, false).get(0);
 
         //assert
         assertTrue(recipe.contains(search));
@@ -121,7 +121,7 @@ class CalendarTest {
         String search = "Nonexistent";
 
         //act
-        int size = calendar.searchRecipes(search).size();
+        int size = calendar.searchRecipes(search, false).size();
 
         //assert
         assertEquals(0, size);

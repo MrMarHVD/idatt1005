@@ -159,16 +159,16 @@ VALUES
     (133, 'Garlic Bread', 3, 6, 'qty'),
     (134, 'Fries', NULL, 6,'kg');
 -- Oppskrifter
-INSERT INTO recipe(recipe_id, name, instruction) VALUES (1, 'Margherita Pizza', 'Classic Margherita Pizza with tomato sauce, mozzarella, and fresh basil. Roll out pizza dough, add sauce and toppings, and bake.');
-INSERT INTO recipe(recipe_id, name, instruction) VALUES (2, 'Classic Grilled Cheese Sandwich', 'A simple and delicious grilled cheese sandwich made with butter, bread, and melted cheese. Butter both sides of bread, add cheese, and grill until golden brown.');
-INSERT INTO recipe(recipe_id, name, instruction) VALUES (3, 'Chicken and Paprika Skewers', 'Flavorful Chicken and Paprika Skewers with marinated chicken and paprika. Skewer chicken and paprika alternately, grill, and serve.');
-INSERT INTO recipe(recipe_id, name, instruction) VALUES (4, 'Spicy Pepperoni Pizza', 'Spicy Pepperoni Pizza with tomato sauce, pepperoni, and chilli peppers. Roll out pizza dough, add sauce, toppings, and bake.');
-INSERT INTO recipe(recipe_id, name, instruction) VALUES (5, 'Egg and Onion Scramble', 'Quick and tasty Egg and Onion Scramble with scrambled eggs and sautéed onions. Scramble eggs, sauté onions, and mix together.');
-INSERT INTO recipe(recipe_id, name, instruction) VALUES (6, 'Recipe 6', 'Recipe 6 instruction');
-INSERT INTO recipe(recipe_id, name, instruction) VALUES (7, 'Recipe 7', 'Recipe 7 instruction');
-INSERT INTO recipe(recipe_id, name, instruction) VALUES (8, 'Recipe 8', 'Recipe 8 instruction');
-INSERT INTO recipe(recipe_id, name, instruction) VALUES (9, 'Recipe 9', 'Recipe 9 instruction');
-INSERT INTO recipe(recipe_id, name, instruction) VALUES (10, 'Recipe 10', 'Recipe 10 instruction');
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (1, 'Margherita Pizza', 'Classic Margherita Pizza with tomato sauce, mozzarella, and fresh basil. Roll out pizza dough, add sauce and toppings, and bake.', 1);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (2, 'Classic Grilled Cheese Sandwich', 'A simple and delicious grilled cheese sandwich made with butter, bread, and melted cheese. Butter both sides of bread, add cheese, and grill until golden brown.', 1);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (3, 'Chicken and Paprika Skewers', 'Flavorful Chicken and Paprika Skewers with marinated chicken and paprika. Skewer chicken and paprika alternately, grill, and serve.', 0);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (4, 'Spicy Pepperoni Pizza', 'Spicy Pepperoni Pizza with tomato sauce, pepperoni, and chilli peppers. Roll out pizza dough, add sauce, toppings, and bake.', 0);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (5, 'Egg and Onion Scramble', 'Quick and tasty Egg and Onion Scramble with scrambled eggs and sautéed onions. Scramble eggs, sauté onions, and mix together.', 1);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (6, 'Recipe 6', 'Recipe 6 instruction', 0);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (7, 'Recipe 7', 'Recipe 7 instruction', 1);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (8, 'Recipe 8', 'Recipe 8 instruction', 0);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (9, 'Recipe 9', 'Recipe 9 instruction', 1);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (10, 'Recipe 10', 'Recipe 10 instruction', 0);
 
 -- OppskriftsIngredienser
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (1, 20, 1); -- Pizza Dough
