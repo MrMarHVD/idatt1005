@@ -82,7 +82,7 @@ protected void updateItem(Integer ingredientId, boolean empty) {
         try {
             // Fetch ingredient details from the database
             ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
-                    "SELECT i.name, ii.quantity as quantity, i.unit as unit, a.name as allergen, c.name as category " +
+                    "SELECT i.name, ii.quantity AS quantity, i.unit AS unit, a.name AS allergen, c.name AS category " +
                     "FROM ingredient i " +
                     "LEFT JOIN allergen a ON i.allergen_id = a.id " +
                         "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id " +

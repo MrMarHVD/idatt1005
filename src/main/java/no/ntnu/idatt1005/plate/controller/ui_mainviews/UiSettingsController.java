@@ -9,6 +9,9 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Settings;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  * Controller class for the inventory view
  */
@@ -32,18 +35,19 @@ public class UiSettingsController {
   @FXML
   private ToggleButton vegetarianButton;
 
+  private final Path configDir = Paths.get(System.getProperty("user.home")).resolve(".plate");
+  private final Settings settings = new Settings(configDir);
+
   /**
    * Initialize the controller.
    */
   public void initialize() {
     this.setMainController(mainController);
-    Settings settings = new Settings();
     darkModeButton.setSelected(settings.getDarkMode());
     vegetarianButton.setSelected(settings.getVegetarian());
   }
 
   public void updateView() {
-    Settings settings = new Settings();
     darkModeButton.setSelected(settings.getDarkMode());
     vegetarianButton.setSelected(settings.getVegetarian());
   }
@@ -65,13 +69,11 @@ public class UiSettingsController {
    * Saves the settings to the config file.
    */
   public void saveSettings() {
-    Settings settings = new Settings();
     settings.saveSettings(darkModeButton.isSelected(), vegetarianButton.isSelected());
     updateTheme();
   }
 
   private void updateTheme() {
-    Settings settings = new Settings();
     if (settings.getDarkMode()) {
 
       String cupertinoDarkStylesheet = new CupertinoDark().getUserAgentStylesheet();

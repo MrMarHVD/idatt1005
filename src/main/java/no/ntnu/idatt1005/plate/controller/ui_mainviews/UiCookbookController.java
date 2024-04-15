@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -13,6 +15,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
 
@@ -34,6 +38,9 @@ public class UiCookbookController {
    */
   @FXML private GridPane gridPane;
 
+  @FXML private TextField searchField;
+
+  @FXML private Button sortButton;
   /**
    * The default recipe button.
    */
@@ -43,6 +50,8 @@ public class UiCookbookController {
    * The buttons for each recipe.
    */
   private ArrayList<Button> recipeButtons = new ArrayList<>();
+
+  private boolean isSortedAsc = false;
 
   /**
    * Initialize the controller.
@@ -59,6 +68,20 @@ public class UiCookbookController {
       e.getMessage();
     }
 
+    searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+      searchCookbook(newValue);
+    });
+
+    sortButton.setOnAction(event -> {
+      if (isSortedAsc) {
+        sortDesc();
+        sortButton.setText("A - Z");
+      } else {
+        sortAsc();
+        sortButton.setText("Z - A");
+      }
+      isSortedAsc = !isSortedAsc;
+    });
   }
 
   /**
@@ -82,21 +105,76 @@ public class UiCookbookController {
   public void addRecipeButton(String recipe) {
 
     Button button = new Button(recipe);
-    button.setPrefWidth(100);
-    button.setPrefHeight(50);
-    button.setMaxHeight(75);
-    button.setMaxWidth(125);
+    button.setMaxWidth(Double.MAX_VALUE);
+    GridPane.setHgrow(button, Priority.ALWAYS);
+    button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
 
     recipeButtons.add(button);
+    updateRowConstraints();
     updateRecipeButtons();
     button.setOnAction(event -> {
 
-      System.out.println("Going to recipe: " + recipe);
+      System.out.println("Going to recipe: " + recipe); // TODO: Remove this line (and other similar lines) when done testing
       if (this.mainController != null) {
         this.mainController.goToRecipe(recipe);
       }
     });
+  }
+
+  /**
+   * Search the cookbook for the given input.
+   * @param input
+   */
+  private void searchCookbook(String input) {
+    recipeButtons.clear();
+    if (gridPane != null) {
+      gridPane.getChildren().clear();
+    }
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe WHERE name LIKE '%" + input + "%'");
+      while (rs.next()) {
+        String name = rs.getString("name");
+        addRecipeButton(name);
+      }
+    } catch (Exception e) {
+      e.getMessage();
+    }
+  }
+
+  /**
+   * Sort the cookbook by name.
+   */
+  private void sortAsc() {
+    recipeButtons.clear();
+    if (gridPane != null) {
+      gridPane.getChildren().clear();
+    }
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe ORDER BY name");
+      while (rs.next()) {
+        String name = rs.getString("name");
+        addRecipeButton(name);
+      }
+    } catch (Exception e) {
+      e.getMessage();
+    }
+  }
+
+  private void sortDesc() {
+    recipeButtons.clear();
+    if (gridPane != null) {
+      gridPane.getChildren().clear();
+    }
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM recipe ORDER BY name DESC");
+      while (rs.next()) {
+        String name = rs.getString("name");
+        addRecipeButton(name);
+      }
+    } catch (Exception e) {
+      e.getMessage();
+    }
   }
 
   /**
@@ -106,7 +184,7 @@ public class UiCookbookController {
     if (gridPane != null) {
       gridPane.getChildren().clear();
       for (int i = 0; i < recipeButtons.size(); i++) {
-        gridPane.add(recipeButtons.get(i), i % 4, i / 4);
+        gridPane.add(recipeButtons.get(i), i % 3, i / 3);
         Button button = recipeButtons.get(i);
         GridPane.setHalignment(button, HPos.CENTER);
         gridPane.setHgap(10);
@@ -114,6 +192,19 @@ public class UiCookbookController {
       }
     } else {
       System.out.println("gridPane is null in updateRecipeButtons");
+    }
+  }
+
+  /**
+   * Update the row constraints for the grid to make all buttons fixed size.
+   */
+  private void updateRowConstraints() {
+    gridPane.getRowConstraints().clear();
+
+    for (int i = 0; i < gridPane.getChildren().size(); i++) {
+      RowConstraints rowConstraints = new RowConstraints(60, 60, 60);
+      rowConstraints.setVgrow(Priority.NEVER); // Sørger for at radene ikke vokser utover angitt høyde
+      gridPane.getRowConstraints().add(rowConstraints);
     }
   }
 

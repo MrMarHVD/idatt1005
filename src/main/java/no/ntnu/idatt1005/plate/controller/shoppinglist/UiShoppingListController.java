@@ -5,9 +5,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -18,8 +15,6 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import no.ntnu.idatt1005.plate.controller.global.MainController;
-
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
@@ -92,7 +87,7 @@ public class UiShoppingListController {
   /**
    * add selected items to the shopping list, or update the quantity if the item already exists.
    */
-  public void addItems() {
+  public void addSelectedItems() {
     try {
 
       String itemName = titleCase(itemNameField.getText());
@@ -134,6 +129,7 @@ public class UiShoppingListController {
     }
 
   }
+
 
   /**
    * Update items in the shopping list.

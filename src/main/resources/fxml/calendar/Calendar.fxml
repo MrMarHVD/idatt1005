@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -10,60 +12,102 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.calendar.CalendarController">
+<AnchorPane prefHeight="503.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.calendar.CalendarController">
    <children>
-      <VBox prefHeight="503.0" prefWidth="338.0">
+      <HBox prefHeight="503.0" prefWidth="894.0">
          <children>
-            <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="368.0">
-              <fx:include fx:id="monday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
-              <fx:include fx:id="tuesday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-              <fx:include fx:id="wednesday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-              <fx:include fx:id="thursday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-              <fx:include fx:id="friday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-              <fx:include fx:id="saturday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-              <fx:include fx:id="sunday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-            
-                            <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-              </rowConstraints>
-            </GridPane>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <VBox prefHeight="503.0" prefWidth="338.0">
                <children>
-                  <Region prefHeight="94.0" prefWidth="35.0" />
-                  <VBox prefHeight="94.0" prefWidth="333.0">
+                  <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="368.0">
+                    <fx:include fx:id="monday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                    <fx:include fx:id="tuesday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                    <fx:include fx:id="wednesday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                    <fx:include fx:id="thursday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                    <fx:include fx:id="friday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                    <fx:include fx:id="saturday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                    <fx:include fx:id="sunday" source="DayBlock.fxml" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                  
+                                  <RowConstraints vgrow="ALWAYS" />
+                      <RowConstraints vgrow="ALWAYS" />
+                      <RowConstraints vgrow="ALWAYS" />
+                      <RowConstraints vgrow="ALWAYS" />
+                      <RowConstraints vgrow="ALWAYS" />
+                      <RowConstraints vgrow="ALWAYS" />
+                      <RowConstraints vgrow="ALWAYS" />
+                    </rowConstraints>
+                  </GridPane>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <HBox prefHeight="18.0" prefWidth="368.0">
+                        <Region prefHeight="94.0" prefWidth="35.0" />
+                        <VBox prefHeight="94.0" prefWidth="333.0">
                            <children>
-                              <TextField fx:id="recipeSearchField" prefHeight="26.0" prefWidth="301.0" promptText="Search" />
+                              <HBox prefHeight="18.0" prefWidth="368.0">
+                                 <children>
+                                    <TextField fx:id="recipeSearchField" prefHeight="26.0" prefWidth="301.0" promptText="Search" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="53.0" prefWidth="368.0">
+                                 <children>
+                                    <ComboBox fx:id="recipeComboBox" prefHeight="26.0" prefWidth="301.0" promptText="Choose recipe" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="89.0" prefWidth="368.0">
+                                 <children>
+
+                                    <Button fx:id="changeRecipeButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="162.0" text="Change recipe" />
+                                    <Region prefHeight="50.0" prefWidth="50.0" />
+                                 </children>
+                              </HBox>
                            </children>
-                        </HBox>
-                        <HBox prefHeight="53.0" prefWidth="368.0">
-                           <children>
-                              <ComboBox fx:id="recipeComboBox" prefHeight="26.0" prefWidth="301.0" promptText="Choose recipe" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="89.0" prefWidth="368.0">
-                           <children>
-                              <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="178.0" text="Search" />
-                              <Button fx:id="changeRecipeButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="162.0" text="Change recipe" />
-                              <Region prefHeight="50.0" prefWidth="50.0" />
-                           </children>
-                        </HBox>
+                        </VBox>
                      </children>
-                  </VBox>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
+            <VBox prefHeight="503.0" prefWidth="404.0">
+               <children>
+                  <Label prefHeight="15.0" prefWidth="296.0" text="Ingredients you need to buy" textAlignment="CENTER" />
+                  <HBox prefHeight="35.0" prefWidth="311.0">
+                     <children>
+                        <Label prefHeight="35.0" prefWidth="156.0" text="Ingredient">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="42.0" prefWidth="160.0" text="Quantity">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="51.0" prefWidth="116.0" text="In SL?">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <ListView fx:id="missingListView" prefHeight="478.0" prefWidth="311.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="503.0" prefWidth="286.0">
+               <children>
+                  <Region prefHeight="44.0" prefWidth="175.0" />
+                  <Label prefHeight="28.0" prefWidth="221.0" text="To Shopping List">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="addMissingFromSelectedButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" text="Add missing from selected" />
+                  <Button fx:id="addAllMissingButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="212.0" text="Add all missing ingredients" />
+               </children>
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
    </children>
 </AnchorPane>

@@ -206,8 +206,7 @@ public class MainController {
       Stage currentStage = MyApp.getPrimaryStage();
       currentStage.setScene(scene);
       currentStage.show();
-      recipeController.displayInstructions();
-      recipeController.displayIngredients();
+      recipeController.initializeDisplay();
 
     }
     catch (Exception e) {

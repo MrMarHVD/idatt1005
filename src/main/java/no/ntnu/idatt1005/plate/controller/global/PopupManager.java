@@ -22,13 +22,26 @@ public class PopupManager {
   }
 
   /**
+   * Display a basic error.
+   *
+   * @param header the header of the popup message.
+   * @param content the content of the popup message.
+   */
+  public static void displayError(String header,  String content) {
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setHeaderText(header);
+    alert.setContentText(content);
+    alert.showAndWait();
+  }
+
+  /**
    * Show an alert indicating an error.
    *
    * @param title title of the alert
    * @param header header of the alert
    * @param content content of the alert
    */
-  public static void displayError(String title, String header, String content) {
+  public static void displayErrorFull(String title, String header, String content) {
     Alert alert = new Alert(AlertType.ERROR);
     alert.setTitle(title);
     alert.setHeaderText(header);

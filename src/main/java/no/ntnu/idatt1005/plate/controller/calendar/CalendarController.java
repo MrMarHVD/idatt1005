@@ -1,27 +1,37 @@
 package no.ntnu.idatt1005.plate.controller.calendar;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 
+import java.util.List;
+import java.util.Map;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.data.SqlConnector;
 import no.ntnu.idatt1005.plate.model.Calendar;
 
 import java.time.DayOfWeek;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.w3c.dom.Text;
+import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
  * This class is the controller for the Calendar view in the user interface.
  */
 public class CalendarController {
+
+  private Date selectedDate;
 
   /**
    * The main controller for the application.
@@ -47,25 +57,56 @@ public class CalendarController {
   @FXML
   private DayBlockController sundayController;
 
+  /**
+   * The ComboBox showing a list of recipes based on search.
+   */
   @FXML
   private ComboBox<String> recipeComboBox;
 
+  /**
+   * The search field for recipes.
+   */
   @FXML
   private TextField recipeSearchField;
 
-  @FXML
-  private Button searchButton;
-
+  /**
+   * The button to change the recipe of the selected day to the selected recipe.
+   */
   @FXML
   private Button changeRecipeButton;
+
+  private final Calendar calendar = new Calendar(new SqlConnector());
+
+  /**
+   * The button to add all missing ingredients to the shopping list.
+   */
+  @FXML
+  private Button addAllMissingButton;
+
+  /**
+   * The button to add all missing ingredients from the recipe planned for the selected day
+   * to the shopping list.
+   */
+  @FXML
+  private Button addMissingFromSelectedButton;
+
+  /**
+   * The list view showing the missing ingredients for the recipe corresponding to the
+   * selected day.
+   */
+  @FXML
+  private ListView<Integer> missingListView;
 
   /**
    * This method initializes the Calendar view with the correct recipes for each day.
    */
   public void initialize() {
     this.groupRadioButtons();
-    this.addActionListeners();
+    this.addRadioButtonActionListeners();
+    this.addRecipeButtonActionListeners();
+    this.addShoppingListButtonActionListeners();
     this.initializeComboBox();
+    //this.missingListView.setCellFactory(param -> new MissingIngredientListCell());
     LocalDate today = LocalDate.now();
     LocalDate thisMonday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
@@ -76,8 +117,8 @@ public class CalendarController {
 
     for (int i = 0; i < 7; i++) {
       LocalDate date = thisMonday.plusDays(i);
-      if (!Calendar.dayExists(Date.valueOf(date))) {
-        Calendar.insertDay(Date.valueOf(date));
+      if (!calendar.dayExists(Date.valueOf(date))) {
+        calendar.insertDay(Date.valueOf(date));
       }
 
       String day = date.getDayOfWeek().toString().charAt(0) +
@@ -85,7 +126,7 @@ public class CalendarController {
       dayBlockControllers.get(i).setDay(day);
       dayBlockControllers.get(i).setDate(date.toString());
 
-      String recipe = Calendar.getDayRecipes().get(date.toString());
+      String recipe = calendar.getDayRecipes().get(date.toString());
       dayBlockControllers.get(i).setRecipe(recipe);
       dayBlockControllers.get(i).setActionOnRecipeButtonClicked(recipe); // Assign action to go to recipe
     }
@@ -96,7 +137,7 @@ public class CalendarController {
    */
   private void initializeComboBox() {
     int maxRecipes = 20;
-    ArrayList<String> results = Calendar.searchRecipes("");
+    ArrayList<String> results = calendar.searchRecipes("");
     if (results.size() > maxRecipes) {
       for (int i = 0; i < maxRecipes; i++) {
         this.recipeComboBox.getItems().add(results.get(i));
@@ -109,35 +150,106 @@ public class CalendarController {
   }
 
   /**
-   * Add action listeners to the buttons for searching for-and changing recipes.
+   * Add action listeners to the radio buttons for each day of the week.
    */
-  private void addActionListeners() {
+  private void addRadioButtonActionListeners() {
+    DayBlockController[] dayBlockControllers = new DayBlockController[]{
+        mondayController, tuesdayController, wednesdayController, thursdayController,
+        fridayController, saturdayController, sundayController};
+
+    for (DayBlockController dayBlockController : dayBlockControllers) {
+      dayBlockController.getSelectedButton().setOnAction(e -> {
+        if (dayBlockController.getSelectedButton().isSelected()) {
+          String date = dayBlockController.getDate();
+          this.selectedDate = Date.valueOf(date); // Ensure that the selected date is stored
+          String recipeName = Calendar.getDayRecipes().get(date);
+
+          List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
+
+          // Create an ObservableList with the IDs of the missing ingredients
+          ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(missingIngredients);
+
+          // Set the ObservableList as the items of the ListView
+          missingListView.setItems(observableIngredients);
+
+          // Set the cell factory of the ListView to use MissingIngredientListCell
+          missingListView.setCellFactory(param -> new MissingIngredientListCell(recipeName));
+
+        }
+      });
+    }
+  }
+
+  /**
+   * Initialize action listeners for functions relating to search and changing recipe
+   * for the selected day.
+   */
+  private void addRecipeButtonActionListeners() {
 
     // Button for searching for recipes
-    this.searchButton.setOnAction(e -> {
-      this.recipeComboBox.getItems().clear();
-      String search = this.recipeSearchField.getText();
-      ArrayList<String> results = Calendar.searchRecipes(search);
-      for (int i = 0; i < results.size(); i++) {
-        this.recipeComboBox.getItems().add(results.get(i));
-      }
-    });
+
+
+    this.recipeSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+          this.recipeComboBox.getItems().clear();
+          ArrayList<String> results = Calendar.searchRecipes(newValue);
+          for (int i = 0; i < results.size(); i++) {
+            this.recipeComboBox.getItems().add(results.get(i));
+          }
+        });
 
     // Button for changing recipe
     this.changeRecipeButton.setOnAction(e -> {
-          String recipe = this.recipeComboBox.getValue();
-          if (recipe != null) {
-            for (DayBlockController dayBlockController : new DayBlockController[]{
-                mondayController, tuesdayController, wednesdayController, thursdayController,
-                fridayController, saturdayController, sundayController}) {
-              if (dayBlockController.getSelectedButton().isSelected()) {
-                String date = dayBlockController.getDate();
+      String recipe = this.recipeComboBox.getValue();
+      if (recipe != null) {
+        for (DayBlockController dayBlockController : new DayBlockController[]{
+            mondayController, tuesdayController, wednesdayController, thursdayController,
+            fridayController, saturdayController, sundayController}) {
+          if (dayBlockController.getSelectedButton().isSelected()) {
+            String date = dayBlockController.getDate();
 
-            Calendar.changeRecipe(Date.valueOf(date), recipe);
+            calendar.changeRecipe(Date.valueOf(date), recipe);
             this.initialize();
           }
         }
-    }});
+      }});
+
+  }
+
+  /**
+   * Initialize action listeners for the buttons that add missing ingredients
+   * to the shopping list.
+   */
+  private void addShoppingListButtonActionListeners() {
+
+    // Create action listener for button which adds missing ingredients from the selected recipe
+    this.addMissingFromSelectedButton.setOnAction(event -> {
+      String recipeName = Calendar.getDayRecipes().get(this.selectedDate.toString());
+      Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(recipeName);
+      for (int ingredientId : missingIngredients.keySet()) {
+
+        // Add to shopping list only if not there already.
+        if (!ShoppingList.inShoppingList(ingredientId)) {
+          ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
+        }
+      }
+    });
+
+    // Create action listener for button which adds all missing ingredients to shopping list.
+    this.addAllMissingButton.setOnAction(event -> {
+      for (DayBlockController dayBlockController : new DayBlockController[]{
+          mondayController, tuesdayController, wednesdayController, thursdayController,
+          fridayController, saturdayController, sundayController}) {
+        String date = dayBlockController.getDate();
+        String recipeName = Calendar.getDayRecipes().get(date);
+        Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(recipeName);
+        for (int ingredientId : missingIngredients.keySet()) {
+          // Add to shopping list only if not there already.
+          if (!ShoppingList.inShoppingList(ingredientId)) {
+            ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
+          }
+        }
+      }
+    });
   }
 
 

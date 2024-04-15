@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.cookbook;
+package no.ntnu.idatt1005.plate.controller.calendar;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +7,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiRecipeViewController;
+import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
  * ListCell class which manages the cells in the ingredient list,
@@ -20,17 +20,12 @@ import no.ntnu.idatt1005.plate.model.Ingredient;
 import org.iq80.snappy.Main;
 
 /**
- * ListCell class which manages the cells in the ingredient list,
- * specifically in the inventory.
->>>>>>> feature/cookbook
+ * ListCell class which manages ingredients that are missing from the inventory
+ * based on the required ingredients in the recipe selected in the calendar.
  */
-public class RecipeListCell extends ListCell<Integer> {
+public class MissingIngredientListCell extends ListCell<Integer> {
 
-  /**
-   * Controller for this list cell.
-   */
-  private final UiRecipeViewController controller;
-
+  private final String recipeName;
 
   /**
    * The grid.
@@ -45,21 +40,22 @@ public class RecipeListCell extends ListCell<Integer> {
   /**
    * The quantity of the ingredient.
    */
-  private final Label quantities = new Label();
+  private final Label quantity = new Label();
 
   /**
-   * The allergens.
+   * Label showing whether or not the ingredient in question is in the shopping list already.
    */
-  private final Label allergens = new Label();
+  private final Label inShoppingList = new Label();
+
+
 
   /**
    * The category of the ingredient.
    */
   //private final Label category = new Label();
 
-  public RecipeListCell(UiRecipeViewController controller) {
-    this.controller = controller;
-
+  public MissingIngredientListCell(String recipeName) {
+    this.recipeName = recipeName;
     // Set the column constraints for the grid such that the columns are equally wide.
     int noOfColumns = 3; // Change this if you want to change the number of columns.
     ColumnConstraints column1 = new ColumnConstraints();
@@ -73,8 +69,8 @@ public class RecipeListCell extends ListCell<Integer> {
     grid.setHgap(10);
     grid.setVgap(10);
     grid.add(name, 0, 0);
-    grid.add(quantities, 1, 0);
-    grid.add(allergens, 2, 0);
+    grid.add(quantity, 1, 0);
+    grid.add(inShoppingList, 2, 0);
   }
 
 
@@ -82,7 +78,6 @@ public class RecipeListCell extends ListCell<Integer> {
   /**
    * Updates the item in the cell (automatic).
    *
-   * @param ingredientId the new ingredient.
    * @param empty whether the cell is to be empty.
    */
   @Override
@@ -96,12 +91,14 @@ public class RecipeListCell extends ListCell<Integer> {
         // Fetch ingredient details from the database
         ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
 
-                "SELECT i.name AS name, i.unit AS unit, a.name AS allergen, ri.quantity AS quantity, c.name AS category " +
+            "SELECT i.name AS name, i.ingredient_id AS ingredient_id, " +
+                "i.unit AS unit, SUM(ri.quantity - IFNULL(ii.quantity, 0)) AS quantity " +
                 "FROM ingredient i " +
-                "LEFT JOIN allergen a ON i.allergen_id = a.id " +
                 "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id " +
-                "JOIN category c ON i.category_id = c.id " +
-                "WHERE ri.ingredient_id = '" + ingredientId + "';"
+                "LEFT JOIN inventory_ingredient ii ON i.ingredient_id = ii.ingredient_id " +
+                "WHERE ri.recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + this.recipeName + "') " +
+                "AND i.ingredient_id = " + ingredientId + " " +
+                "GROUP BY i.name, i.unit;"
         );
 
         if (ingredientDetails.next()) {
@@ -110,19 +107,14 @@ public class RecipeListCell extends ListCell<Integer> {
 
           String quantity = ingredientDetails.getString("quantity");
           String unit = ingredientDetails.getString("unit");
+          this.quantity.setText(quantity != null ? (quantity + " " + unit) : "None");
 
-          if (this.controller.getPortionTextField().getText().matches("[+-]?([0-9]*[.])?[0-9]+")) {
-            quantities.setText(quantity != null ? ((Float.parseFloat(quantity) *
-                Float.parseFloat(this.controller.getPortionTextField().getText())) + " " + unit) : "None");
+          // Check if the ingredient is already in the shopping list
+          if (ShoppingList.inShoppingList(ingredientDetails.getInt("ingredient_id"))) {
+            this.inShoppingList.setText("Yes");
           } else {
-            quantities.setText(quantity != null ? ((quantity + " " + unit)) : "None");
+            this.inShoppingList.setText("No");
           }
-
-          String allergen = ingredientDetails.getString("allergen");
-          allergens.setText(allergen != null ? allergen : "None");
-
-          //String category = ingredientDetails.getString("category");
-          //this.category.setText(category != null ? category : "None");
 
           setGraphic(grid);
         }
