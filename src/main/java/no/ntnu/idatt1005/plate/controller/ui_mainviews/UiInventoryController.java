@@ -3,6 +3,7 @@ package no.ntnu.idatt1005.plate.controller.ui_mainviews;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.UnaryOperator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,6 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
+import javafx.util.converter.NumberStringConverter;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.global.PopupManager;
 import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
@@ -70,23 +74,12 @@ public class UiInventoryController {
   @FXML
   private TextField addIngredientNameField;
 
-  /**
-   * Text field for the quantity of the new ingredient to be added
-   */
-  @FXML
-  private TextField quantityFieldAdd;
 
   /**
    * TextField for inserting the quantity to add to the selected ingredient.
    */
   @FXML
   private TextField quantityFieldUpdate;
-
-  /**
-   * Button for adding a new ingredient to the inventory.
-   */
-  @FXML
-  private Button addIngredientButton;
 
   /**
    * Button for executing update of selected ingredient
@@ -146,18 +139,26 @@ public class UiInventoryController {
    */
   private void initializeButtonHandlers() {
 
+    // Define a unary operator to prevent the user from inputting invalid characters.
+    UnaryOperator<Change> floatFilter = change -> {
+      String newText = change.getControlNewText();
+      if (newText.isEmpty() || newText.matches("\\d*\\.?\\d*")) {
+        return change;
+      }
+      return null;
+    };
+    quantityFieldUpdate.setTextFormatter(new TextFormatter<>(floatFilter));
+
     // Set handler for the update button
     updateIngredientButton.setOnMouseClicked(event -> {
-      Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
-      if (selectedIngredientId != null) {
-        String ingredientName = Inventory.selectIngredient(selectedIngredientId);
-            // Update the ingredient selected with the new quantity.
-            this.updateIngredient(ingredientName, Float.parseFloat(quantityFieldUpdate.getText()));
-      }
+      //Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
+      float quantity = Float.parseFloat(quantityFieldUpdate.getText());
+      //if (quantity == (float) quantity)
+      this.updateIngredient(quantity);
     });
+    // Set handler to remove the selected button.
     removeSelectedButton.setOnMouseClicked(event -> removeSelectedIngredient());
-    addIngredientButton.setOnMouseClicked(event -> addNewIngredient(addIngredientNameField.getText(),
-        Float.parseFloat(quantityFieldAdd.getText())));
+
   }
 
   /**
@@ -301,25 +302,36 @@ public class UiInventoryController {
   /**
    * This method is called when the quantity of an existing ingredient is to be updated.
    *
-   * @param name name of the ingredient
    * @param quantity quantity entered by the user
    */
   @FXML
-  private void updateIngredient(String name, float quantity) {
-    Inventory.updateIngredient(name, quantity);
-  }
+  private void updateIngredient(float quantity) {
+    // Check if there has been an input into the ingredient name field.
+    String ingredientName = this.addIngredientNameField.getText();
 
-  /**
-   * Add a new ingredient to the 'inventory_ingredient'-table assuming it doesn't already exist.
-   * This method only works for ingredients which have already been registered in the
-   * 'ingredients'-table.
-   *
-   * @param name name of the ingredient to add
-   * @param quantity quantity to add when adding the ingredient
-   */
-  @FXML
-  private void addNewIngredient(String name, float quantity) {
-    Inventory.addNewIngredient(name, quantity);
+    // If the ingredient does not exist in the inventory, but is in the database, add it.
+    if (!Inventory.ingredientExistsInInventory(ingredientName)
+        && Inventory.ingredientExists(ingredientName)) {
+      Inventory.addNewIngredient(ingredientName, quantity);
+
+      // if the ingredient exists in the inventory, update its quantity.
+    } else if(Inventory.ingredientExistsInInventory(ingredientName) ) {
+      //PopupManager.displayError("Error", "No ingredient selected");
+      Inventory.updateIngredient(ingredientName, quantity);
+
+      // Else, an ingredient is selected via the list view, update that one.
+    } else if(ingredientListView.getSelectionModel().getSelectedItem() != null) {
+      int ingredientId = ingredientListView.getSelectionModel().getSelectedItem();
+      ingredientName = Inventory.selectIngredient(ingredientId);
+      System.out.println(ingredientName);
+      Inventory.updateIngredient(ingredientName, quantity);
+
+      // If no valid ingredient is in the field, and no ingredient is selected, display error.
+    } else {
+      PopupManager.displayError("Error", "No valid ingredient is selected.");
+    }
+
     this.displayIngredients();
   }
+
 }

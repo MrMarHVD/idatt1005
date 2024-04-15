@@ -32,6 +32,40 @@ public class Inventory {
   }
 
   /**
+   * Check whether the given ingredient exists in the inventory.
+   *
+   * @param name the name of the ingredient.
+   * @return the boolean value of whether the ingredient exists.
+   */
+  public static boolean ingredientExistsInInventory(String name) {
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT * FROM inventory_ingredient "
+              + "LEFT JOIN ingredient i ON inventory_ingredient.ingredient_id = i.ingredient_id "
+              + "WHERE i.name = '" + name + "';");
+      if (rs.next()) {
+        return true;
+      }
+    } catch (Exception e) {
+      PopupManager.displayError("Selection error", "Could not select ingredient");
+    }
+    return false;
+  }
+
+  public static boolean ingredientExists(String name) {
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT * FROM ingredient WHERE name = '" + name + "';");
+      if (rs.next()) {
+        return true;
+      }
+    } catch (Exception e) {
+      PopupManager.displayError("Selection error", "Could not select ingredient");
+    }
+    return false;
+  }
+
+  /**
    * Select all ingredients in the inventory.
    *
    * @return the result set of the query.
