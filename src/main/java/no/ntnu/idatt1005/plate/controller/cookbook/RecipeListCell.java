@@ -111,6 +111,8 @@ public class RecipeListCell extends ListCell<Integer> {
           String quantity = ingredientDetails.getString("quantity");
           String unit = ingredientDetails.getString("unit");
 
+          /* Check if the input to the portion text field can be converted to a float, and if so,
+          calculate the new quantity and add it to the display*/
           if (this.controller.getPortionTextField().getText().matches("[+-]?([0-9]*[.])?[0-9]+")) {
             quantities.setText(quantity != null ? ((Float.parseFloat(quantity) *
                 Float.parseFloat(this.controller.getPortionTextField().getText())) + " " + unit) : "None");

@@ -161,11 +161,6 @@ public class UiInventoryController {
   }
 
   /**
-   * Initialize the listener which monitors which fields in the listview are selected.
-   */
-
-
-  /**
    * Set the main controller for this class and its toolbar controller.
    *
    * @param mainController the main controller.
@@ -191,10 +186,6 @@ public class UiInventoryController {
    * Queries all ingredients in the inventory and displays them.
    */
   private void displayIngredients() {
-    //ist<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
-    //ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList(allIngredients);
-    //ingredientListView.setItems(observableIngredients);
-    //ingredientListView.setCellFactory(param -> new IngredientListCell());
     List<Integer> fullInventory = new ArrayList<Integer>();
 
     try {

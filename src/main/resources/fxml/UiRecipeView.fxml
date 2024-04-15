@@ -123,7 +123,7 @@
                         <HBox prefHeight="27.0" prefWidth="141.0">
                            <children>
                               <TextField fx:id="quantityTextField" prefHeight="26.0" prefWidth="88.0" promptText="Quantity" />
-                              <Label fx:id="quantityLabel" prefHeight="27.0" prefWidth="53.0" text="unit" />
+                              <Label fx:id="unitLabel" prefHeight="27.0" prefWidth="53.0" text="unit" />
                            </children>
                         </HBox>
                   <Button fx:id="addIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Add Ingredient" />

@@ -30,15 +30,6 @@ public class UiHomeController {
   @FXML
   private CalendarController calendarController;
 
-  @FXML
-  private Button home;
-
-  @FXML
-  private Button cookbook;
-
-  @FXML
-  private Button testButton;
-
 
   /**
    * Initialize the controller.

@@ -168,6 +168,5 @@ public class Inventory {
       PopupManager.displayErrorFull("Error", "Failed to add ingredient", e.getMessage());
       e.printStackTrace();
     }
-
   }
 }

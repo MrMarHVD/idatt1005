@@ -195,17 +195,7 @@ public class CalendarController {
           this.selectedDate = Date.valueOf(date); // Ensure that the selected date is stored
           String recipeName = Calendar.getDayRecipes().get(date);
 
-          List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
-
-          // Create an ObservableList with the IDs of the missing ingredients
-          ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(missingIngredients);
-
-          // Set the ObservableList as the items of the ListView
-          missingListView.setItems(observableIngredients);
-
-          // Set the cell factory of the ListView to use MissingIngredientListCell
-          missingListView.setCellFactory(param -> new MissingIngredientListCell(recipeName));
-
+          this.populateMissingIngredientListView(recipeName);
         }
       });
     }
@@ -216,9 +206,7 @@ public class CalendarController {
    */
   private void addRecipeButtonActionListeners() {
 
-    // Button for searching for recipes
-
-
+    // Add listener to search field to add recipes to the combo box
     this.recipeSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
           this.recipeComboBox.getItems().clear();
           ArrayList<String> results = Calendar.searchRecipes(newValue, settings.getVegetarian());
@@ -268,6 +256,7 @@ public class CalendarController {
           ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
         }
       }
+      this.populateMissingIngredientListView(recipeName);
     });
 
     // Create action listener for button which adds all missing ingredients to shopping list.
@@ -286,6 +275,24 @@ public class CalendarController {
         }
       }
     });
+  }
+
+  /**
+   * Populate the list view with ingredients missing from the selected recipe.
+   *
+   * @param recipeName the name of the selected recipe.
+   */
+  private void populateMissingIngredientListView(String recipeName) {
+    List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
+
+    // Create an ObservableList with the IDs of the missing ingredients
+    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(missingIngredients);
+
+    // Set the ObservableList as the items of the ListView
+    missingListView.setItems(observableIngredients);
+
+    // Set the cell factory of the ListView to use MissingIngredientListCell
+    missingListView.setCellFactory(param -> new MissingIngredientListCell(recipeName));
   }
 
 
