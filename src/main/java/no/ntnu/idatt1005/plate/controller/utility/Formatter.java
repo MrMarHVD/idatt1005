@@ -1,6 +1,7 @@
 package no.ntnu.idatt1005.plate.controller.utility;
 
 import java.util.function.UnaryOperator;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
 
 /**
@@ -21,11 +22,11 @@ public class Formatter {
   };
 
   /**
-   * Get the float formatter.
+   * Get the float formatter as a TextFormatter.
    *
    * @return the float formatter.
    */
-  public static UnaryOperator<Change> getFloatFormatter() {
-    return floatFormatter;
+  public static TextFormatter<Change> getFloatFormatter() {
+    return new TextFormatter<>(floatFormatter);
   }
 }
