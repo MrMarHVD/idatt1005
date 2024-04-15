@@ -138,7 +138,7 @@ public class UiInventoryController {
   private void initializeButtonHandlers() {
 
 
-    quantityFieldUpdate.setTextFormatter(new TextFormatter<>(Formatter.getFloatFormatter()));
+    quantityFieldUpdate.setTextFormatter(Formatter.getFloatFormatter());
 
     // Set handler for the update button
     updateIngredientButton.setOnMouseClicked(event -> {
