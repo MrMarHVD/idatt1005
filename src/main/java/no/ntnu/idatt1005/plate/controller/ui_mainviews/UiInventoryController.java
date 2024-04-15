@@ -306,12 +306,11 @@ public class UiInventoryController {
       Inventory.addNewIngredient(ingredientName, quantity);
 
       // if the ingredient exists in the inventory, update its quantity.
-    } else if(Inventory.ingredientExistsInInventory(ingredientName) ) {
-      //PopupManager.displayError("Error", "No ingredient selected");
+    } else if (Inventory.ingredientExistsInInventory(ingredientName) ) {
       Inventory.updateIngredient(ingredientName, quantity);
 
-      // Else, an ingredient is selected via the list view, update that one.
-    } else if(ingredientListView.getSelectionModel().getSelectedItem() != null) {
+      // Else, if an ingredient is selected via the list view, update that one.
+    } else if (ingredientListView.getSelectionModel().getSelectedItem() != null) {
       int ingredientId = ingredientListView.getSelectionModel().getSelectedItem();
       ingredientName = Inventory.selectIngredient(ingredientId);
       System.out.println(ingredientName);
