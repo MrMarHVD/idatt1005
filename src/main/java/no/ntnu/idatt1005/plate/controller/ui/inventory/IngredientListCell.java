@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.inventory;
+package no.ntnu.idatt1005.plate.controller.ui.inventory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

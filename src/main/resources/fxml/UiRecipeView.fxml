@@ -51,7 +51,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.ui_mainviews.UiRecipeViewController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.ui.mainviews.UiRecipeViewController">
   <children>
     <BorderPane prefHeight="594.0" prefWidth="900.0">
       <top>
@@ -123,10 +123,15 @@
                         <HBox prefHeight="27.0" prefWidth="141.0">
                            <children>
                               <TextField fx:id="quantityTextField" prefHeight="26.0" prefWidth="88.0" promptText="Quantity" />
-                              <Label fx:id="quantityLabel" prefHeight="27.0" prefWidth="53.0" text="unit" />
+
+                              <Label fx:id="unitLabel" prefHeight="27.0" prefWidth="53.0" text="unit" />
+
+                              <Label fx:id="quantityLabel" prefHeight="27.0" prefWidth="53.0" />
+
                            </children>
                         </HBox>
                   <Button fx:id="addIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Add Ingredient" styleClass="greenButton" />
+                        <Button fx:id="removeIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="141.0" text="Remove Ingredient" styleClass="redButton" />
                      </children>
                   </VBox>
                   <Region prefHeight="133.0" prefWidth="141.0" />

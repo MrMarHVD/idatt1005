@@ -1,27 +1,22 @@
-package no.ntnu.idatt1005.plate.controller.ui_mainviews;
+package no.ntnu.idatt1005.plate.controller.ui.mainviews;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
+
 import no.ntnu.idatt1005.plate.model.Settings;
+
+import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 
 public class UiCookbookController {
 

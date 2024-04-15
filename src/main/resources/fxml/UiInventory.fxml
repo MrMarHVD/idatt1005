@@ -47,7 +47,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.ui_mainviews.UiInventoryController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.ui.mainviews.UiInventoryController">
   <children>
     <BorderPane prefHeight="520.0" prefWidth="900.0">
       <top>
@@ -102,21 +102,19 @@
       <right>
         <VBox prefHeight="477.0" prefWidth="165.0" BorderPane.alignment="CENTER" stylesheets="@../styles/plateStyle.css">
           <children>
+                  <Label prefHeight="34.0" prefWidth="189.0" text="Add / update" styleClass="greenButton">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
             <TextField fx:id="addIngredientNameField" prefHeight="30.0" prefWidth="114.0" promptText="Name" />
-            <HBox prefHeight="30.0" prefWidth="151.0">
-              <children>
-                <TextField fx:id="quantityFieldAdd" prefHeight="30.0" prefWidth="166.0" promptText="Quantity" />
-              </children>
-            </HBox>
-            <Button fx:id="addIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Add new" styleClass="greenButton" />
-                  <Region prefHeight="24.0" prefWidth="165.0" />
                   <HBox prefHeight="16.0" prefWidth="165.0">
                      <children>
                         <TextField fx:id="quantityFieldUpdate" prefHeight="26.0" prefWidth="172.0" promptText="Quantity" />
                      </children>
                   </HBox>
-                  <Button fx:id="updateIngredientButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="187.0" text="Update selected" />
-            <Region prefHeight="168.0" prefWidth="165.0" />
+                  <Button fx:id="updateIngredientButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="187.0" text="Update ingredient" />
+            <Region prefHeight="274.0" prefWidth="165.0" />
             <Button fx:id="removeSelectedButton" mnemonicParsing="false" prefHeight="55.0" prefWidth="165.0" text="Remove selected" styleClass="redButton" />
           </children>
         </VBox>

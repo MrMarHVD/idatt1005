@@ -3,7 +3,7 @@ package no.ntnu.idatt1005.plate.model;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.global.PopupManager;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
  * This is a class for managing SQL-queries relating to the recipe view.
@@ -116,6 +116,17 @@ public class Recipe {
           "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, quantity) VALUES (" + recipeId + ", " + ingredientId + ", " + quantity + ");");
     } catch (Exception e) {
       PopupManager.displayError("Insert error", "Could not insert ingredient");
+    }
+  }
+
+  public static void removeIngredientFromRecipe(String recipeName, int ingredientId) {
+    try {
+      int recipeId = MainController.sqlConnector.executeSqlSelect(
+          "SELECT recipe_id FROM recipe WHERE name = '" + recipeName + "';").getInt("recipe_id");
+      MainController.sqlConnector.executeSqlUpdate(
+          "DELETE FROM recipe_ingredients WHERE recipe_id = " + recipeId + " AND ingredient_id = " + ingredientId + ";");
+    } catch (Exception e) {
+      PopupManager.displayError("Delete error", "Could not delete ingredient");
     }
   }
 

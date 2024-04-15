@@ -1,8 +1,11 @@
-package no.ntnu.idatt1005.plate.controller.global;
+package no.ntnu.idatt1005.plate.controller.utility;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * This class handles all popups in the application.
+ */
 public class PopupManager {
 
   /**
@@ -49,6 +52,5 @@ public class PopupManager {
     alert.setContentText(content);
     alert.showAndWait();
   }
-
 
 }

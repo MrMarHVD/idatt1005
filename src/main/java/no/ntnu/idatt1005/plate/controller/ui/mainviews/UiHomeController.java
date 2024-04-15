@@ -1,10 +1,10 @@
-package no.ntnu.idatt1005.plate.controller.ui_mainviews;
+package no.ntnu.idatt1005.plate.controller.ui.mainviews;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import no.ntnu.idatt1005.plate.controller.calendar.CalendarController;
+import no.ntnu.idatt1005.plate.controller.ui.calendar.CalendarController;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 
 /**
  * This class is the controller for the user interface, mediating between the model and view
@@ -29,15 +29,6 @@ public class UiHomeController {
    */
   @FXML
   private CalendarController calendarController;
-
-  @FXML
-  private Button home;
-
-  @FXML
-  private Button cookbook;
-
-  @FXML
-  private Button testButton;
 
 
   /**

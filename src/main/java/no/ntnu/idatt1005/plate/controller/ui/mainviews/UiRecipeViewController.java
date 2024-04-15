@@ -1,5 +1,6 @@
-package no.ntnu.idatt1005.plate.controller.ui_mainviews;
+package no.ntnu.idatt1005.plate.controller.ui.mainviews;
 
+import java.util.function.UnaryOperator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -8,18 +9,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.layout.GridPane;
-import no.ntnu.idatt1005.plate.controller.cookbook.RecipeListCell;
+import no.ntnu.idatt1005.plate.controller.ui.cookbook.RecipeListCell;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.global.PopupManager;
-import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.controller.utility.Formatter;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
+import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 import javafx.fxml.FXML;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import no.ntnu.idatt1005.plate.model.Calendar;
 import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
@@ -59,11 +62,8 @@ public class UiRecipeViewController {
   private GridPane recommendedRecipes;
 
   /**
-   * The list view for displaying ingredients in the recipe
-   * and their relevant properties.
-   * TODO: Add a custom cell factory for the list view.
+   * The text area for displaying (or editing) the instructions for this recipe.
    */
-
   @FXML
   private TextArea instructionsArea;
 
@@ -73,36 +73,62 @@ public class UiRecipeViewController {
   @FXML
   private Label recipeNameLabel;
 
-  @FXML
-  private Button addRecipeButton;
-
+  /**
+   * Button for deleting the selected recipe from the database.
+   */
   @FXML
   private Button deleteRecipeButton;
 
+  /**
+   * Text field for searching for ingredients to add to the recipe.
+   */
   @FXML
   private TextField ingredientTextField;
+
+  /**
+   * Button for adding an ingredient to the recipe.
+   */
+  @FXML
+  private Button removeIngredientButton;
 
   @FXML
   private Button addIngredientButton;
 
+  /**
+   * Text field for inputting the quantity of the ingredient to add.
+   */
   @FXML
   private TextField quantityTextField;
 
+  /**
+   * Label for displaying the unit of the ingredient which has been selected.
+   */
   @FXML
-  private Label quantityLabel;
+  private Label unitLabel;
 
+  /**
+   * ComboBox for selecting an ingredient to add to the recipe.
+   */
   @FXML
   private ComboBox<String> selectIngredientComboBox;
 
+  /**
+   * Button for creating a new, blank recipe.
+   */
   @FXML
   private Button newRecipeButton;
 
+  /**
+   * Text field for adding the recipe name of a new recipe to be created.
+   */
   @FXML
   private TextField recipeNameTextField;
 
+  /**
+   * Text field for inputting how many portions to display
+   */
   @FXML
   private TextField portionTextField;
-
 
   /**
    * Buttons for saving, or discarding changes made to current recipe.
@@ -110,6 +136,9 @@ public class UiRecipeViewController {
   @FXML
   private Button saveChangesButton;
 
+  /**
+   * Button for discarding changes made to the instructions.
+   */
   @FXML
   private Button discardChangesButton;
 
@@ -149,6 +178,11 @@ public class UiRecipeViewController {
     }
   }
 
+  /**
+   * Set the name of this recipe.
+   *
+   * @param name the new name.
+   */
   public void setRecipeName(String name) {
     this.recipeName = name;
   }
@@ -178,6 +212,11 @@ public class UiRecipeViewController {
     }
   }
 
+  /**
+   * Get the text field for inputting the number of portions.
+   *
+   * @return the TextField object.
+   */
   public TextField getPortionTextField() {
     return portionTextField;
   }
@@ -193,19 +232,10 @@ public class UiRecipeViewController {
 
     try {
       // Query to fetch the recipe's instructions using the recipeId.
-      ResultSet recipeInstructions = mainController.sqlConnector.executeSqlSelect(
-          "SELECT instruction " +
-              "FROM recipe " +
-              "WHERE name = '" + recipeName + "';"
-      );
+      String instructions = Recipe.getInstructions(recipeName);
+      instructionsArea.setText(instructions != null ? instructions : "No instructions provided.");
 
-      if (recipeInstructions.next()) {
-        String instructions = recipeInstructions.getString("instruction");
-        instructionsArea.setText(instructions != null ? instructions : "No instructions provided.");
-      } else {
-        instructionsArea.setText("Recipe not found.");
-      }
-    } catch (SQLException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       instructionsArea.setText("Error retrieving instructions.");
     }
@@ -248,12 +278,24 @@ public class UiRecipeViewController {
       this.displayIngredients();
     });
 
+    // Define action listener for the remove ingredient button
+    this.removeIngredientButton.setOnAction(event -> {
+      int ingredientId = this.ingredientsListView.getSelectionModel().getSelectedItem();
+      Recipe.removeIngredientFromRecipe(this.recipeName, ingredientId);
+      this.displayIngredients();
+
+    });
+
   }
 
   /**
    * Initialize action handlers for ComboBoxes and text fields.
    */
   private void initializeSelectionHandlers() {
+
+    // Set text formatter for the quantity text field to prevent invalid input.
+    this.quantityTextField.setTextFormatter(Formatter.getFloatFormatter());
+
     this.ingredientTextField.textProperty().addListener((observable, oldValue, newValue) -> {
       this.selectIngredientComboBox.getItems().clear();
       ArrayList<String> results = Recipe.searchIngredients(newValue);
@@ -265,7 +307,7 @@ public class UiRecipeViewController {
     // Add listener to ComboBox such that the unit is updated upon selection.
     this.selectIngredientComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
       String unit = Recipe.getIngredientUnit(newValue);
-      this.quantityLabel.setText(unit);
+      this.unitLabel.setText(unit);
     });
 
     this.portionTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -289,6 +331,4 @@ public class UiRecipeViewController {
   private void displayName() {
     this.recipeNameLabel.setText(this.recipeName);
   }
-
-
 }
