@@ -1,8 +1,8 @@
 package no.ntnu.idatt1005.plate.controller.calendar;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 
@@ -24,6 +24,8 @@ import java.time.DayOfWeek;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import no.ntnu.idatt1005.plate.model.Settings;
 import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
@@ -32,6 +34,11 @@ import no.ntnu.idatt1005.plate.model.ShoppingList;
 public class CalendarController {
 
   private Date selectedDate;
+
+  private final Calendar calendar = new Calendar(new SqlConnector());
+  private final LocalDate thisMonday = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+  private final Path configDir = Paths.get(System.getProperty("user.home")).resolve(".plate");
+  private final Settings settings = new Settings(configDir);
 
   /**
    * The main controller for the application.
@@ -75,7 +82,12 @@ public class CalendarController {
   @FXML
   private Button changeRecipeButton;
 
-  private final Calendar calendar = new Calendar(new SqlConnector());
+  /**
+   * Button to reroll the recipes for the entire week
+   */
+  @FXML
+  private Button rerollWeekButton;
+
 
   /**
    * The button to add all missing ingredients to the shopping list.
@@ -107,29 +119,47 @@ public class CalendarController {
     this.addShoppingListButtonActionListeners();
     this.initializeComboBox();
     //this.missingListView.setCellFactory(param -> new MissingIngredientListCell());
-    LocalDate today = LocalDate.now();
-    LocalDate thisMonday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+
+
+
+
+    insertWeek(thisMonday);
+  }
+
+  /**
+   * Inserts name, recipe and date to the dayBlockControllers for the entire week.
+   *
+   * @param monday monday of current week
+   */
+  private void insertWeek(LocalDate monday) {
 
     ArrayList<DayBlockController> dayBlockControllers = new ArrayList<>(Arrays.asList(
-        mondayController, tuesdayController, wednesdayController, thursdayController,
-        fridayController, saturdayController, sundayController));
-
+            mondayController, tuesdayController, wednesdayController, thursdayController,
+            fridayController, saturdayController, sundayController));
 
     for (int i = 0; i < 7; i++) {
-      LocalDate date = thisMonday.plusDays(i);
+      LocalDate date = monday.plusDays(i);
       if (!calendar.dayExists(Date.valueOf(date))) {
-        calendar.insertDay(Date.valueOf(date));
+        calendar.insertDay(Date.valueOf(date), settings.getVegetarian());
       }
 
       String day = date.getDayOfWeek().toString().charAt(0) +
-          date.getDayOfWeek().toString().substring(1).toLowerCase();
+              date.getDayOfWeek().toString().substring(1).toLowerCase();
       dayBlockControllers.get(i).setDay(day);
       dayBlockControllers.get(i).setDate(date.toString());
 
-      String recipe = calendar.getDayRecipes().get(date.toString());
+      String recipe = Calendar.getDayRecipes().get(date.toString());
       dayBlockControllers.get(i).setRecipe(recipe);
       dayBlockControllers.get(i).setActionOnRecipeButtonClicked(recipe); // Assign action to go to recipe
     }
+  }
+
+  public void rerollWeek(LocalDate monday) {
+    for (int i = 0; i < 7; i++) {
+      LocalDate date = monday.plusDays(i);
+      calendar.removeDay(Date.valueOf(date));
+    }
+    insertWeek(monday);
   }
 
   /**
@@ -137,7 +167,8 @@ public class CalendarController {
    */
   private void initializeComboBox() {
     int maxRecipes = 20;
-    ArrayList<String> results = calendar.searchRecipes("");
+    ArrayList<String> results = calendar.searchRecipes("", settings.getVegetarian());
+
     if (results.size() > maxRecipes) {
       for (int i = 0; i < maxRecipes; i++) {
         this.recipeComboBox.getItems().add(results.get(i));
@@ -181,8 +212,7 @@ public class CalendarController {
   }
 
   /**
-   * Initialize action listeners for functions relating to search and changing recipe
-   * for the selected day.
+   * Initialize action listeners for functions relating to search and changing recipes.
    */
   private void addRecipeButtonActionListeners() {
 
@@ -191,7 +221,7 @@ public class CalendarController {
 
     this.recipeSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
           this.recipeComboBox.getItems().clear();
-          ArrayList<String> results = Calendar.searchRecipes(newValue);
+          ArrayList<String> results = Calendar.searchRecipes(newValue, settings.getVegetarian());
           for (int i = 0; i < results.size(); i++) {
             this.recipeComboBox.getItems().add(results.get(i));
           }
@@ -212,6 +242,12 @@ public class CalendarController {
           }
         }
       }});
+
+    // Button for rerolling the current week
+    this.rerollWeekButton.setOnAction(e -> {
+      this.rerollWeek(thisMonday);
+      this.initialize();
+    });
 
   }
 

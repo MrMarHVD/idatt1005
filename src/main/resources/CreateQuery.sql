@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS ingredient(
 CREATE TABLE IF NOT EXISTS recipe(
         recipe_id INTEGER PRIMARY KEY AUTOINCREMENT,
         name VARCHAR(60) NOT NULL,
-        instruction TEXT
+        instruction TEXT,
+        vegetarian INTEGER
         );
 
 CREATE TABLE IF NOT EXISTS recipe_ingredients(

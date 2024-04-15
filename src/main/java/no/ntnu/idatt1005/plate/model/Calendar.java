@@ -50,8 +50,11 @@ public class Calendar {
    *
    * @param date the date to insert
    */
-  public void insertDay(Date date) {
+  public void insertDay(Date date, boolean vegetarian) {
     String selectQuery = "SELECT recipe_id FROM recipe ORDER BY ABS(RANDOM()) LIMIT 1;";
+    if (vegetarian) {
+      selectQuery = "SELECT recipe_id FROM recipe WHERE vegetarian = 1 ORDER BY ABS(RANDOM()) LIMIT 1;";
+    }
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
     int recipeId = 0;
     try {
@@ -63,6 +66,16 @@ public class Calendar {
     }
 
     String query = "INSERT INTO day(date, recipe_id) VALUES ('" + date + "', " + recipeId + ");";
+    sqlConnector.executeSqlUpdate(query);
+  }
+
+  /**
+   * Method for removing a given day from the database
+   *
+   * @param date the date to remove
+   */
+  public void removeDay(Date date) {
+    String query = "DELETE FROM day WHERE date = '" + date + "';";
     sqlConnector.executeSqlUpdate(query);
   }
 
@@ -131,9 +144,12 @@ public class Calendar {
    * @param search the string to search the database for.
    * @return an arraylist containing the names of the recipes that match the search string.
    */
-  public static ArrayList<String> searchRecipes (String search) {
+  public static ArrayList<String> searchRecipes (String search, boolean vegetarian) {
     ArrayList<String> recipes = new ArrayList<>();
     String selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%';";
+    if (vegetarian) {
+      selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%' AND vegetarian = 1;";
+    }
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
     if (rs != null) {
       try {
