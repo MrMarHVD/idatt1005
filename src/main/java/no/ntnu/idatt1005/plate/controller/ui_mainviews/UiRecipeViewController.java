@@ -289,6 +289,4 @@ public class UiRecipeViewController {
   private void displayName() {
     this.recipeNameLabel.setText(this.recipeName);
   }
-
-
 }

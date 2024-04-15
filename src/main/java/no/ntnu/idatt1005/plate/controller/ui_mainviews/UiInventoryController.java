@@ -192,10 +192,6 @@ public class UiInventoryController {
    * Queries all ingredients in the inventory and displays them.
    */
   private void displayIngredients() {
-    //ist<Ingredient> allIngredients = JsonReader.getInventoryIngredients();
-    //ObservableList<Ingredient> observableIngredients = FXCollections.observableArrayList(allIngredients);
-    //ingredientListView.setItems(observableIngredients);
-    //ingredientListView.setCellFactory(param -> new IngredientListCell());
     List<Integer> fullInventory = new ArrayList<Integer>();
 
     try {
@@ -315,12 +311,11 @@ public class UiInventoryController {
       Inventory.addNewIngredient(ingredientName, quantity);
 
       // if the ingredient exists in the inventory, update its quantity.
-    } else if(Inventory.ingredientExistsInInventory(ingredientName) ) {
-      //PopupManager.displayError("Error", "No ingredient selected");
+    } else if (Inventory.ingredientExistsInInventory(ingredientName) ) {
       Inventory.updateIngredient(ingredientName, quantity);
 
-      // Else, an ingredient is selected via the list view, update that one.
-    } else if(ingredientListView.getSelectionModel().getSelectedItem() != null) {
+      // Else, if an ingredient is selected via the list view, update that one.
+    } else if (ingredientListView.getSelectionModel().getSelectedItem() != null) {
       int ingredientId = ingredientListView.getSelectionModel().getSelectedItem();
       ingredientName = Inventory.selectIngredient(ingredientId);
       System.out.println(ingredientName);

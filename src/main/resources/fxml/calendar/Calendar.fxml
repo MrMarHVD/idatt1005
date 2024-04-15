@@ -72,7 +72,7 @@
             </VBox>
             <VBox prefHeight="503.0" prefWidth="404.0">
                <children>
-                  <Label prefHeight="15.0" prefWidth="296.0" text="Ingredients you need to buy" textAlignment="CENTER" />
+                  <Label prefHeight="15.0" prefWidth="296.0" text="Ingredients you need for this recipe" textAlignment="CENTER" />
                   <HBox prefHeight="35.0" prefWidth="311.0">
                      <children>
                         <Label prefHeight="35.0" prefWidth="156.0" text="Ingredient">

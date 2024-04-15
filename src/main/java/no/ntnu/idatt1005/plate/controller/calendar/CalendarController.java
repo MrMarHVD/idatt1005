@@ -31,6 +31,9 @@ import no.ntnu.idatt1005.plate.model.ShoppingList;
  */
 public class CalendarController {
 
+  /**
+   * The date of the currently selected day in the calendar.
+   */
   private Date selectedDate;
 
   /**
@@ -161,23 +164,31 @@ public class CalendarController {
       dayBlockController.getSelectedButton().setOnAction(e -> {
         if (dayBlockController.getSelectedButton().isSelected()) {
           String date = dayBlockController.getDate();
-          this.selectedDate = Date.valueOf(date); // Ensure that the selected date is stored
-          String recipeName = Calendar.getDayRecipes().get(date);
-
-          List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
-
-          // Create an ObservableList with the IDs of the missing ingredients
-          ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(missingIngredients);
-
-          // Set the ObservableList as the items of the ListView
-          missingListView.setItems(observableIngredients);
-
-          // Set the cell factory of the ListView to use MissingIngredientListCell
-          missingListView.setCellFactory(param -> new MissingIngredientListCell(recipeName));
-
+          this.populateListView(date);
         }
       });
     }
+  }
+
+  /**
+   * Populate the list view with the ingredients missing from the recipe corresponding to a certain
+   * day.
+   *
+   * @param date the date of the recipe as a string.
+   */
+  private void populateListView(String date) {
+    this.selectedDate = Date.valueOf(date); // Ensure that the selected date is stored
+    String recipeName = Calendar.getDayRecipes().get(date);
+    List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
+
+    // Create an ObservableList with the IDs of the missing ingredients
+    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(missingIngredients);
+
+    // Set the ObservableList as the items of the ListView
+    missingListView.setItems(observableIngredients);
+
+    // Set the cell factory of the ListView to use MissingIngredientListCell
+    missingListView.setCellFactory(param -> new MissingIngredientListCell(recipeName));
   }
 
   /**
@@ -232,6 +243,7 @@ public class CalendarController {
           ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
         }
       }
+      this.populateListView(this.selectedDate.toString());
     });
 
     // Create action listener for button which adds all missing ingredients to shopping list.
@@ -249,6 +261,7 @@ public class CalendarController {
           }
         }
       }
+      this.populateListView(this.selectedDate.toString());
     });
   }
 
