@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.cookbook;
+package no.ntnu.idatt1005.plate.controller.ui.cookbook;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,13 +9,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-
-import javafx.scene.layout.Priority;
-import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.ui_mainviews.UiInventoryController;
-
-import org.iq80.snappy.Main;
-import org.w3c.dom.Text;
 
 
 /**

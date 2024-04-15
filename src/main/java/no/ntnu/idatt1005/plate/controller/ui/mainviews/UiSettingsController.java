@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.ui_mainviews;
+package no.ntnu.idatt1005.plate.controller.ui.mainviews;
 
 import atlantafx.base.theme.CupertinoDark;
 import atlantafx.base.theme.CupertinoLight;
@@ -6,7 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Settings;
 
 import java.nio.file.Path;

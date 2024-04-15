@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.calendar;
+package no.ntnu.idatt1005.plate.controller.ui.calendar;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

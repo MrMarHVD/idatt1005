@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.shoppinglist;
+package no.ntnu.idatt1005.plate.controller.ui.shoppinglist;
 
 
 import java.sql.ResultSet;
@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 
-import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 
 /**
  * Controller class for the shopping list view.

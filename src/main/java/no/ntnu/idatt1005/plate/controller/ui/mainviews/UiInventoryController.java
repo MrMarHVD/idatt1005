@@ -1,9 +1,8 @@
-package no.ntnu.idatt1005.plate.controller.ui_mainviews;
+package no.ntnu.idatt1005.plate.controller.ui.mainviews;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.UnaryOperator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,12 +11,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
-import javafx.util.converter.NumberStringConverter;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.global.PopupManager;
-import no.ntnu.idatt1005.plate.controller.toolbar.ToolbarController;
-import no.ntnu.idatt1005.plate.controller.inventory.IngredientListCell;
+import no.ntnu.idatt1005.plate.controller.utility.Formatter;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
+import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.controller.ui.inventory.IngredientListCell;
 import no.ntnu.idatt1005.plate.model.Inventory;
 
 /**
@@ -139,15 +137,8 @@ public class UiInventoryController {
    */
   private void initializeButtonHandlers() {
 
-    // Define a unary operator to prevent the user from inputting invalid characters.
-    UnaryOperator<Change> floatFilter = change -> {
-      String newText = change.getControlNewText();
-      if (newText.isEmpty() || newText.matches("\\d*\\.?\\d*")) {
-        return change;
-      }
-      return null;
-    };
-    quantityFieldUpdate.setTextFormatter(new TextFormatter<>(floatFilter));
+
+    quantityFieldUpdate.setTextFormatter(new TextFormatter<>(Formatter.getFloatFormatter()));
 
     // Set handler for the update button
     updateIngredientButton.setOnMouseClicked(event -> {

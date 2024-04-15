@@ -2,7 +2,7 @@ package no.ntnu.idatt1005.plate.model;
 
 import java.sql.ResultSet;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-import no.ntnu.idatt1005.plate.controller.global.PopupManager;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
  * Class for managing the sql queries for the inventory.
