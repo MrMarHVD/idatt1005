@@ -108,6 +108,7 @@ public class UiCookbookController {
     button.setMaxWidth(Double.MAX_VALUE);
     GridPane.setHgrow(button, Priority.ALWAYS);
     button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+    button.setStyle("-fx-wrap-text: true; -fx-text-alignment: CENTER");
 
 
     recipeButtons.add(button);

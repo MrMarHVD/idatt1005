@@ -123,7 +123,12 @@ public class RecipeListCell extends ListCell<Integer> {
 
           //String category = ingredientDetails.getString("category");
           //this.category.setText(category != null ? category : "None");
-
+          int index = getIndex();
+          if (index % 2 == 0) {
+            grid.setStyle("-fx-background-color: #ffffff00;");
+          } else {
+            grid.setStyle("-fx-background-color: #e0e0e033;");
+          }
           setGraphic(grid);
         }
       } catch (SQLException e) {

@@ -115,7 +115,12 @@ public class MissingIngredientListCell extends ListCell<Integer> {
           } else {
             this.inShoppingList.setText("No");
           }
-
+          int index = getIndex();
+          if (index % 2 == 0) {
+            grid.setStyle("-fx-background-color: #ffffff00;");
+          } else {
+            grid.setStyle("-fx-background-color: #e0e0e033;");
+          }
           setGraphic(grid);
         }
       } catch (SQLException e) {

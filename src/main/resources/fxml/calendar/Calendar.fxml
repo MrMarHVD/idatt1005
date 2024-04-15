@@ -70,10 +70,10 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="503.0" prefWidth="404.0">
+            <VBox prefHeight="503.0" prefWidth="404.0" >
                <children>
-                  <Label prefHeight="15.0" prefWidth="296.0" text="Ingredients you need to buy" textAlignment="CENTER" />
-                  <HBox prefHeight="35.0" prefWidth="311.0">
+                  <Label prefHeight="50.0" prefWidth="296.0" text="Ingredients you need to buy" textAlignment="CENTER" />
+                  <HBox prefHeight="45.0" prefWidth="311.0">
                      <children>
                         <Label prefHeight="35.0" prefWidth="156.0" text="Ingredient">
                            <font>
@@ -92,7 +92,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <ListView fx:id="missingListView" prefHeight="478.0" prefWidth="311.0" />
+                  <ListView fx:id="missingListView" prefHeight="478.0" prefWidth="311.0" styleClass="grayBackground" />
                </children>
             </VBox>
             <VBox prefHeight="503.0" prefWidth="286.0">
@@ -103,8 +103,8 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="addMissingFromSelectedButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" text="Add missing from selected" />
-                  <Button fx:id="addAllMissingButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="212.0" text="Add all missing ingredients" />
+                  <Button fx:id="addMissingFromSelectedButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" text="Add missing from selected" style="-fx-font-size: 12px" />
+                  <Button fx:id="addAllMissingButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="212.0" text="Add all missing ingredients" style="-fx-font-size: 12px" />
                </children>
             </VBox>
          </children>

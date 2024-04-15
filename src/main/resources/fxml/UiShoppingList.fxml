@@ -52,7 +52,7 @@
   <children>
     <BorderPane prefHeight="520.0" prefWidth="900.0">
       <top>
-        <VBox prefHeight="91.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="91.0" prefWidth="900.0" BorderPane.alignment="CENTER" >
           <children>
             <MenuBar VBox.vgrow="NEVER">
               <menus>
@@ -103,29 +103,29 @@
       <center>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER" stylesheets="@../styles/plateStyle.css">
           <content>
-            <HBox prefHeight="423.0" prefWidth="450.0"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" styleClass="grayBackground">
-              <VBox prefHeight="419.0" prefWidth="460.0" styleClass="noBorder">
+            <HBox prefHeight="423.0" prefWidth="650.0"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" styleClass="lessGrayBackground">
+              <VBox prefHeight="419.0" prefWidth="660.0" styleClass="noBorder">
                 <Label minHeight="48" prefHeight="48.0" prefWidth="422.0" text=" Shopping List" styleClass="titleLabel">
                   <font>
                     <Font size="18.0" />
                   </font>
                 </Label>
-                        <HBox prefHeight="27.0" prefWidth="448.0">
+                        <HBox prefHeight="27.0" prefWidth="648.0">
                            <children>
-                      <TextField fx:id="itemNameField" prefHeight="25.0" prefWidth="225.0" promptText="item name" />
-                      <TextField fx:id="itemAmountField" prefHeight="25.0" prefWidth="125.0" promptText="item amount" />
+                      <TextField fx:id="itemNameField" prefHeight="25.0" prefWidth="260.0" promptText="item name" />
+                      <TextField fx:id="itemAmountField" prefHeight="25.0" prefWidth="150.0" promptText="item amount" />
                       <Button mnemonicParsing="false" onAction="#addSelectedItems" prefHeight="25.0" prefWidth="93.0" text="add item" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="28.0" prefWidth="448.0">
+                        <HBox prefHeight="28.0" prefWidth="648.0">
                            <children>
-                              <Button fx:id="selectAll" mnemonicParsing="false" onAction="#selectAllItems" prefHeight="28.0" prefWidth="100" text="Select all"></Button>
-                              <Button fx:id="clearSelection" mnemonicParsing="false" onAction="#unselectAllItems" prefHeight="28.0" prefWidth="125" text="Clear selection"></Button>
+                              <Button fx:id="selectAll" mnemonicParsing="false" onAction="#selectAllItems" prefHeight="28.0" prefWidth="115" text="Select all"></Button>
+                              <Button fx:id="clearSelection" mnemonicParsing="false" onAction="#unselectAllItems" prefHeight="28.0" prefWidth="145" text="Clear selection"></Button>
                            </children>
                         </HBox>
-                        <HBox prefHeight="320.0" prefWidth="448.0">
+                        <HBox prefHeight="320.0" prefWidth="648.0">
                            <children>
-                              <ListView fx:id="listView" prefHeight="188.0" prefWidth="448.0" />
+                              <ListView fx:id="listView" prefHeight="188.0" prefWidth="648.0" />
                            </children>
                         </HBox>
               </VBox>
