@@ -74,9 +74,6 @@ public class UiShoppingListController {
     details_label.setTextFill(Color.web("#bb5555"));
     details_label.setStyle("-fx-font-size: 16;");
 
-    buyItemsButton.setStyle("-fx-background-color: #cedece;");
-    clearListButton.setStyle("-fx-background-color: #decece;");
-
   }
 
   /**

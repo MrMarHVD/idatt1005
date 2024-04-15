@@ -48,7 +48,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.shoppinglist.UiShoppingListController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.shoppinglist.UiShoppingListController" >
   <children>
     <BorderPane prefHeight="520.0" prefWidth="900.0">
       <top>
@@ -101,11 +101,11 @@
         <VBox prefHeight="429.0" prefWidth="42.0" BorderPane.alignment="CENTER" />
       </left>
       <center>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
+        <ScrollPane prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="CENTER" stylesheets="@../styles/plateStyle.css">
           <content>
-            <HBox prefHeight="423.0" prefWidth="450.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-              <VBox prefHeight="419.0" prefWidth="460.0">
-                <Label minHeight="48" prefHeight="48.0" prefWidth="422.0" text="Your Shopping List">
+            <HBox prefHeight="423.0" prefWidth="450.0"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" styleClass="grayBackground">
+              <VBox prefHeight="419.0" prefWidth="460.0" styleClass="noBorder">
+                <Label minHeight="48" prefHeight="48.0" prefWidth="422.0" text=" Shopping List" styleClass="titleLabel">
                   <font>
                     <Font size="18.0" />
                   </font>
@@ -134,7 +134,7 @@
         </ScrollPane>
       </center>
       <right>
-        <AnchorPane prefHeight="417.0" prefWidth="199.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="417.0" prefWidth="199.0" BorderPane.alignment="CENTER" stylesheets="@../styles/plateStyle.css">
           <children>
             <Label fx:id="details_label" alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="" textAlignment="CENTER" wrapText="false">
               <font>
@@ -147,10 +147,10 @@
         </AnchorPane>
       </right>
     </BorderPane>
-      <AnchorPane prefHeight="75.0" prefWidth="900.0">
+      <AnchorPane prefHeight="75.0" prefWidth="900.0" stylesheets="@../styles/plateStyle.css">
          <children>
-            <Button fx:id="buyItemsButton" layoutX="46.0" layoutY="7.0" mnemonicParsing="false" onAction="#buyItems" prefHeight="43.0" prefWidth="155.0" text="Add to inventory" />
-            <Button fx:id="clearListButton" layoutX="223.0" layoutY="7.0" mnemonicParsing="false" onAction="#clearList" prefHeight="43.0" prefWidth="90.0" text="Remove" />
+            <Button fx:id="buyItemsButton" layoutX="46.0" layoutY="7.0" mnemonicParsing="false" onAction="#buyItems" prefHeight="43.0" prefWidth="155.0" text="Add to inventory" styleClass="greenButton" />
+            <Button fx:id="clearListButton" layoutX="223.0" layoutY="7.0" mnemonicParsing="false" onAction="#clearList" prefHeight="43.0" prefWidth="90.0" text="Remove" styleClass="redButton" />
          </children>
       </AnchorPane>
   </children>

@@ -1,0 +1,53 @@
+.button, .label, .text-field, .text-area, .list-view, .scroll-pane {
+  -fx-font-family: 'Consolas';
+}
+
+.button {
+  -fx-background-color: #a0a0a058;
+  -fx-border-radius: 5px;
+  -fx-border-width: 1px;
+  -fx-border-color: #e0e0e050;
+  -fx-font-size: 12px;
+  -fx-padding: 0px 10px 0px 10px;
+}
+
+.button:hover {
+  -fx-background-color: #c0c0c070;
+}
+
+.greenButton {
+  -fx-background-color: #ceeece88;
+}
+
+.redButton {
+  -fx-background-color: #ffcccc88;
+}
+
+.grayBackground {
+  -fx-background-color: rgba(157, 157, 157, 0.32);
+  -fx-border-width: 1px;
+  -fx-border-color: #c0c0c0;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+
+}
+
+.noBorder {
+  -fx-border-width: 0px;
+  -fx-border-radius: 5px;
+}
+
+.vbox, .hbox {
+  -fx-border-width: 0px;
+}
+
+.label {
+  -fx-label-padding: 2px;
+}
+
+.titleLabel {
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+}
+
+

@@ -73,8 +73,13 @@ public class UiSettingsController {
   private void updateTheme() {
     Settings settings = new Settings();
     if (settings.getDarkMode()) {
-      Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
-    } else {
+
+      String cupertinoDarkStylesheet = new CupertinoDark().getUserAgentStylesheet();
+//      String customStylesheet = getClass().getResource("C:\\Users\\konra\\Documents\\Skole\\Semester 2\\Systemutvikling\\Prosjekt\\purchase-planner\\src\\main\\resources\\styles\\plateStyleDark.css").toExternalForm();
+      String combinedStylesheet = cupertinoDarkStylesheet + "\n" ;
+
+      Application.setUserAgentStylesheet(combinedStylesheet);
+    }  else {
       Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
     }
   }
