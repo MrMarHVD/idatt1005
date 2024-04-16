@@ -2,6 +2,7 @@ package no.ntnu.idatt1005.plate.model;
 
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +25,11 @@ class CalendarTest {
     private static final SqlConnector sqlConnector = new SqlConnector(dbFileName);
 
     private static final Calendar calendar = new Calendar(sqlConnector);
+
+    @BeforeEach
+    void setUp() {
+        sqlConnector.resetDatabase();
+    }
 
     @Test
     @DisplayName("constructor test")
@@ -127,6 +133,41 @@ class CalendarTest {
         assertEquals(0, size);
     }
 
+    @Test
+    @DisplayName("remove day test")
+    void testRemoveDay() {
+
+        //act
+        calendar.removeDay(date);
+
+        //assert
+        assertFalse(calendar.dayExists(date));
+    }
+
+    @Test
+    @DisplayName("get missing ingredients test")
+    void testGetMissingIngredients() {
+        //arrange
+
+        //act
+        String missingIngredients = calendar.getMissingIngredients("Margherita Pizza").toString();
+
+        //assert
+    assertNotNull(missingIngredients);
+
+    }
+
+    @Test
+    @DisplayName("get missing ingredients with quantity test")
+    void testGetMissingIngredientsWithQuantity() {
+        //arrange
+
+        //act
+        String missingIngredients = calendar.getMissingIngredientsWithQuantity("Margherita Pizza", 2).toString();
+
+        //assert
+        assertNotNull(missingIngredients);
+    }
 
 
     @AfterAll

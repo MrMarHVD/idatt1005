@@ -176,7 +176,7 @@ public class Calendar {
     List<Integer> missingIngredients = new ArrayList<>();
     try {
       // Fetch the list of ingredients required for the recipe
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = sqlConnector.executeSqlSelect(
           "SELECT ingredient_id, quantity " +
               "FROM recipe_ingredients " +
               "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
@@ -187,7 +187,7 @@ public class Calendar {
         float requiredQuantity = rs.getFloat("quantity");
 
         // Check if the ingredient is available in the inventory in the required quantity
-        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+        ResultSet rsInventory = sqlConnector.executeSqlSelect(
             "SELECT quantity " +
                 "FROM inventory_ingredient " +
                 "WHERE ingredient_id = " + ingredientId
@@ -223,7 +223,7 @@ public class Calendar {
     Map<Integer, Float> missingIngredients = new HashMap<>();
     try {
       // Fetch the list of ingredients required for the recipe
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = sqlConnector.executeSqlSelect(
           "SELECT ingredient_id, quantity " +
               "FROM recipe_ingredients " +
               "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
@@ -234,7 +234,7 @@ public class Calendar {
         float requiredQuantity = rs.getFloat("quantity") * portions;
 
         // Check if the ingredient is available in the inventory in the required quantity
-        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+        ResultSet rsInventory = sqlConnector.executeSqlSelect(
             "SELECT quantity " +
                 "FROM inventory_ingredient " +
                 "WHERE ingredient_id = " + ingredientId

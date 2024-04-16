@@ -128,7 +128,7 @@ public class SqlConnector {
    * Reset the database to its initial state. If any table is missing, the tables are created and
    * default  data is inserted.
    */
-  private void resetDatabase() {
+  public void resetDatabase() {
     runSqlFile(createSqlFilePath);
     if (anyTableMissing()) {
       runSqlFile(insertSqlFilePath);
