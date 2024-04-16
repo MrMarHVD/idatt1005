@@ -47,6 +47,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ComboBox?>
+
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatt1005.plate.controller.ui.shoppinglist.UiShoppingListController">
   <children>
@@ -112,8 +114,9 @@
                 </Label>
                         <HBox prefHeight="27.0" prefWidth="648.0">
                            <children>
-                      <TextField fx:id="itemNameField" prefHeight="25.0" prefWidth="260.0" promptText="item name" />
-                      <TextField fx:id="itemAmountField" prefHeight="25.0" prefWidth="150.0" promptText="item amount" />
+                      <TextField fx:id="itemNameField" prefHeight="25.0" prefWidth="160.0" promptText="item name" />
+                      <ComboBox fx:id="selectIngredientComboBox" prefWidth="150.0" promptText="Ingredient" />
+                             <TextField fx:id="itemAmountField" prefHeight="25.0" prefWidth="150.0" promptText="item amount" />
                       <Button mnemonicParsing="false" onAction="#addSelectedItems" prefHeight="25.0" prefWidth="93.0" text="add item" />
                            </children>
                         </HBox>

@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -18,6 +19,8 @@ import javafx.scene.paint.Color;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.model.Inventory;
+import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
  * Controller class for the shopping list view.
@@ -47,6 +50,9 @@ public class UiShoppingListController {
   @FXML
   private ToolbarController toolbarController;
 
+  @FXML
+  private ComboBox<String> selectIngredientComboBox;
+
 
   @FXML
   private Label details_label;
@@ -69,6 +75,20 @@ public class UiShoppingListController {
     details_label.setTextFill(Color.web("#bb5555"));
     details_label.setStyle("-fx-font-size: 16;");
 
+    ArrayList<String> ingredients = Inventory.searchIngredients("");
+    for (int i = 0; i < ingredients.size(); i++) {
+      this.selectIngredientComboBox.getItems().add(ingredients.get(i));
+    }
+
+
+    this.itemNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+      this.selectIngredientComboBox.getItems().clear();
+      ArrayList<String> results = Inventory.searchIngredients(newValue);
+      for (int i = 0; i < results.size(); i++) {
+        this.selectIngredientComboBox.getItems().add(results.get(i));
+      }
+    });
+
   }
 
   /**
@@ -90,7 +110,7 @@ public class UiShoppingListController {
   public void addSelectedItems() {
     try {
 
-      String itemName = titleCase(itemNameField.getText());
+      String itemName = titleCase(selectIngredientComboBox.getSelectionModel().getSelectedItem());
       String itemAmount = itemAmountField.getText();
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
           "SELECT ingredient_id FROM ingredient WHERE name = '" + itemName + "'");
