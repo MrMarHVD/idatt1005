@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.collections.FXCollections;
@@ -283,6 +284,9 @@ public class CalendarController {
 
     // Create action listener for button which adds missing ingredients from the selected recipe
     this.addMissingFromSelectedButton.setOnAction(event -> {
+      if (this.selectedDate == null) {
+        return;
+      }
       String recipeName = Calendar.getDayRecipes().get(this.selectedDate.toString());
 
       // Get portions from text field
@@ -308,17 +312,27 @@ public class CalendarController {
 
     // Create action listener for button which adds all missing ingredients to shopping list.
     this.addAllMissingButton.setOnAction(event -> {
+      Map<Integer, Float> missingIngredients = new HashMap<>();
       for (DayBlockController dayBlockController : new DayBlockController[]{
           mondayController, tuesdayController, wednesdayController, thursdayController,
           fridayController, saturdayController, sundayController}) {
         String date = dayBlockController.getDate();
         String recipeName = Calendar.getDayRecipes().get(date);
-        Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(recipeName, 1);
-        for (int ingredientId : missingIngredients.keySet()) {
-          // Add to shopping list only if not there already.
-          if (!ShoppingList.inShoppingList(ingredientId)) {
-            ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
+
+        Map<Integer, Float> currentMissing = Calendar.getIngredientsAndQuantity(recipeName, 1);
+        for (int ingredientId : currentMissing.keySet()) {
+          if (missingIngredients.containsKey(ingredientId)) {
+            missingIngredients.put(ingredientId, missingIngredients.get(ingredientId) + currentMissing.get(ingredientId));
+          } else {
+            missingIngredients.put(ingredientId, currentMissing.get(ingredientId));
           }
+        }
+      }
+      missingIngredients = Calendar.getMissingIngredientsFromMap(missingIngredients);
+      for (int ingredientId : missingIngredients.keySet()) {
+        // Add to shopping list only if not there already.
+        if (!ShoppingList.inShoppingList(ingredientId)) {
+          ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
         }
       }
 

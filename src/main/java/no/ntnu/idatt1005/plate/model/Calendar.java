@@ -256,6 +256,68 @@ public class Calendar {
     return missingIngredients;
   }
 
+  /**
+   * Get a list of ingredients and the quantity required for a given recipe
+   * @param recipe the name of the recipe
+   * @param portions the portions of the recipe
+   * @return a map of ingredients and the quantity required
+   */
+  public static Map<Integer, Float> getIngredientsAndQuantity(String recipe, float portions) {
+    Map<Integer, Float> totalIngredients = new HashMap<>();
+    try {
+      // Fetch the list of ingredients required for the recipe
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT ingredient_id, quantity " +
+              "FROM recipe_ingredients " +
+              "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
+      );
+
+      while (rs.next()) {
+        int ingredientId = rs.getInt("ingredient_id");
+        float requiredQuantity = rs.getFloat("quantity") * portions;
+        totalIngredients.put(ingredientId, requiredQuantity);
+        }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  return totalIngredients;
+  }
+
+  /**
+   * Get a list of missing ingredients and the missing quantity by comparing the ingredients in a Map to what you have
+   * @param ingredients the ingredients and the quantity required
+   * @return a map of missing ingredients and the quantity missing
+   */
+  public static Map<Integer, Float> getMissingIngredientsFromMap(Map<Integer, Float> ingredients) {
+    Map<Integer, Float> missingIngredients = new HashMap<>();
+    try {
+      for (Map.Entry<Integer, Float> entry : ingredients.entrySet()) {
+        int ingredientId = entry.getKey();
+        float requiredQuantity = entry.getValue();
+
+        // Check if the ingredient is available in the inventory in the required quantity
+        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+            "SELECT quantity " +
+                "FROM inventory_ingredient " +
+                "WHERE ingredient_id = " + ingredientId
+        );
+
+        if (rsInventory.next()) {
+          float availableQuantity = rsInventory.getFloat("quantity");
+          if (availableQuantity < requiredQuantity) {
+            missingIngredients.put(ingredientId, requiredQuantity - availableQuantity);
+          }
+        } else {
+          missingIngredients.put(ingredientId, requiredQuantity);
+        }
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return missingIngredients;
+  }
+
 
 
 }
