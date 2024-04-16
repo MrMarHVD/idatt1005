@@ -221,6 +221,10 @@ public class UiRecipeViewController {
     return portionTextField;
   }
 
+  public String getRecipeName() {
+    return recipeName;
+  }
+
   /**
    * Method to show a recipes instructions in the text area.
    */

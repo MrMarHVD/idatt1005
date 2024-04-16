@@ -8,6 +8,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiRecipeViewController;
+import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
  * ListCell class which manages the cells in the ingredient list,
@@ -93,6 +94,9 @@ public class RecipeListCell extends ListCell<Integer> {
       setGraphic(null);
     } else {
       try {
+
+        // Get controller ID to compare with the recipe ID when querying recipe_ingredients.
+        int recipeId = Recipe.getRecipeIdFromName(this.controller.getRecipeName());
         // Fetch ingredient details from the database
         ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
 
@@ -101,7 +105,7 @@ public class RecipeListCell extends ListCell<Integer> {
                 "LEFT JOIN allergen a ON i.allergen_id = a.id " +
                 "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id " +
                 "JOIN category c ON i.category_id = c.id " +
-                "WHERE ri.ingredient_id = '" + ingredientId + "';"
+                "WHERE ri.ingredient_id = '" + ingredientId + "' AND ri.recipe_id = " + recipeId + ";"
         );
 
         if (ingredientDetails.next()) {
@@ -110,9 +114,11 @@ public class RecipeListCell extends ListCell<Integer> {
 
           String quantity = ingredientDetails.getString("quantity");
           String unit = ingredientDetails.getString("unit");
+          System.out.println("Test2" + quantity);
 
           /* Check if the input to the portion text field can be converted to a float, and if so,
           calculate the new quantity and add it to the display*/
+          // TODO: add solution using the Formatter
           if (this.controller.getPortionTextField().getText().matches("[+-]?([0-9]*[.])?[0-9]+")) {
             quantities.setText(quantity != null ? ((Float.parseFloat(quantity) *
                 Float.parseFloat(this.controller.getPortionTextField().getText())) + " " + unit) : "None");

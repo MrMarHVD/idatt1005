@@ -297,7 +297,10 @@ public class CalendarController {
           ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
         }
       }
-      this.populateListView(this.selectedDate.toString());
+      if (this.selectedDate != null)
+      {
+        this.populateListView(this.selectedDate.toString());
+      }
     });
 
     // Create action listener for button which adds all missing ingredients to shopping list.

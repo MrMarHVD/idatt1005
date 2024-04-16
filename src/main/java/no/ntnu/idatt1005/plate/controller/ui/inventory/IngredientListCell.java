@@ -96,6 +96,7 @@ protected void updateItem(Integer ingredientId, boolean empty) {
                 name.setText(ingredientDetails.getString("name"));
 
                 String quantity = ingredientDetails.getString("quantity");
+
                 String unit = ingredientDetails.getString("unit");
                 quantities.setText(quantity != null ? (quantity + " " + unit) : "None");
 

@@ -114,6 +114,7 @@ public class Recipe {
           "SELECT ingredient_id FROM ingredient WHERE name = '" + ingredientName + "';").getInt("ingredient_id");
       MainController.sqlConnector.executeSqlUpdate(
           "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, quantity) VALUES (" + recipeId + ", " + ingredientId + ", " + quantity + ");");
+      System.out.println("Test: " + quantity);
     } catch (Exception e) {
       PopupManager.displayError("Insert error", "Could not insert ingredient");
     }
@@ -130,6 +131,12 @@ public class Recipe {
     }
   }
 
+  /**
+   * Select the ingredients in a given recipe.
+   *
+   * @param recipeName the name of the recipe.
+   * @return the result set of ingredients.
+   */
   public static ResultSet selectIngredientsInRecipe(String recipeName) {
     ResultSet ingredients = null;
 
@@ -143,6 +150,17 @@ public class Recipe {
       PopupManager.displayError("Selection error", "Could not select ingredients");
     }
     return ingredients;
+  }
+
+  public static int getRecipeIdFromName(String recipeName) {
+    int recipeId = -1;
+    try {
+      recipeId = MainController.sqlConnector.executeSqlSelect(
+          "SELECT recipe_id FROM recipe WHERE name = '" + recipeName + "';").getInt("recipe_id");
+    } catch (Exception e) {
+      PopupManager.displayError("Selection error", "Could not select recipe id");
+    }
+    return recipeId;
   }
 
 }
