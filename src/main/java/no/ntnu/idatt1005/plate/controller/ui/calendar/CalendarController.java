@@ -315,7 +315,15 @@ public class CalendarController {
           }
         }
       }
-      this.populateListView(this.selectedDate.toString());
+
+      // Populate or select Monday and populate if no day is selected.
+      if (this.selectedDate != null)
+      {
+        this.populateListView(this.selectedDate.toString());
+      } else {
+        this.populateListView(thisMonday.toString());
+        this.mondayController.getSelectedButton().selectedProperty().set(true);
+      }
     });
   }
 
