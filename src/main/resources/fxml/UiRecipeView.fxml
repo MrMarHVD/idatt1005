@@ -166,7 +166,7 @@
             </VBox>
             <VBox prefHeight="429.0" prefWidth="361.0" styleClass="grayBackground">
               <children>
-                        <Label fx:id="recipeNameLabel" prefHeight="50.0" prefWidth="341.0" text="Recipe" styleClass="titleLabel">
+                        <Label fx:id="recipeNameLabel" prefHeight="100.0" prefWidth="341.0" text="Recipe" styleClass="titleLabel" style="-fx-wrap-text: true">
                            <font>
                               <Font size="25.0" />
                            </font>

@@ -77,10 +77,8 @@ public class UiSettingsController {
     if (settings.getDarkMode()) {
 
       String cupertinoDarkStylesheet = new CupertinoDark().getUserAgentStylesheet();
-//      String customStylesheet = getClass().getResource("C:\\Users\\konra\\Documents\\Skole\\Semester 2\\Systemutvikling\\Prosjekt\\purchase-planner\\src\\main\\resources\\styles\\plateStyleDark.css").toExternalForm();
-      String combinedStylesheet = cupertinoDarkStylesheet + "\n" ;
 
-      Application.setUserAgentStylesheet(combinedStylesheet);
+      Application.setUserAgentStylesheet(cupertinoDarkStylesheet);
     }  else {
       Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
     }

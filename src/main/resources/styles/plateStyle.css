@@ -59,8 +59,9 @@
 }
 
 .titleLabel {
-  -fx-font-size: 25px;
+  -fx-font-size: 23px;
   -fx-font-weight: bold;
+  -fx-wrap-text: true;
 }
 
 .smallTitleLabel {

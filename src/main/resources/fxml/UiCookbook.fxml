@@ -145,9 +145,9 @@
         </VBox>
       </center>
       <right>
-        <VBox prefHeight="437.0" prefWidth="102.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="437.0" prefWidth="102.0" BorderPane.alignment="CENTER" stylesheets="@../styles/plateStyle.css">
           <children>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Add">
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Add" styleClass="greenButton">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin></Button>

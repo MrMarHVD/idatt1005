@@ -1,0 +1,38 @@
+
+.button {
+    -fx-background-color: rgba(224, 224, 224, 0.35);
+    -fx-border-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-border-color: #e0e0e070;
+}
+.homeButton {
+    -fx-background-color: #cedece88;
+}
+.homeButton:hover {
+    -fx-background-color: rgba(206, 255, 206, 0.67);
+}
+.cookBookButton {
+    -fx-background-color: #dfcccc88;
+}
+.cookBookButton:hover {
+    -fx-background-color: rgba(248, 194, 194, 0.67);
+}
+.inventoryButton {
+    -fx-background-color: rgba(252, 245, 220, 0.53);
+}
+.inventoryButton:hover {
+    -fx-background-color: rgba(252, 238, 190, 0.67);
+}
+.shoppingListButton {
+    -fx-background-color: rgba(255, 241, 225, 0.53);
+}
+.shoppingListButton:hover {
+    -fx-background-color: rgba(250, 210, 177, 0.67);
+}
+.settingsButton {
+    -fx-background-color: rgba(182, 180, 180, 0.53);
+}
+.settingsButton:hover {
+    -fx-background-color: rgba(155, 154, 154, 0.67);
+}
+
