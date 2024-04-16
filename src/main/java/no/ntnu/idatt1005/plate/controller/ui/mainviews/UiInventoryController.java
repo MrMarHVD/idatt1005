@@ -165,6 +165,7 @@ public class UiInventoryController {
     });
 
     this.addIngredientNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+      this.ingredientComboBox.getItems().clear();
       ArrayList<String> results = Inventory.searchIngredients(newValue);
       for (int i = 0; i < results.size(); i++) {
         this.ingredientComboBox.getItems().add(results.get(i));

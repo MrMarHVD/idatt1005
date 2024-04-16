@@ -34,11 +34,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -53,51 +49,12 @@
       <top>
         <VBox prefHeight="91.0" prefWidth="900.0" BorderPane.alignment="CENTER">
           <children>
-            <MenuBar VBox.vgrow="NEVER">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="New" />
-                    <MenuItem mnemonicParsing="false" text="Open…" />
-                    <Menu mnemonicParsing="false" text="Open Recent" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                    <MenuItem mnemonicParsing="false" text="Save" />
-                    <MenuItem mnemonicParsing="false" text="Save As…" />
-                    <MenuItem mnemonicParsing="false" text="Revert" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Preferences…" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Quit" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Undo" />
-                    <MenuItem mnemonicParsing="false" text="Redo" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Cut" />
-                    <MenuItem mnemonicParsing="false" text="Copy" />
-                    <MenuItem mnemonicParsing="false" text="Paste" />
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Select All" />
-                    <MenuItem mnemonicParsing="false" text="Unselect All" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
             <fx:include fx:id="toolbar" source="toolbar/Toolbar.fxml" />
           </children>
         </VBox>
       </top>
       <center>
-        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="701.0"  stylesheets="@../styles/plateStyle.css" styleClass="grayBackground">
+        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="701.0" styleClass="grayBackground" stylesheets="@../styles/plateStyle.css">
 
           <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -129,7 +86,7 @@
             </HBox>
             <ScrollPane hbarPolicy="NEVER" prefHeight="335.0" prefWidth="600.0">
               <content>
-                <GridPane fx:id="gridPane" prefHeight="327.0" prefWidth="697.0" >
+                <GridPane fx:id="gridPane" prefHeight="327.0" prefWidth="697.0">
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" percentWidth="33" />
                     <ColumnConstraints hgrow="SOMETIMES" percentWidth="33" />
@@ -145,9 +102,9 @@
         </VBox>
       </center>
       <right>
-        <VBox prefHeight="437.0" prefWidth="102.0" BorderPane.alignment="CENTER" stylesheets="@../styles/plateStyle.css">
+        <VBox prefHeight="437.0" prefWidth="102.0" stylesheets="@../styles/plateStyle.css" BorderPane.alignment="CENTER">
           <children>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" text="Add" styleClass="greenButton">
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" styleClass="greenButton" text="Add">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin></Button>
