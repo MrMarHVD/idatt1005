@@ -20,7 +20,7 @@
     from this software without specific prior written permission.
 
   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIEsS, INCLUDING, BUT NOT
   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
   A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
   OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
@@ -127,7 +127,6 @@
                               <Label fx:id="unitLabel" prefHeight="27.0" prefWidth="53.0" text="unit" />
 
                               <Label fx:id="quantityLabel" prefHeight="27.0" prefWidth="53.0" />
-
                            </children>
                         </HBox>
                   <Button fx:id="addIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Add Ingredient" />
