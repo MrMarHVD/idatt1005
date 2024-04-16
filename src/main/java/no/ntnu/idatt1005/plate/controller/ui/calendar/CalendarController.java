@@ -286,7 +286,10 @@ public class CalendarController {
       String recipeName = Calendar.getDayRecipes().get(this.selectedDate.toString());
 
       // Get portions from text field
-      float portions = Float.parseFloat(portionsTextField.getText());
+      float portions = 1;
+      if (portionsTextField.getText() != null && !portionsTextField.getText().isEmpty()) {
+        portions = Float.parseFloat(portionsTextField.getText());
+      }
 
       Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(
           recipeName, portions);
