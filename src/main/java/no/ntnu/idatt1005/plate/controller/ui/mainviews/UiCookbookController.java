@@ -14,6 +14,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 
+import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.Settings;
 
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
@@ -39,6 +40,10 @@ public class UiCookbookController {
   @FXML private TextField searchField;
 
   @FXML private Button sortButton;
+
+  @FXML private Button addButton;
+
+  @FXML private TextField recipeNameTextField;
   /**
    * The default recipe button.
    */
@@ -70,6 +75,13 @@ public class UiCookbookController {
     } catch (Exception e) {
       e.getMessage();
     }
+
+    this.addButton.setOnAction(event -> {
+      Recipe.createRecipe(this.recipeNameTextField.getText());
+      if (this.mainController != null) {
+        this.mainController.goToRecipe(this.recipeNameTextField.getText());
+      }
+    });
 
     searchField.textProperty().addListener((observable, oldValue, newValue) -> {
       searchCookbook(newValue);

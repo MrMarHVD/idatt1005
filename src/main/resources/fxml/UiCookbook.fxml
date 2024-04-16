@@ -104,7 +104,9 @@
       <right>
         <VBox prefHeight="437.0" prefWidth="102.0" stylesheets="@../styles/plateStyle.css" BorderPane.alignment="CENTER">
           <children>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" styleClass="greenButton" text="Add">
+            <TextField fx:id="recipeNameTextField" promptText="Recipe Name" style="-fx-font-size: 12" />
+
+            <Button fx:id="addButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="102.0" styleClass="greenButton" text="Add">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin></Button>

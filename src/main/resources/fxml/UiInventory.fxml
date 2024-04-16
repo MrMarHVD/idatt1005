@@ -55,7 +55,7 @@
         </VBox>
       </top>
       <left>
-        <VBox prefHeight="477.0" prefWidth="65.0" BorderPane.alignment="CENTER" />
+        <VBox prefHeight="477.0" prefWidth="50.0" BorderPane.alignment="CENTER" />
       </left>
       <right>
         <VBox prefHeight="477.0" prefWidth="165.0" stylesheets="@../styles/plateStyle.css" BorderPane.alignment="CENTER">

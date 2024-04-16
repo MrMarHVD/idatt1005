@@ -100,13 +100,8 @@
       <center>
         <HBox prefHeight="460.0" prefWidth="798.0" stylesheets="@../styles/plateStyle.css" BorderPane.alignment="CENTER">
           <children>
-            <VBox prefHeight="503.0" prefWidth="179.0">
+            <VBox prefHeight="503.0" prefWidth="65.0">
               <children>
-                <Label prefHeight="80.0" prefWidth="279.0" style="-fx-wrap-text: true" text="Other recipes you might like">
-                  <font>
-                    <Font size="14.0" />
-                  </font>
-                </Label>
                 <GridPane fx:id="recommendedRecipes" prefHeight="431.0" prefWidth="219.0">
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
