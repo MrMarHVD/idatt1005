@@ -16,7 +16,7 @@ import no.ntnu.idatt1005.plate.data.SqlConnector;
  */
 public class Calendar {
 
-  private static SqlConnector sqlConnector;
+  private final SqlConnector sqlConnector;
 
 
   public Calendar(SqlConnector sqlConnector) {
@@ -84,7 +84,7 @@ public class Calendar {
    *
    * @return a map with the date as key and the recipe as value
    */
-  public static Map<String, String> getDayRecipes() {
+  public Map<String, String> getDayRecipes() {
     Map<String, String> dayRecipes = new HashMap<>();
     String selectQuery = "SELECT * FROM day JOIN recipe ON day.recipe_id = recipe.recipe_id";
 
@@ -144,7 +144,7 @@ public class Calendar {
    * @param search the string to search the database for.
    * @return an arraylist containing the names of the recipes that match the search string.
    */
-  public static ArrayList<String> searchRecipes (String search, boolean vegetarian) {
+  public ArrayList<String> searchRecipes (String search, boolean vegetarian) {
     ArrayList<String> recipes = new ArrayList<>();
     String selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%';";
     if (vegetarian) {
@@ -172,7 +172,7 @@ public class Calendar {
    * @param recipe the input recipe.
    * @return a list of missing ingredients.
    */
-  public static List<Integer> getMissingIngredients(String recipe) {
+  public List<Integer> getMissingIngredients(String recipe) {
     List<Integer> missingIngredients = new ArrayList<>();
     try {
       // Fetch the list of ingredients required for the recipe
@@ -219,7 +219,7 @@ public class Calendar {
    * @param recipe the input recipe.
    * @return a list of missing ingredients.
    */
-  public static Map<Integer, Float> getMissingIngredientsWithQuantity(String recipe, float portions) {
+  public Map<Integer, Float> getMissingIngredientsWithQuantity(String recipe, float portions) {
     Map<Integer, Float> missingIngredients = new HashMap<>();
     try {
       // Fetch the list of ingredients required for the recipe

@@ -159,7 +159,7 @@ public class CalendarController {
       dayBlockControllers.get(i).setDay(day);
       dayBlockControllers.get(i).setDate(date.toString());
 
-      String recipe = Calendar.getDayRecipes().get(date.toString());
+      String recipe = calendar.getDayRecipes().get(date.toString());
       dayBlockControllers.get(i).setRecipe(recipe);
       dayBlockControllers.get(i).setActionOnRecipeButtonClicked(recipe); // Assign action to go to recipe
     }
@@ -221,8 +221,8 @@ public class CalendarController {
    */
   private void populateListView(String date) {
     this.selectedDate = Date.valueOf(date); // Ensure that the selected date is stored
-    String recipeName = Calendar.getDayRecipes().get(date);
-    List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
+    String recipeName = calendar.getDayRecipes().get(date);
+    List<Integer> missingIngredients = calendar.getMissingIngredients(recipeName);
 
     // Create an ObservableList with the IDs of the missing ingredients
     ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(missingIngredients);
@@ -243,7 +243,7 @@ public class CalendarController {
     // Add listener to search field to add recipes to the combo box
     this.recipeSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
           this.recipeComboBox.getItems().clear();
-          ArrayList<String> results = Calendar.searchRecipes(newValue, settings.getVegetarian());
+          ArrayList<String> results = calendar.searchRecipes(newValue, settings.getVegetarian());
           for (int i = 0; i < results.size(); i++) {
             this.recipeComboBox.getItems().add(results.get(i));
           }
@@ -283,12 +283,12 @@ public class CalendarController {
 
     // Create action listener for button which adds missing ingredients from the selected recipe
     this.addMissingFromSelectedButton.setOnAction(event -> {
-      String recipeName = Calendar.getDayRecipes().get(this.selectedDate.toString());
+      String recipeName = calendar.getDayRecipes().get(this.selectedDate.toString());
 
       // Get portions from text field
       float portions = Float.parseFloat(portionsTextField.getText());
 
-      Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(
+      Map<Integer, Float> missingIngredients = calendar.getMissingIngredientsWithQuantity(
           recipeName, portions);
       for (int ingredientId : missingIngredients.keySet()) {
 
@@ -306,8 +306,8 @@ public class CalendarController {
           mondayController, tuesdayController, wednesdayController, thursdayController,
           fridayController, saturdayController, sundayController}) {
         String date = dayBlockController.getDate();
-        String recipeName = Calendar.getDayRecipes().get(date);
-        Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(recipeName, 1);
+        String recipeName = calendar.getDayRecipes().get(date);
+        Map<Integer, Float> missingIngredients = calendar.getMissingIngredientsWithQuantity(recipeName, 1);
         for (int ingredientId : missingIngredients.keySet()) {
           // Add to shopping list only if not there already.
           if (!ShoppingList.inShoppingList(ingredientId)) {
@@ -333,7 +333,7 @@ public class CalendarController {
    * @param recipeName the name of the selected recipe.
    */
   private void populateMissingIngredientListView(String recipeName) {
-    List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
+    List<Integer> missingIngredients = calendar.getMissingIngredients(recipeName);
 
     // Create an ObservableList with the IDs of the missing ingredients
     ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(missingIngredients);
