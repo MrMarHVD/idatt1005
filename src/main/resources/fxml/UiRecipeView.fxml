@@ -36,10 +36,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -57,51 +53,12 @@
       <top>
         <VBox prefHeight="91.0" prefWidth="900.0" BorderPane.alignment="CENTER">
           <children>
-            <MenuBar VBox.vgrow="NEVER">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="New" />
-                    <MenuItem mnemonicParsing="false" text="Open…" />
-                    <Menu mnemonicParsing="false" text="Open Recent" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                    <MenuItem mnemonicParsing="false" text="Save" />
-                    <MenuItem mnemonicParsing="false" text="Save As…" />
-                    <MenuItem mnemonicParsing="false" text="Revert" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Preferences…" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Quit" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Undo" />
-                    <MenuItem mnemonicParsing="false" text="Redo" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Cut" />
-                    <MenuItem mnemonicParsing="false" text="Copy" />
-                    <MenuItem mnemonicParsing="false" text="Paste" />
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                    <SeparatorMenuItem mnemonicParsing="false" />
-                    <MenuItem mnemonicParsing="false" text="Select All" />
-                    <MenuItem mnemonicParsing="false" text="Unselect All" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
             <fx:include fx:id="toolbar" source="toolbar/Toolbar.fxml" />
           </children>
         </VBox>
       </top>
       <right>
-        <VBox prefHeight="503.0" prefWidth="141.0" BorderPane.alignment="CENTER" stylesheets="@../styles/plateStyle.css">
+        <VBox prefHeight="503.0" prefWidth="141.0" stylesheets="@../styles/plateStyle.css" BorderPane.alignment="CENTER">
           <children>
                   <Label prefHeight="32.0" prefWidth="143.0" text="New Recipe">
                      <font>
@@ -109,11 +66,11 @@
                      </font>
                   </Label>
                   <TextField fx:id="recipeNameTextField" promptText="Recipe Name" />
-            <Button fx:id="newRecipeButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" text="New Recipe" styleClass="greenButton" />
-                  <Region prefHeight="85.0" prefWidth="141.0" />
-                  <VBox prefHeight="200.0" prefWidth="100.0" styleClass="lessGrayBackground">
+            <Button fx:id="newRecipeButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="205.0" styleClass="greenButton" text="New Recipe" />
+                  <Region prefHeight="109.0" prefWidth="141.0" />
+                  <VBox prefHeight="118.0" prefWidth="141.0" styleClass="lessGrayBackground">
                      <children>
-                        <Label prefHeight="27.0" prefWidth="146.0" text="Edit Recipe">
+                        <Label prefHeight="31.0" prefWidth="139.0" text="Edit selected">
                            <font>
                               <Font size="17.0" />
                            </font>
@@ -122,30 +79,30 @@
                         <ComboBox fx:id="selectIngredientComboBox" prefWidth="150.0" promptText="Ingredient" />
                         <HBox prefHeight="27.0" prefWidth="141.0">
                            <children>
-                              <TextField fx:id="quantityTextField" prefHeight="26.0" prefWidth="88.0" promptText="Quantity" />
+                              <TextField fx:id="quantityTextField" prefHeight="26.0" prefWidth="113.0" promptText="Quantity" />
 
                               <Label fx:id="unitLabel" prefHeight="27.0" prefWidth="53.0" text="unit" />
 
                               <Label fx:id="quantityLabel" prefHeight="27.0" prefWidth="53.0" />
                            </children>
                         </HBox>
-                  <Button fx:id="addIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" text="Add Ingredient" styleClass="greenButton" />
-                        <Button fx:id="removeIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="141.0" text="Remove Ingredient" styleClass="redButton" />
+                  <Button fx:id="addIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" styleClass="greenButton" text="Add Ingredient" />
+                        <Button fx:id="removeIngredientButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="141.0" styleClass="redButton" text="Remove Ingredient" />
                      </children>
                   </VBox>
-                  <Region prefHeight="133.0" prefWidth="141.0" />
-            <Button fx:id="saveChangesButton" mnemonicParsing="false" prefHeight="81.0" prefWidth="141.0" text="Save changes" styleClass="greenButton" />
-            <Button fx:id="discardChangesButton" mnemonicParsing="false" prefHeight="86.0" prefWidth="141.0" text="Discard changes" styleClass="redButton" />
-            <Button fx:id="deleteRecipeButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="199.0" text="Delete Recipe" styleClass="redButton" />
+                  <Region prefHeight="116.0" prefWidth="141.0" />
+            <Button fx:id="saveChangesButton" mnemonicParsing="false" prefHeight="81.0" prefWidth="141.0" styleClass="greenButton" text="Save changes" />
+            <Button fx:id="discardChangesButton" mnemonicParsing="false" prefHeight="86.0" prefWidth="141.0" styleClass="redButton" text="Discard changes" />
+            <Button fx:id="deleteRecipeButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="199.0" styleClass="redButton" text="Delete Recipe" />
           </children>
         </VBox>
       </right>
       <center>
-        <HBox prefHeight="460.0" prefWidth="798.0" BorderPane.alignment="CENTER" stylesheets="@../styles/plateStyle.css">
+        <HBox prefHeight="460.0" prefWidth="798.0" stylesheets="@../styles/plateStyle.css" BorderPane.alignment="CENTER">
           <children>
             <VBox prefHeight="503.0" prefWidth="179.0">
               <children>
-                <Label prefHeight="80.0" prefWidth="279.0" text="Other recipes you might like" style="-fx-wrap-text: true">
+                <Label prefHeight="80.0" prefWidth="279.0" style="-fx-wrap-text: true" text="Other recipes you might like">
                   <font>
                     <Font size="14.0" />
                   </font>
@@ -165,24 +122,24 @@
             </VBox>
             <VBox prefHeight="429.0" prefWidth="361.0" styleClass="grayBackground">
               <children>
-                        <Label fx:id="recipeNameLabel" prefHeight="100.0" prefWidth="341.0" text="Recipe" styleClass="titleLabel" style="-fx-wrap-text: true">
+                        <Label fx:id="recipeNameLabel" prefHeight="100.0" prefWidth="341.0" style="-fx-wrap-text: true" styleClass="titleLabel" text="Recipe">
                            <font>
                               <Font size="25.0" />
                            </font>
                         </Label>
-                        <Region prefHeight="88.0" prefWidth="320.0" />
-                <Label prefHeight="30.0" prefWidth="371.0" text="Instructions" styleClass="smallTitleLabel">
+                        <Region prefHeight="59.0" prefWidth="305.0" />
+                <Label prefHeight="39.0" prefWidth="305.0" styleClass="smallTitleLabel" text="Instructions">
                   <font>
                     <Font size="19.0" />
                   </font>
                 </Label>
-                <TextArea fx:id="instructionsArea" prefColumnCount="1" prefHeight="336.0" prefWidth="320.0" wrapText="true" styleClass="instructions" />
+                <TextArea fx:id="instructionsArea" prefColumnCount="1" prefHeight="336.0" prefWidth="320.0" styleClass="instructions" wrapText="true" />
               </children></VBox>
             <VBox prefHeight="503.0" prefWidth="382.0" styleClass="grayBackground">
               <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="52.0" prefWidth="326.0">
                            <children>
-                      <Label prefHeight="29.0" prefWidth="190.0" text="Ingredients" styleClass="smallTitleLabel">
+                      <Label prefHeight="29.0" prefWidth="190.0" styleClass="smallTitleLabel" text="Ingredients">
                         <font>
                           <Font size="19.0" />
                         </font>
@@ -190,14 +147,14 @@
                               <TextField fx:id="portionTextField" prefHeight="32.0" prefWidth="174.0" promptText="Portions" />
                            </children>
                         </HBox>
-                <HBox prefHeight="28.0" prefWidth="171.0">
+                <HBox prefHeight="47.0" prefWidth="326.0">
                   <children>
                     <Label prefHeight="28.0" prefWidth="101.0" text="Name">
                       <font>
                         <Font size="16.0" />
                       </font>
                     </Label>
-                              <Label prefHeight="28.0" prefWidth="106.0" text="Ammount">
+                              <Label prefHeight="28.0" prefWidth="106.0" text="Amount">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
