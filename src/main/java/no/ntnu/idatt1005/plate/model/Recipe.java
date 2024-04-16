@@ -69,26 +69,6 @@ public class Recipe {
   }
 
   /**
-   * Search the database for ingredients with a name that contains the search string.
-   *
-   * @param search the search input.
-   * @return a list of all the matching ingredients.
-   */
-  public static ArrayList<String> searchIngredients(String search) {
-    ArrayList<String> ingredients = new ArrayList<>();
-    try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM ingredient WHERE name LIKE '%" + search + "%'");
-      while (rs.next()) {
-        String name = rs.getString("name");
-        ingredients.add(name);
-      }
-    } catch (Exception e) {
-      e.getMessage();
-    }
-    return ingredients;
-  }
-
-  /**
    * Get the unit of a given ingredient.
    *
    * @param ingredientName the name of the ingredient.

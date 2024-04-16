@@ -7,10 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.utility.Formatter;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
@@ -86,6 +86,12 @@ public class UiInventoryController {
   private Button updateIngredientButton;
 
   /**
+   * ComboBox for the list of ingredients found via search.
+   */
+  @FXML
+  private ComboBox<String> ingredientComboBox;
+
+  /**
    * Button for removing the selected ingredient from the inventory.
    */
   @FXML
@@ -111,11 +117,9 @@ public class UiInventoryController {
     this.setMainController(mainController);
     ingredientListView.setCellFactory(param -> new IngredientListCell());
     this.displayIngredients();
+    this.initializeComboBox();
 
-
-    searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-      searchIngredients(newValue);
-    });
+    this.initializeSearchFeatures();
 
     this.initializeSortLabelHandlers();
 
@@ -150,6 +154,32 @@ public class UiInventoryController {
     // Set handler to remove the selected button.
     removeSelectedButton.setOnMouseClicked(event -> removeSelectedIngredient());
 
+  }
+
+  /**
+   * Initialise the search features available in the inventory view.
+   */
+  private void initializeSearchFeatures() {
+    searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+      searchIngredients(newValue);
+    });
+
+    this.addIngredientNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+      ArrayList<String> results = Inventory.searchIngredients(newValue);
+      for (int i = 0; i < results.size(); i++) {
+        this.ingredientComboBox.getItems().add(results.get(i));
+      }
+    });
+  }
+
+  /**
+   * Initialise the ComboBox with all ingredients.
+   */
+  private void initializeComboBox() {
+    ArrayList<String> results = Inventory.searchIngredients("");
+    for (int i = 0; i < results.size(); i++) {
+      this.ingredientComboBox.getItems().add(results.get(i));
+    }
   }
 
   /**
@@ -201,7 +231,7 @@ public class UiInventoryController {
   private void searchIngredients(String input) {
     List<Integer> fullInventory = new ArrayList<Integer>();
     try {
-      ResultSet searchResults = Inventory.searchIngredients(input);
+      ResultSet searchResults = Inventory.searchIngredientsInInventory(input);
       while (searchResults.next()) {
         fullInventory.add(searchResults.getInt("ingredient_id"));
       }
@@ -289,7 +319,7 @@ public class UiInventoryController {
   @FXML
   private void updateIngredient(float quantity) {
     // Check if there has been an input into the ingredient name field.
-    String ingredientName = this.addIngredientNameField.getText();
+    String ingredientName = this.ingredientComboBox.getSelectionModel().getSelectedItem();
 
     // If the ingredient does not exist in the inventory, but is in the database, add it.
     if (!Inventory.ingredientExistsInInventory(ingredientName)

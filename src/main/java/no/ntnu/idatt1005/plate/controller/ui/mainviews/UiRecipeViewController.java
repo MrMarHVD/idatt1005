@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import no.ntnu.idatt1005.plate.model.Inventory;
 import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
@@ -302,7 +303,7 @@ public class UiRecipeViewController {
 
     this.ingredientTextField.textProperty().addListener((observable, oldValue, newValue) -> {
       this.selectIngredientComboBox.getItems().clear();
-      ArrayList<String> results = Recipe.searchIngredients(newValue);
+      ArrayList<String> results = Inventory.searchIngredients(newValue);
       for (int i = 0; i < results.size(); i++) {
         this.selectIngredientComboBox.getItems().add(results.get(i));
       }
@@ -323,7 +324,7 @@ public class UiRecipeViewController {
    * Initialise the ComboBox such that all ingredients are shown upon entering the recipe view.
    */
   private void initializeComboBox() {
-    ArrayList<String> results = Recipe.searchIngredients("");
+    ArrayList<String> results = Inventory.searchIngredients("");
     for (int i = 0; i < results.size(); i++) {
       this.selectIngredientComboBox.getItems().add(results.get(i));
     }

@@ -33,6 +33,7 @@
 -->
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -100,14 +101,15 @@
         <VBox prefHeight="477.0" prefWidth="65.0" BorderPane.alignment="CENTER" />
       </left>
       <right>
-        <VBox prefHeight="477.0" prefWidth="165.0" BorderPane.alignment="CENTER" stylesheets="@../styles/plateStyle.css">
+        <VBox prefHeight="477.0" prefWidth="165.0" stylesheets="@../styles/plateStyle.css" BorderPane.alignment="CENTER">
           <children>
-                  <Label prefHeight="34.0" prefWidth="189.0" text="Add / update" styleClass="greenButton">
+                  <Label prefHeight="34.0" prefWidth="189.0" styleClass="greenButton" text="Add / update">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
             <TextField fx:id="addIngredientNameField" prefHeight="30.0" prefWidth="114.0" promptText="Name" />
+                  <ComboBox fx:id="ingredientComboBox" prefHeight="26.0" prefWidth="173.0" promptText="Ingredient" />
                   <HBox prefHeight="16.0" prefWidth="165.0">
                      <children>
                         <TextField fx:id="quantityFieldUpdate" prefHeight="26.0" prefWidth="172.0" promptText="Quantity" />
@@ -115,18 +117,18 @@
                   </HBox>
                   <Button fx:id="updateIngredientButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="187.0" text="Update ingredient" />
             <Region prefHeight="274.0" prefWidth="165.0" />
-            <Button fx:id="removeSelectedButton" mnemonicParsing="false" prefHeight="55.0" prefWidth="165.0" text="Remove selected" styleClass="redButton" />
+            <Button fx:id="removeSelectedButton" mnemonicParsing="false" prefHeight="55.0" prefWidth="165.0" styleClass="redButton" text="Remove selected" />
           </children>
         </VBox>
       </right>
       <center>
-        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="477.0" prefWidth="654.0" BorderPane.alignment="CENTER" stylesheets="@../styles/plateStyle.css">
+        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="477.0" prefWidth="654.0" stylesheets="@../styles/plateStyle.css" BorderPane.alignment="CENTER">
                <children>
-                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="670.0" styleClass="lessGrayBackground" >
+                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="670.0" styleClass="lessGrayBackground">
                      <children>
                         <VBox prefHeight="93.0" prefWidth="366.0">
                            <children>
-                              <Label prefHeight="30.0" prefWidth="368.0" text="Search" styleClass="titleLabel">
+                              <Label prefHeight="30.0" prefWidth="368.0" styleClass="titleLabel" text="Search">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
@@ -138,7 +140,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <HBox prefHeight="55.0" prefWidth="668.0" >
+                        <HBox prefHeight="55.0" prefWidth="668.0">
                            <children>
                               <Label fx:id="nameLabel" prefHeight="28.0" prefWidth="190.0" text="Name">
                                  <font>

@@ -1,6 +1,7 @@
 package no.ntnu.idatt1005.plate.model;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
@@ -83,12 +84,32 @@ public class Inventory {
    * @param search the search query.
    * @return the result set of the query.
    */
-  public static ResultSet searchIngredients(String search) {
+  public static ResultSet searchIngredientsInInventory(String search) {
     return MainController.sqlConnector.executeSqlSelect(""
         + "SELECT i.ingredient_id "
         + "FROM ingredient i "
         + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
         + "WHERE i.name LIKE '%" + search + "%';");
+  }
+
+  /**
+   * Search the database for ingredients with a name that contains the search string.
+   *
+   * @param search the search input.
+   * @return a list of all the matching ingredients.
+   */
+  public static ArrayList<String> searchIngredients(String search) {
+    ArrayList<String> ingredients = new ArrayList<>();
+    try {
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM ingredient WHERE name LIKE '%" + search + "%'");
+      while (rs.next()) {
+        String name = rs.getString("name");
+        ingredients.add(name);
+      }
+    } catch (Exception e) {
+      e.getMessage();
+    }
+    return ingredients;
   }
 
   /**
