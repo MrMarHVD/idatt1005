@@ -103,6 +103,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
+                  <TextField fx:id="portionsTextField" promptText="Portions to add" />
                   <Button fx:id="addMissingFromSelectedButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" text="Add missing from selected" />
                   <Button fx:id="addAllMissingButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="212.0" text="Add all missing ingredients" />
                </children>

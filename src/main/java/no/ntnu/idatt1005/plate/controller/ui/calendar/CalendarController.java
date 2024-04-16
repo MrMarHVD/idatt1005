@@ -15,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.utility.Formatter;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 import no.ntnu.idatt1005.plate.model.Calendar;
 
@@ -92,6 +93,13 @@ public class CalendarController {
   private Button addMissingFromSelectedButton;
 
   /**
+   * Text field for the number of portions worth of missing ingredients in the currently selected
+   * recipe, to add to the shopping list.
+   */
+  @FXML
+  private TextField portionsTextField;
+
+  /**
    * The list view showing the missing ingredients for the recipe corresponding to the
    * selected day.
    */
@@ -104,8 +112,8 @@ public class CalendarController {
   public void initialize() {
     this.groupRadioButtons();
     this.addRadioButtonActionListeners();
-    this.addRecipeButtonActionListeners();
-    this.addShoppingListButtonActionListeners();
+    this.initializeRecipeButtonActionListeners();
+    this.initializeShoppingListButtonActionListeners();
     this.initializeComboBox();
     //this.missingListView.setCellFactory(param -> new MissingIngredientListCell());
     LocalDate today = LocalDate.now();
@@ -193,7 +201,7 @@ public class CalendarController {
    * Initialize action listeners for functions relating to search and changing recipe
    * for the selected day.
    */
-  private void addRecipeButtonActionListeners() {
+  private void initializeRecipeButtonActionListeners() {
 
     // Button for searching for recipes
 
@@ -228,12 +236,19 @@ public class CalendarController {
    * Initialize action listeners for the buttons that add missing ingredients
    * to the shopping list.
    */
-  private void addShoppingListButtonActionListeners() {
+  private void initializeShoppingListButtonActionListeners() {
+
+    this.portionsTextField.setTextFormatter(Formatter.getFloatFormatter());
 
     // Create action listener for button which adds missing ingredients from the selected recipe
     this.addMissingFromSelectedButton.setOnAction(event -> {
       String recipeName = Calendar.getDayRecipes().get(this.selectedDate.toString());
-      Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(recipeName);
+
+      // Get portions from text field
+      float portions = Float.parseFloat(portionsTextField.getText());
+
+      Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(
+          recipeName, portions);
       for (int ingredientId : missingIngredients.keySet()) {
 
         // Add to shopping list only if not there already.
@@ -251,7 +266,7 @@ public class CalendarController {
           fridayController, saturdayController, sundayController}) {
         String date = dayBlockController.getDate();
         String recipeName = Calendar.getDayRecipes().get(date);
-        Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(recipeName);
+        Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(recipeName, 1);
         for (int ingredientId : missingIngredients.keySet()) {
           // Add to shopping list only if not there already.
           if (!ShoppingList.inShoppingList(ingredientId)) {

@@ -203,7 +203,7 @@ public class Calendar {
    * @param recipe the input recipe.
    * @return a list of missing ingredients.
    */
-  public static Map<Integer, Float> getMissingIngredientsWithQuantity(String recipe) {
+  public static Map<Integer, Float> getMissingIngredientsWithQuantity(String recipe, float portions) {
     Map<Integer, Float> missingIngredients = new HashMap<>();
     try {
       // Fetch the list of ingredients required for the recipe
@@ -215,7 +215,7 @@ public class Calendar {
 
       while (rs.next()) {
         int ingredientId = rs.getInt("ingredient_id");
-        float requiredQuantity = rs.getFloat("quantity");
+        float requiredQuantity = rs.getFloat("quantity") * portions;
 
         // Check if the ingredient is available in the inventory in the required quantity
         ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
