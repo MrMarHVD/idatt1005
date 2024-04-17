@@ -1,16 +1,12 @@
 package no.ntnu.idatt1005.plate;
 
 import atlantafx.base.theme.*;
-
-import no.ntnu.idatt1005.plate.controller.global.MainController;
-
-import javafx.application.Application;
-import javafx.stage.Stage;
-import no.ntnu.idatt1005.plate.model.Settings;
-
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.model.Settings;
 
 
 /**
@@ -26,9 +22,9 @@ public class MyApp extends Application {
   static Stage primaryStage;
 
   /**
-   * Start method
+   * Start method.
    *
-   * @param primaryStage the primary stage
+   * @param primaryStage the primary stage.
    */
   @Override
   public void start(Stage primaryStage) {
@@ -38,9 +34,8 @@ public class MyApp extends Application {
     // Assign the mainController for the app (remains the same throughout the runtime)
     MainController mainController = new MainController();
 
-    // Set the primaryStage such that i can be accessed from other classes
+    // Set the primaryStage such that it can be accessed from other classes
     MyApp.primaryStage = primaryStage;
-
 
     // Set the theme for the app.
     Path configDir = Paths.get(System.getProperty("user.home")).resolve(".plate");
@@ -65,7 +60,7 @@ public class MyApp extends Application {
   }
 
   /**
-   * Main method for testing
+   * Main method for testing.
    */
   public static void main(String[] args) throws Exception {
     Application.launch(args);

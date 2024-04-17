@@ -21,7 +21,8 @@ public class Recipe {
       // Escape line breaks in the instructions string
 
       MainController.sqlConnector.executeSqlUpdate(
-          "UPDATE recipe SET instruction = '" + instructions + "' WHERE name = '" + recipeName + "';");
+          "UPDATE recipe SET instruction = '" + instructions
+              + "' WHERE name = '" + recipeName + "';");
     } catch (Exception e) {
       PopupManager.displayError("Update error", "Could not update instructions");
     }
@@ -38,7 +39,8 @@ public class Recipe {
     System.out.println(recipeName);
     try {
       instructions = MainController.sqlConnector.executeSqlSelect(
-          "SELECT instruction FROM recipe WHERE name = '" + recipeName + "';").getString("instruction");
+          "SELECT instruction FROM recipe WHERE name = '" + recipeName + "';")
+              .getString("instruction");
     } catch (Exception e) {
       PopupManager.displayError("Selection error", e.getMessage());
     }
@@ -59,6 +61,11 @@ public class Recipe {
     }
   }
 
+  /**
+   * Create a recipe with the given name.
+   *
+   * @param recipeName the name of the new recipe.
+   */
   public static void createRecipe(String recipeName) {
     try {
       MainController.sqlConnector.executeSqlUpdate(
@@ -78,34 +85,54 @@ public class Recipe {
     String unit = null;
     try {
       unit = MainController.sqlConnector.executeSqlSelect(
-          "SELECT unit FROM ingredient WHERE name = '" + ingredientName + "';").getString("unit");
+          "SELECT unit FROM ingredient WHERE name = '" + ingredientName
+              + "';").getString("unit");
     } catch (Exception e) {
       PopupManager.displayError("Selection error", e.getMessage());
     }
     return unit;
   }
 
-  // TODO: add method which checks whether the ingredient the user has tried to add, is already in the recipe. If so, add quantity instead.
-  public static void addIngredientToRecipe(String recipeName, String ingredientName, float quantity) {
+  /**
+   * Add the ingredient with the given name to the recipe with the given name,
+   * with the given quantity.
+   *
+   * @param recipeName the name of the recipe to which the ingredient is to be added.
+   * @param ingredientName the name of the ingredient to add.
+   * @param quantity the quantity of the ingredient to add.
+   */
+  public static void addIngredientToRecipe(String recipeName, String ingredientName,
+      float quantity) {
     try {
       int recipeId = MainController.sqlConnector.executeSqlSelect(
-          "SELECT recipe_id FROM recipe WHERE name = '" + recipeName + "';").getInt("recipe_id");
+          "SELECT recipe_id FROM recipe WHERE name = '" + recipeName + "';")
+          .getInt("recipe_id");
       int ingredientId = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient_id FROM ingredient WHERE name = '" + ingredientName + "';").getInt("ingredient_id");
+          "SELECT ingredient_id FROM ingredient WHERE name = '" + ingredientName + "';")
+          .getInt("ingredient_id");
       MainController.sqlConnector.executeSqlUpdate(
-          "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, quantity) VALUES (" + recipeId + ", " + ingredientId + ", " + quantity + ");");
+          "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, quantity) VALUES "
+              + "(" + recipeId + ", " + ingredientId + ", " + quantity + ");");
       System.out.println("Test: " + quantity);
     } catch (Exception e) {
       PopupManager.displayError("Insert error", "Could not insert ingredient");
     }
   }
 
+  /**
+   * Remove a given ingredient from the given recipe.
+   *
+   * @param recipeName the name of the recipe.
+   * @param ingredientId the id of the ingredient to remove.
+   */
   public static void removeIngredientFromRecipe(String recipeName, int ingredientId) {
     try {
       int recipeId = MainController.sqlConnector.executeSqlSelect(
-          "SELECT recipe_id FROM recipe WHERE name = '" + recipeName + "';").getInt("recipe_id");
+          "SELECT recipe_id FROM recipe WHERE name = '"
+              + recipeName + "';").getInt("recipe_id");
       MainController.sqlConnector.executeSqlUpdate(
-          "DELETE FROM recipe_ingredients WHERE recipe_id = " + recipeId + " AND ingredient_id = " + ingredientId + ";");
+          "DELETE FROM recipe_ingredients WHERE recipe_id = "
+              + recipeId + " AND ingredient_id = " + ingredientId + ";");
     } catch (Exception e) {
       PopupManager.displayError("Delete error", "Could not delete ingredient");
     }
@@ -122,16 +149,22 @@ public class Recipe {
 
     try {
       ingredients = MainController.sqlConnector.executeSqlSelect(
-          "SELECT recipe_ingredients.ingredient_id " +
-              "FROM recipe_ingredients " +
-              "JOIN recipe ON recipe_ingredients.recipe_id = recipe.recipe_id " +
-              "WHERE recipe.name = '" + recipeName + "';");
+          "SELECT recipe_ingredients.ingredient_id "
+              + "FROM recipe_ingredients "
+              + "JOIN recipe ON recipe_ingredients.recipe_id = recipe.recipe_id "
+              + "WHERE recipe.name = '" + recipeName + "';");
     } catch (Exception e) {
       PopupManager.displayError("Selection error", "Could not select ingredients");
     }
     return ingredients;
   }
 
+  /**
+   * Get the ID of the recipe with the given name.
+   *
+   * @param recipeName the name of the recipe.
+   * @return the ID of the recipe.
+   */
   public static int getRecipeIdFromName(String recipeName) {
     int recipeId = -1;
     try {

@@ -40,6 +40,11 @@ public class IngredientListCell extends ListCell<Integer> {
    * The category of the ingredient.
    */
   private final Label category = new Label();
+
+  /**
+   * Constructor for the IngredientListCell. Set the column constraints and add the various
+   * components to the grid.
+   */
   public IngredientListCell() {
 
     // Set the column constraints for the grid such that the columns are equally wide.
@@ -77,47 +82,46 @@ protected void updateItem(Integer ingredientId, boolean empty) {
     super.updateItem(ingredientId, empty);
 
     if (ingredientId == null || empty) {
-        setGraphic(null);
+      setGraphic(null);
     } else {
-        try {
-            // Fetch ingredient details from the database
-            ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
-                    "SELECT i.name, ii.quantity AS quantity, i.unit AS unit, a.name AS allergen, c.name AS category " +
-                    "FROM ingredient i " +
-                    "LEFT JOIN allergen a ON i.allergen_id = a.id " +
-                        "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id " +
-                    "LEFT JOIN category c ON i.category_id = c.id " +
-                    "WHERE i.ingredient_id = " + ingredientId + ";"
-            );
+      try {
+        // Fetch ingredient details from the database
+        ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
+              "SELECT i.name, ii.quantity AS quantity, i.unit AS unit, a.name AS allergen, "
+                  + "c.name AS category "
+                  + "FROM ingredient i "
+                  + "LEFT JOIN allergen a ON i.allergen_id = a.id "
+                  + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
+                  + "LEFT JOIN category c ON i.category_id = c.id "
+                  + "WHERE i.ingredient_id = " + ingredientId + ";"
+          );
 
 
-            if (ingredientDetails.next()) {
-                // Set the name, allergens, and category labels
-                name.setText(ingredientDetails.getString("name"));
+        if (ingredientDetails.next()) {
+          // Set the name, allergens, and category labels
+          name.setText(ingredientDetails.getString("name"));
 
-                String quantity = ingredientDetails.getString("quantity");
+          String quantity = ingredientDetails.getString("quantity");
 
-                String unit = ingredientDetails.getString("unit");
-                quantities.setText(quantity != null ? (quantity + " " + unit) : "None");
+          String unit = ingredientDetails.getString("unit");
+          quantities.setText(quantity != null ? (quantity + " " + unit) : "None");
 
-                String allergen = ingredientDetails.getString("allergen");
-                allergens.setText(allergen != null ? allergen : "None");
+          String allergen = ingredientDetails.getString("allergen");
+          allergens.setText(allergen != null ? allergen : "None");
 
-                String category = ingredientDetails.getString("category");
-                this.category.setText(category != null ? category : "None");
-                int index = getIndex();
-                if (index % 2 == 0) {
-                  grid.setStyle("-fx-background-color: #ffffff00;");
-                } else {
-                  grid.setStyle("-fx-background-color: #e0e0e033;");
-                }
-                setGraphic(grid);
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+          String category = ingredientDetails.getString("category");
+          this.category.setText(category != null ? category : "None");
+          int index = getIndex();
+          if (index % 2 == 0) {
+            grid.setStyle("-fx-background-color: #ffffff00;");
+          } else {
+            grid.setStyle("-fx-background-color: #e0e0e033;");
+          }
+          setGraphic(grid);
         }
+      } catch (SQLException e) {
+        System.out.println(e.getMessage());
+      }
     }
-}
-
-
+  }
 }

@@ -91,14 +91,15 @@ public class MissingIngredientListCell extends ListCell<Integer> {
         // Fetch ingredient details from the database
         ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
 
-            "SELECT i.name AS name, i.ingredient_id AS ingredient_id, " +
-                "i.unit AS unit, SUM(ri.quantity - IFNULL(ii.quantity, 0)) AS quantity " +
-                "FROM ingredient i " +
-                "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id " +
-                "LEFT JOIN inventory_ingredient ii ON i.ingredient_id = ii.ingredient_id " +
-                "WHERE ri.recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + this.recipeName + "') " +
-                "AND i.ingredient_id = " + ingredientId + " " +
-                "GROUP BY i.name, i.unit;"
+            "SELECT i.name AS name, i.ingredient_id AS ingredient_id, "
+                + "i.unit AS unit, SUM(ri.quantity - IFNULL(ii.quantity, 0)) AS quantity "
+                + "FROM ingredient i "
+                + "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id "
+                + "LEFT JOIN inventory_ingredient ii ON i.ingredient_id = ii.ingredient_id "
+                + "WHERE ri.recipe_id = (SELECT recipe_id FROM recipe WHERE name = '"
+                + this.recipeName + "') "
+                + "AND i.ingredient_id = " + ingredientId + " "
+                + "GROUP BY i.name, i.unit;"
         );
 
         if (ingredientDetails.next()) {

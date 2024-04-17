@@ -53,7 +53,8 @@ public class Calendar {
   public void insertDay(Date date, boolean vegetarian) {
     String selectQuery = "SELECT recipe_id FROM recipe ORDER BY ABS(RANDOM()) LIMIT 1;";
     if (vegetarian) {
-      selectQuery = "SELECT recipe_id FROM recipe WHERE vegetarian = 1 ORDER BY ABS(RANDOM()) LIMIT 1;";
+      selectQuery = "SELECT recipe_id FROM recipe WHERE vegetarian = 1 "
+          + "ORDER BY ABS(RANDOM()) LIMIT 1;";
     }
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
     int recipeId = 0;
@@ -70,9 +71,9 @@ public class Calendar {
   }
 
   /**
-   * Method for removing a given day from the database
+   * Method for removing a given day from the database.
    *
-   * @param date the date to remove
+   * @param date the date to remove.
    */
   public void removeDay(Date date) {
     String query = "DELETE FROM day WHERE date = '" + date + "';";
@@ -82,7 +83,7 @@ public class Calendar {
   /**
    * This method gets the recipes for each day in the day table.
    *
-   * @return a map with the date as key and the recipe as value
+   * @return a map with the date as key and the recipe as value-
    */
   public static Map<String, String> getDayRecipes() {
     Map<String, String> dayRecipes = new HashMap<>();
@@ -107,9 +108,16 @@ public class Calendar {
     return dayRecipes;
   }
 
-  public String getRecipe (Date date) {
+  /**
+   * Get a recipe by a given date.
+   *
+   * @param date the date to search with.
+   * @return the recipe name.
+   */
+  public String getRecipe(Date date) {
     String recipe = "";
-    String selectQuery = "SELECT * FROM day JOIN recipe ON day.recipe_id = recipe.recipe_id WHERE date = '" + date + "';";
+    String selectQuery = "SELECT * FROM day JOIN recipe ON day.recipe_id "
+        + "= recipe.recipe_id WHERE date = '" + date + "';";
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
     if (rs != null) {
       try {
@@ -123,6 +131,12 @@ public class Calendar {
     return recipe;
   }
 
+  /**
+   * Change the recipe for a given date to a new recipe.
+   *
+   * @param date the date to change the recipe for.
+   * @param recipe the new recipe
+   */
   public void changeRecipe(Date date, String recipe) {
     String selectQuery = "SELECT recipe_id FROM recipe WHERE name = '" + recipe + "';";
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
@@ -144,7 +158,7 @@ public class Calendar {
    * @param search the string to search the database for.
    * @return an arraylist containing the names of the recipes that match the search string.
    */
-  public static ArrayList<String> searchRecipes (String search, boolean vegetarian) {
+  public static ArrayList<String> searchRecipes(String search, boolean vegetarian) {
     ArrayList<String> recipes = new ArrayList<>();
     String selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%';";
     if (vegetarian) {
@@ -177,9 +191,9 @@ public class Calendar {
     try {
       // Fetch the list of ingredients required for the recipe
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient_id, quantity " +
-              "FROM recipe_ingredients " +
-              "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
+          "SELECT ingredient_id, quantity "
+              + "FROM recipe_ingredients "
+              + "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
       );
 
       while (rs.next()) {
@@ -188,9 +202,9 @@ public class Calendar {
 
         // Check if the ingredient is available in the inventory in the required quantity
         ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
-            "SELECT quantity " +
-                "FROM inventory_ingredient " +
-                "WHERE ingredient_id = " + ingredientId
+            "SELECT quantity "
+                + "FROM inventory_ingredient "
+                + "WHERE ingredient_id = " + ingredientId
         );
 
         if (rsInventory.next()) {
@@ -205,7 +219,8 @@ public class Calendar {
 
     } catch (Exception e) {
       e.printStackTrace();
-    } for (int i = 0; i < missingIngredients.size(); i++) {
+    }
+    for (int i = 0; i < missingIngredients.size(); i++) {
       System.out.println(missingIngredients.get(i));
     }
     return missingIngredients;
@@ -219,14 +234,15 @@ public class Calendar {
    * @param recipe the input recipe.
    * @return a list of missing ingredients.
    */
-  public static Map<Integer, Float> getMissingIngredientsWithQuantity(String recipe, float portions) {
+  public static Map<Integer, Float> getMissingIngredientsWithQuantity(String recipe,
+      float portions) {
     Map<Integer, Float> missingIngredients = new HashMap<>();
     try {
       // Fetch the list of ingredients required for the recipe
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient_id, quantity " +
-              "FROM recipe_ingredients " +
-              "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
+          "SELECT ingredient_id, quantity "
+              + "FROM recipe_ingredients "
+              + "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
       );
 
       while (rs.next()) {
@@ -235,9 +251,9 @@ public class Calendar {
 
         // Check if the ingredient is available in the inventory in the required quantity
         ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
-            "SELECT quantity " +
-                "FROM inventory_ingredient " +
-                "WHERE ingredient_id = " + ingredientId
+            "SELECT quantity "
+                + "FROM inventory_ingredient "
+                + "WHERE ingredient_id = " + ingredientId
         );
 
         if (rsInventory.next()) {
@@ -257,34 +273,37 @@ public class Calendar {
   }
 
   /**
-   * Get a list of ingredients and the quantity required for a given recipe
-   * @param recipe the name of the recipe
-   * @param portions the portions of the recipe
-   * @return a map of ingredients and the quantity required
+   * Get a list of ingredients and the quantity required for a given recipe.
+   *
+   * @param recipe the name of the recipe.
+   * @param portions the portions of the recipe.
+   * @return a map of ingredients and the quantity required.
    */
   public static Map<Integer, Float> getIngredientsAndQuantity(String recipe, float portions) {
     Map<Integer, Float> totalIngredients = new HashMap<>();
     try {
       // Fetch the list of ingredients required for the recipe
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient_id, quantity " +
-              "FROM recipe_ingredients " +
-              "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
+          "SELECT ingredient_id, quantity "
+              + "FROM recipe_ingredients "
+              + "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
       );
 
       while (rs.next()) {
         int ingredientId = rs.getInt("ingredient_id");
         float requiredQuantity = rs.getFloat("quantity") * portions;
         totalIngredients.put(ingredientId, requiredQuantity);
-        }
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
-  return totalIngredients;
+    return totalIngredients;
   }
 
   /**
-   * Get a list of missing ingredients and the missing quantity by comparing the ingredients in a Map to what you have
+   * Get a list of missing ingredients and the missing quantity by comparing the ingredients
+   * in a Map to what you have.
+   *
    * @param ingredients the ingredients and the quantity required
    * @return a map of missing ingredients and the quantity missing
    */
@@ -297,9 +316,9 @@ public class Calendar {
 
         // Check if the ingredient is available in the inventory in the required quantity
         ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
-            "SELECT quantity " +
-                "FROM inventory_ingredient " +
-                "WHERE ingredient_id = " + ingredientId
+            "SELECT quantity "
+                + "FROM inventory_ingredient "
+                + "WHERE ingredient_id = " + ingredientId
         );
 
         if (rsInventory.next()) {

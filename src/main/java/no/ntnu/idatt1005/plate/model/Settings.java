@@ -7,15 +7,31 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
 
+/**
+ * This class manages the settings for the application.
+ */
 public class Settings {
-  
-  
+
+  /**
+   * The key for the dark mode setting.
+   */
   private static final String DARK_MODE = "dark_mode";
-  
+
+  /**
+   * The key for the vegetarian setting.
+   */
   private static final String VEGETARIAN = "vegetarian";
 
+  /**
+   * The path to the config file.
+   */
   private final Path configFile;
 
+  /**
+   * Constructor for the Settings.
+   *
+   * @param configDir the config directory.
+   */
   public Settings(Path configDir) {
     this.configFile = configDir.resolve("config.properties");
 
@@ -38,6 +54,12 @@ public class Settings {
     }
   }
 
+  /**
+   * Save the settings to the config file.
+   *
+   * @param darkMode whether or not dark mode is enabled.
+   * @param vegetarian whether or not vegetarian mode is enabled.
+   */
   public void saveSettings(boolean darkMode, boolean vegetarian) {
     Properties prop = new Properties();
     prop.setProperty(DARK_MODE, String.valueOf(darkMode));
@@ -50,6 +72,11 @@ public class Settings {
     }
   }
 
+  /**
+   * Get the dark mode setting.
+   *
+   * @return whether or not dark mode is enabled.
+   */
   public boolean getDarkMode() {
     Properties prop = new Properties();
     try (InputStream fis = Files.newInputStream(configFile)) {
@@ -60,6 +87,11 @@ public class Settings {
     return Boolean.parseBoolean(prop.getProperty(DARK_MODE));
   }
 
+  /**
+   * Get the vegetarian setting.
+   *
+   * @return whether or not vegetarian mode is enabled.
+   */
   public boolean getVegetarian() {
     Properties prop = new Properties();
     try (InputStream fis = Files.newInputStream(configFile)) {

@@ -3,9 +3,11 @@ package no.ntnu.idatt1005.plate.controller.ui.calendar;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-
-
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,12 +23,6 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.utility.Formatter;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 import no.ntnu.idatt1005.plate.model.Calendar;
-
-import java.time.DayOfWeek;
-import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import no.ntnu.idatt1005.plate.model.Settings;
 import no.ntnu.idatt1005.plate.model.ShoppingList;
 
@@ -41,7 +37,8 @@ public class CalendarController {
   private Date selectedDate;
 
   private final Calendar calendar = new Calendar(new SqlConnector());
-  private final LocalDate thisMonday = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+  private final LocalDate thisMonday = LocalDate.now().with(
+      TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
   private final Path configDir = Paths.get(System.getProperty("user.home")).resolve(".plate");
   private final Settings settings = new Settings(configDir);
 
@@ -88,7 +85,7 @@ public class CalendarController {
   private Button changeRecipeButton;
 
   /**
-   * Button to reroll the recipes for the entire week
+   * Button to reroll the recipes for the entire week.
    */
   @FXML
   private Button rerollWeekButton;
@@ -155,17 +152,22 @@ public class CalendarController {
         calendar.insertDay(Date.valueOf(date), settings.getVegetarian());
       }
 
-      String day = date.getDayOfWeek().toString().charAt(0) +
-              date.getDayOfWeek().toString().substring(1).toLowerCase();
+      String day = date.getDayOfWeek().toString().charAt(0)
+          + date.getDayOfWeek().toString().substring(1).toLowerCase();
       dayBlockControllers.get(i).setDay(day);
       dayBlockControllers.get(i).setDate(date.toString());
 
       String recipe = Calendar.getDayRecipes().get(date.toString());
       dayBlockControllers.get(i).setRecipe(recipe);
-      dayBlockControllers.get(i).setActionOnRecipeButtonClicked(recipe); // Assign action to go to recipe
+      dayBlockControllers.get(i).setActionOnRecipeButtonClicked(recipe);
     }
   }
 
+  /**
+   * Reroll the week, assigning new, randomised recipes to each day of the week.
+   *
+   * @param monday the current Monday.
+   */
   public void rerollWeek(LocalDate monday) {
     for (int i = 0; i < 7; i++) {
       LocalDate date = monday.plusDays(i);
@@ -226,7 +228,8 @@ public class CalendarController {
     List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
 
     // Create an ObservableList with the IDs of the missing ingredients
-    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(missingIngredients);
+    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(
+        missingIngredients);
 
     // Set the ObservableList as the items of the ListView
     missingListView.setItems(observableIngredients);
@@ -243,12 +246,12 @@ public class CalendarController {
 
     // Add listener to search field to add recipes to the combo box
     this.recipeSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
-          this.recipeComboBox.getItems().clear();
-          ArrayList<String> results = Calendar.searchRecipes(newValue, settings.getVegetarian());
-          for (int i = 0; i < results.size(); i++) {
-            this.recipeComboBox.getItems().add(results.get(i));
-          }
-        });
+      this.recipeComboBox.getItems().clear();
+      ArrayList<String> results = Calendar.searchRecipes(newValue, settings.getVegetarian());
+      for (int i = 0; i < results.size(); i++) {
+        this.recipeComboBox.getItems().add(results.get(i));
+      }
+    });
 
     // Button for changing recipe
     this.changeRecipeButton.setOnAction(e -> {
@@ -264,7 +267,8 @@ public class CalendarController {
             this.initialize();
           }
         }
-      }});
+      }
+    });
 
     // Button for rerolling the current week
     this.rerollWeekButton.setOnAction(e -> {
@@ -304,8 +308,7 @@ public class CalendarController {
           ShoppingList.addItem(ingredientId, missingIngredients.get(ingredientId));
         }
       }
-      if (this.selectedDate != null)
-      {
+      if (this.selectedDate != null) {
         this.populateListView(this.selectedDate.toString());
       }
     });
@@ -322,7 +325,8 @@ public class CalendarController {
         Map<Integer, Float> currentMissing = Calendar.getIngredientsAndQuantity(recipeName, 1);
         for (int ingredientId : currentMissing.keySet()) {
           if (missingIngredients.containsKey(ingredientId)) {
-            missingIngredients.put(ingredientId, missingIngredients.get(ingredientId) + currentMissing.get(ingredientId));
+            missingIngredients.put(ingredientId, missingIngredients.get(ingredientId)
+                + currentMissing.get(ingredientId));
           } else {
             missingIngredients.put(ingredientId, currentMissing.get(ingredientId));
           }
@@ -337,8 +341,7 @@ public class CalendarController {
       }
 
       // Populate or select Monday and populate if no day is selected.
-      if (this.selectedDate != null)
-      {
+      if (this.selectedDate != null) {
         this.populateListView(this.selectedDate.toString());
       } else {
         this.populateListView(thisMonday.toString());
@@ -356,7 +359,8 @@ public class CalendarController {
     List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
 
     // Create an ObservableList with the IDs of the missing ingredients
-    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(missingIngredients);
+    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(
+        missingIngredients);
 
     // Set the ObservableList as the items of the ListView
     missingListView.setItems(observableIngredients);

@@ -4,7 +4,6 @@ package no.ntnu.idatt1005.plate.controller.ui.shoppinglist;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,50 +12,75 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
-
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Inventory;
-import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
  * Controller class for the shopping list view.
  */
 public class UiShoppingListController {
 
+  /**
+   * The ListView object for the shopping list.
+   */
   @FXML
   private ListView<HBox> listView;
 
+  /**
+   * The list of selected items.
+   */
   private final List<Integer> selectedItems = new ArrayList<>();
 
-
+  /**
+   * The text field for the item name.
+   */
   @FXML
   private TextField itemNameField;
 
+  /**
+   * The text field for the item amount.
+   */
   @FXML
   private TextField itemAmountField;
 
+  /**
+   * The buttons for the shopping list.
+   */
   @FXML
   private Button clearListButton;
   @FXML
   private Button buyItemsButton;
 
+  /**
+   * The main controller for this class.
+   */
   @FXML
   private MainController mainController;
 
+  /**
+   * The toolbar controller for this class.
+   */
   @FXML
   private ToolbarController toolbarController;
 
+  /**
+   * The combobox for selecting ingredients.
+   */
   @FXML
   private ComboBox<String> selectIngredientComboBox;
 
-
+  /**
+   * The label for details.
+   */
   @FXML
-  private Label details_label;
+  private Label detailsLabel;
 
+  /**
+   * The list of checkboxes in the shopping list.
+   */
   private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
   /**
@@ -72,8 +96,8 @@ public class UiShoppingListController {
       listView.setStyle("-fx-font-family: 'Consolas'; -fx-font-size: 13;");
     }
 
-    details_label.setTextFill(Color.web("#bb5555"));
-    details_label.setStyle("-fx-font-size: 16;");
+    detailsLabel.setTextFill(Color.web("#bb5555"));
+    detailsLabel.setStyle("-fx-font-size: 16;");
 
     ArrayList<String> ingredients = Inventory.searchIngredients("");
     for (int i = 0; i < ingredients.size(); i++) {
@@ -105,7 +129,7 @@ public class UiShoppingListController {
   }
 
   /**
-   * add selected items to the shopping list, or update the quantity if the item already exists.
+   * Add selected items to the shopping list, or update the quantity if the item already exists.
    */
   public void addSelectedItems() {
     try {
@@ -118,15 +142,15 @@ public class UiShoppingListController {
 
       if (ingredientId == 0) {
         if (itemName.isEmpty()) {
-          details_label.setText("No item name entered");
+          detailsLabel.setText("No item name entered");
           return;
         } else if (itemName.length() > 16) {
           itemName = itemName.substring(0, 16) + "...";
         }
-        details_label.setText("No ingredient named:\n " + itemName + "     ");
+        detailsLabel.setText("No ingredient named:\n " + itemName + "     ");
         return;
       }
-      details_label.setText("");
+      detailsLabel.setText("");
       ResultSet rs2 = MainController.sqlConnector.executeSqlSelect(
           "SELECT * FROM shopping_list_items WHERE ingredient_id = " + ingredientId);
       if (rs2.next()) {
@@ -161,7 +185,9 @@ public class UiShoppingListController {
       boolean nextRowGray = false;
 
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient.ingredient_id, name, quantity, unit FROM shopping_list_items JOIN ingredient ON shopping_list_items.ingredient_id = ingredient.ingredient_id");
+          "SELECT ingredient.ingredient_id, name, quantity, "
+              + "unit FROM shopping_list_items JOIN ingredient ON "
+              + "shopping_list_items.ingredient_id = ingredient.ingredient_id");
       while (rs.next()) {
         if (Float.parseFloat(rs.getString("quantity")) <= 0) {
           MainController.sqlConnector.executeSqlUpdate(
@@ -187,19 +213,19 @@ public class UiShoppingListController {
         checkBoxes.add(checkBox);
 
         Label label = new Label(item);
-        HBox hBox = new HBox();
+        HBox hbox = new HBox();
         if (nextRowGray) {
-          hBox.setStyle("-fx-background-color: #e0e0e033;");
+          hbox.setStyle("-fx-background-color: #e0e0e033;");
         } else {
-          hBox.setStyle("-fx-background-color: #ffffff00;");
+          hbox.setStyle("-fx-background-color: #ffffff00;");
         }
         nextRowGray = !nextRowGray;
-        hBox.setAlignment(Pos.CENTER);
+        hbox.setAlignment(Pos.CENTER);
 
-        hBox.getChildren().add(label);
-        hBox.getChildren().add(checkBox);
+        hbox.getChildren().add(label);
+        hbox.getChildren().add(checkBox);
 
-        listView.getItems().add(hBox);
+        listView.getItems().add(hbox);
       }
     } catch (Exception e) {
       System.out.println(e.getMessage());
@@ -228,7 +254,7 @@ public class UiShoppingListController {
   private void buyItems() {
     try {
       if (selectedItems.isEmpty()) {
-        details_label.setText("No items selected");
+        detailsLabel.setText("No items selected");
         return;
       }
 
@@ -271,7 +297,7 @@ public class UiShoppingListController {
   private void clearList() {
     try {
       if (selectedItems.isEmpty()) {
-        details_label.setText("No items selected");
+        detailsLabel.setText("No items selected");
         return;
       }
       MainController.sqlConnector.executeSqlUpdate(

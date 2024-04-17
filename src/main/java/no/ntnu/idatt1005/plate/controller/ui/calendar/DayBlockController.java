@@ -77,8 +77,7 @@ public class DayBlockController {
 
       if (this.mainController != null) {
         this.mainController.goToRecipe(recipe);
-      }
-      else {
+      } else {
         System.out.println("Main controller is null");
       }
     });

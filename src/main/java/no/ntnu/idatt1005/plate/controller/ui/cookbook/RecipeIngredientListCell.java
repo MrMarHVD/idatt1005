@@ -25,7 +25,7 @@ import org.iq80.snappy.Main;
  * specifically in the inventory.
 >>>>>>> feature/cookbook
  */
-public class RecipeListCell extends ListCell<Integer> {
+public class RecipeIngredientListCell extends ListCell<Integer> {
 
   /**
    * Controller for this list cell.
@@ -58,7 +58,7 @@ public class RecipeListCell extends ListCell<Integer> {
    */
   //private final Label category = new Label();
 
-  public RecipeListCell(UiRecipeViewController controller) {
+  public RecipeIngredientListCell(UiRecipeViewController controller) {
     this.controller = controller;
 
     // Set the column constraints for the grid such that the columns are equally wide.
@@ -77,8 +77,6 @@ public class RecipeListCell extends ListCell<Integer> {
     grid.add(quantities, 1, 0);
     grid.add(allergens, 2, 0);
   }
-
-
 
   /**
    * Updates the item in the cell (automatic).
@@ -100,12 +98,14 @@ public class RecipeListCell extends ListCell<Integer> {
         // Fetch ingredient details from the database
         ResultSet ingredientDetails = MainController.sqlConnector.executeSqlSelect(
 
-                "SELECT i.name AS name, i.unit AS unit, a.name AS allergen, ri.quantity AS quantity, c.name AS category " +
-                "FROM ingredient i " +
-                "LEFT JOIN allergen a ON i.allergen_id = a.id " +
-                "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id " +
-                "JOIN category c ON i.category_id = c.id " +
-                "WHERE ri.ingredient_id = '" + ingredientId + "' AND ri.recipe_id = " + recipeId + ";"
+                "SELECT i.name AS name, i.unit AS unit, a.name AS allergen, ri.quantity "
+                    + "AS quantity, c.name AS category "
+                    + "FROM ingredient i "
+                    + "LEFT JOIN allergen a ON i.allergen_id = a.id "
+                    + "JOIN recipe_ingredients ri ON i.ingredient_id = ri.ingredient_id "
+                    + "JOIN category c ON i.category_id = c.id "
+                    + "WHERE ri.ingredient_id = '" + ingredientId + "' AND ri.recipe_id = "
+                    + recipeId + ";"
         );
 
         if (ingredientDetails.next()) {
@@ -120,8 +120,9 @@ public class RecipeListCell extends ListCell<Integer> {
           calculate the new quantity and add it to the display*/
           // TODO: add solution using the Formatter
           if (this.controller.getPortionTextField().getText().matches("[+-]?([0-9]*[.])?[0-9]+")) {
-            quantities.setText(quantity != null ? ((Float.parseFloat(quantity) *
-                Float.parseFloat(this.controller.getPortionTextField().getText())) + " " + unit) : "None");
+            quantities.setText(quantity != null ? ((Float.parseFloat(quantity)
+                * Float.parseFloat(this.controller.getPortionTextField().getText())) + " " + unit)
+                : "None");
           } else {
             quantities.setText(quantity != null ? ((quantity + " " + unit)) : "None");
           }

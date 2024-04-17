@@ -12,14 +12,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.ui.inventory.IngredientListCell;
+import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.controller.utility.Formatter;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
-import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
-import no.ntnu.idatt1005.plate.controller.ui.inventory.IngredientListCell;
 import no.ntnu.idatt1005.plate.model.Inventory;
 
 /**
- * Controller class for the inventory view
+ * Controller class for the inventory view.
  */
 public class UiInventoryController {
 
@@ -80,7 +80,7 @@ public class UiInventoryController {
   private TextField quantityFieldUpdate;
 
   /**
-   * Button for executing update of selected ingredient
+   * Button for executing update of selected ingredient.
    */
   @FXML
   private Button updateIngredientButton;
@@ -191,9 +191,9 @@ public class UiInventoryController {
   public void setMainController(MainController mainController) {
     this.mainController = mainController;
 
-    if (toolbarController != null)
+    if (toolbarController != null) {
       toolbarController.setMainController(mainController);
-
+    }
   }
 
   /**
@@ -219,7 +219,8 @@ public class UiInventoryController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
+    ObservableList<Integer> observableIngredients =
+        FXCollections.observableArrayList(fullInventory);
     ingredientListView.setItems(observableIngredients);
     ingredientListView.setCellFactory(param -> new IngredientListCell());
   }
@@ -236,11 +237,11 @@ public class UiInventoryController {
       while (searchResults.next()) {
         fullInventory.add(searchResults.getInt("ingredient_id"));
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
-    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
+    ObservableList<Integer> observableIngredients =
+        FXCollections.observableArrayList(fullInventory);
     ingredientListView.setItems(observableIngredients);
   }
 
@@ -258,7 +259,8 @@ public class UiInventoryController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
+    ObservableList<Integer> observableIngredients =
+        FXCollections.observableArrayList(fullInventory);
     ingredientListView.setItems(observableIngredients);
     ingredientListView.setCellFactory(param -> new IngredientListCell());
   }
@@ -279,7 +281,8 @@ public class UiInventoryController {
       PopupManager.displayErrorFull("Error", "Failed to sort", e.getMessage());
       e.printStackTrace();
     }
-    ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(fullInventory);
+    ObservableList<Integer> observableIngredients =
+        FXCollections.observableArrayList(fullInventory);
     ingredientListView.setItems(observableIngredients);
     ingredientListView.setCellFactory(param -> new IngredientListCell());
 
@@ -293,9 +296,9 @@ public class UiInventoryController {
     if (ingredientListView == null) {
       System.out.println("ingredientListView is null");
     } else {
-        Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
-        this.deleteIngredient(selectedIngredientId);
-        this.displayIngredients();
+      Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
+      this.deleteIngredient(selectedIngredientId);
+      this.displayIngredients();
     }
   }
 
@@ -328,7 +331,7 @@ public class UiInventoryController {
       Inventory.addNewIngredient(ingredientName, quantity);
 
       // if the ingredient exists in the inventory, update its quantity.
-    } else if (Inventory.ingredientExistsInInventory(ingredientName) ) {
+    } else if (Inventory.ingredientExistsInInventory(ingredientName)) {
       Inventory.updateIngredient(ingredientName, quantity);
 
       // Else, if an ingredient is selected via the list view, update that one.

@@ -52,5 +52,4 @@ public class PopupManager {
     alert.setContentText(content);
     alert.showAndWait();
   }
-
 }

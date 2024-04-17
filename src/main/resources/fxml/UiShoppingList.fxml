@@ -95,7 +95,7 @@
       <right>
         <AnchorPane prefHeight="417.0" prefWidth="199.0" stylesheets="@../styles/plateStyle.css" BorderPane.alignment="CENTER">
           <children>
-            <Label fx:id="details_label" alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="" textAlignment="CENTER" wrapText="false">
+            <Label fx:id="detailsLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="" textAlignment="CENTER" wrapText="false">
               <font>
                 <Font size="18.0" fx:id="x7" />
               </font>

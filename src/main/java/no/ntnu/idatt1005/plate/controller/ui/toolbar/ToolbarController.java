@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 
+/**
+ * Controller class for the toolbar in the GUI.
+ */
 public class ToolbarController {
 
   /**
@@ -79,6 +82,11 @@ public class ToolbarController {
     }
   }
 
+  /**
+   * Respond to pressing the cookbook button.
+   *
+   * @param event the event triggered.
+   */
   @FXML
   public void onCookbookButtonPressed(ActionEvent event) {
     if (this.mainController != null) {
@@ -98,6 +106,11 @@ public class ToolbarController {
     }
   }
 
+  /**
+   * Respond to pressing the settings button.
+   *
+   * @param event the event that was triggered.
+   */
   @FXML
   public void onSettingsButtonPressed(ActionEvent event) {
     if (this.mainController != null) {

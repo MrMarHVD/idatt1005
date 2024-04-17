@@ -1,9 +1,8 @@
 package no.ntnu.idatt1005.plate.controller.ui.mainviews;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import no.ntnu.idatt1005.plate.controller.ui.calendar.CalendarController;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.ui.calendar.CalendarController;
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 
 /**
@@ -48,15 +47,4 @@ public class UiHomeController {
     this.toolbarController.setMainController(mainController);
     this.calendarController.setMainController(mainController);
   }
-
-  // Define an event handler method for your button
-  @FXML
-  private void handleButtonAction() {
-    // Your logic here
-    System.out.println("Button clicked!");
-  }
-
-
-
-
 }

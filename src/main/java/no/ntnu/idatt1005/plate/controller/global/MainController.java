@@ -5,7 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import no.ntnu.idatt1005.plate.MyApp;
-
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiCookbookController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiHomeController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiInventoryController;
@@ -23,8 +22,6 @@ import no.ntnu.idatt1005.plate.data.SqlConnector;
  */
 public class MainController {
   public static SqlConnector sqlConnector = new SqlConnector();
-  private void initialize() {
-  }
 
   /**
    * Load the initial view. Only called once when the application starts.
@@ -96,8 +93,7 @@ public class MainController {
       Stage currentStage = MyApp.getPrimaryStage();
       currentStage.setScene(scene);
       currentStage.show();
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
@@ -134,7 +130,8 @@ public class MainController {
    */
   public void goToShoppingList() {
     try {
-      FXMLLoader shoppingListLoader = new FXMLLoader(getClass().getResource("/fxml/UiShoppingList.fxml"));
+      FXMLLoader shoppingListLoader = new FXMLLoader(getClass().getResource(
+          "/fxml/UiShoppingList.fxml"));
       Parent shoppingListView = shoppingListLoader.load();
 
       // Instantiate the shopping list controller
@@ -183,6 +180,11 @@ public class MainController {
     }
   }
 
+  /**
+   * Go to a specific recipe view.
+   *
+   * @param recipe the recipe to go to.
+   */
   public void goToRecipe(String recipe) {
     try {
       FXMLLoader recipeLoader = new FXMLLoader(getClass().getResource("/fxml/UiRecipeView.fxml"));
@@ -197,8 +199,7 @@ public class MainController {
       if (recipe != null) {
         recipeController.setRecipeName(recipe);
         System.out.println(recipe);
-      }
-      else {
+      } else {
         System.out.println("Null");
       }
 
@@ -208,14 +209,8 @@ public class MainController {
       currentStage.show();
       recipeController.initializeDisplay();
 
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
-
-
-
-
-
 }

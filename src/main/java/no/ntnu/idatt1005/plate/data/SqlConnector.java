@@ -5,6 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 
+/**
+ * This class handles all direct interactions with the SQLite database, and is
+ * responsible for querying and updating it according to the needs of the application.
+ */
 public class SqlConnector {
 
   private static Connection con = null;
@@ -144,8 +148,8 @@ public class SqlConnector {
    */
   private void runSqlFile(String path) {
     try {
-      String Query = new String(Files.readAllBytes(Paths.get(path)));
-      executeSqlUpdate(Query);
+      String query = new String(Files.readAllBytes(Paths.get(path)));
+      executeSqlUpdate(query);
     } catch (IOException e) {
       e.printStackTrace();
     }

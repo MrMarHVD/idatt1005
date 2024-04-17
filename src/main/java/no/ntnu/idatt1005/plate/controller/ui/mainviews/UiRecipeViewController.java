@@ -1,36 +1,35 @@
 package no.ntnu.idatt1005.plate.controller.ui.mainviews;
 
-import java.util.function.UnaryOperator;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.layout.GridPane;
-import no.ntnu.idatt1005.plate.controller.ui.cookbook.RecipeListCell;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.ui.cookbook.RecipeIngredientListCell;
+import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.controller.utility.Formatter;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
-import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
-import javafx.fxml.FXML;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import no.ntnu.idatt1005.plate.model.Inventory;
 import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
- * Controller class for the recipe view
+ * Controller class for the recipe view.
  */
 public class UiRecipeViewController {
 
+  /**
+   * The name of the recipe being shown in this recipe view.
+   */
   private String recipeName;
 
   /**
@@ -126,7 +125,7 @@ public class UiRecipeViewController {
   private TextField recipeNameTextField;
 
   /**
-   * Text field for inputting how many portions to display
+   * Text field for inputting how many portions to display.
    */
   @FXML
   private TextField portionTextField;
@@ -150,7 +149,7 @@ public class UiRecipeViewController {
   private void initialize() {
 
     this.setMainController(mainController);
-    ingredientsListView.setCellFactory(param -> new RecipeListCell(this));
+    ingredientsListView.setCellFactory(param -> new RecipeIngredientListCell(this));
 
   }
 
@@ -205,7 +204,7 @@ public class UiRecipeViewController {
 
       ObservableList<Integer> observableList = FXCollections.observableArrayList(ingredientList);
       ingredientsListView.setItems(observableList);
-      ingredientsListView.setCellFactory(param -> new RecipeListCell(this));
+      ingredientsListView.setCellFactory(param -> new RecipeIngredientListCell(this));
     } catch (SQLException e) {
       e.printStackTrace();
       PopupManager.displayErrorFull("Error",
@@ -288,7 +287,6 @@ public class UiRecipeViewController {
       int ingredientId = this.ingredientsListView.getSelectionModel().getSelectedItem();
       Recipe.removeIngredientFromRecipe(this.recipeName, ingredientId);
       this.displayIngredients();
-
     });
 
   }
@@ -310,7 +308,8 @@ public class UiRecipeViewController {
     });
 
     // Add listener to ComboBox such that the unit is updated upon selection.
-    this.selectIngredientComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    this.selectIngredientComboBox.getSelectionModel().selectedItemProperty().addListener((
+        observable, oldValue, newValue) -> {
       String unit = Recipe.getIngredientUnit(newValue);
       this.unitLabel.setText(unit);
     });

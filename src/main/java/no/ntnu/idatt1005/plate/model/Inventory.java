@@ -53,6 +53,12 @@ public class Inventory {
     return false;
   }
 
+  /**
+   * Check whether the ingredient with a given name exists in the database.
+   *
+   * @param name the name of the ingredient.
+   * @return the boolean for whether the ingredient exists.
+   */
   public static boolean ingredientExists(String name) {
     try {
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
@@ -101,7 +107,8 @@ public class Inventory {
   public static ArrayList<String> searchIngredients(String search) {
     ArrayList<String> ingredients = new ArrayList<>();
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect("SELECT name FROM ingredient WHERE name LIKE '%" + search + "%'");
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT name FROM ingredient WHERE name LIKE '%" + search + "%'");
       while (rs.next()) {
         String name = rs.getString("name");
         ingredients.add(name);
@@ -168,13 +175,15 @@ public class Inventory {
 
         // Check if the ingredient exists in the inventory_ingredient table
         ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
-            "SELECT ingredient_id FROM inventory_ingredient WHERE ingredient_id = " + ingredientId
+            "SELECT ingredient_id FROM inventory_ingredient WHERE ingredient_id = "
+                + ingredientId
         );
 
         if (rsInventory.next()) {
           // If the ingredient exists, update its quantity
           MainController.sqlConnector.executeSqlUpdate(
-              "UPDATE inventory_ingredient SET quantity = quantity + " + quantity + " WHERE ingredient_id = " + ingredientId
+              "UPDATE inventory_ingredient SET quantity = quantity + " + quantity
+                  + " WHERE ingredient_id = " + ingredientId
           );
         }
       }
@@ -207,9 +216,11 @@ public class Inventory {
         );
 
         // If a corresponding ingredient exists, throw exception.
-        if (rsInventory.next()) {throw new IllegalArgumentException(""
+        if (rsInventory.next()) {
+          throw new IllegalArgumentException(""
             + "Cannot add a new ingredient if it already exists in inventory. Please "
-            + "update existing ingredient instead."); }
+            + "update existing ingredient instead.");
+        }
 
         MainController.sqlConnector.executeSqlUpdate(
             "INSERT INTO inventory_ingredient (ingredient_id, quantity) "
