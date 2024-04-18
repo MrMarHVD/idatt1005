@@ -16,7 +16,7 @@ import no.ntnu.idatt1005.plate.data.SqlConnector;
  */
 public class Calendar {
 
-  private static SqlConnector sqlConnector;
+  private final SqlConnector sqlConnector;
 
 
   public Calendar(SqlConnector sqlConnector) {
@@ -89,6 +89,7 @@ public class Calendar {
     Map<String, String> dayRecipes = new HashMap<>();
     String selectQuery = "SELECT * FROM day JOIN recipe ON day.recipe_id = recipe.recipe_id";
 
+    SqlConnector sqlConnector = MainController.sqlConnector;
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
 
     if (rs != null) {
@@ -158,12 +159,15 @@ public class Calendar {
    * @param search the string to search the database for.
    * @return an arraylist containing the names of the recipes that match the search string.
    */
+
   public static ArrayList<String> searchRecipes(String search, boolean vegetarian) {
+
     ArrayList<String> recipes = new ArrayList<>();
     String selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%';";
     if (vegetarian) {
       selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%' AND vegetarian = 1;";
     }
+    SqlConnector sqlConnector = MainController.sqlConnector;
     ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
     if (rs != null) {
       try {
@@ -243,6 +247,7 @@ public class Calendar {
           "SELECT ingredient_id, quantity "
               + "FROM recipe_ingredients "
               + "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
+
       );
 
       while (rs.next()) {
