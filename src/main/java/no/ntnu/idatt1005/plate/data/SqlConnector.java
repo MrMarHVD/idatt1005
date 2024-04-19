@@ -15,6 +15,7 @@ public class SqlConnector {
 
   private static final String createSqlFilePath = "src/main/resources/CreateQuery.sql";
   private static final String insertSqlFilePath = "src/main/resources/InsertQuery.sql";
+  private static final String dropSqlFilePath = "src/main/resources/DropQuery.sql";
 
   /**
    * Constructor for the SqlConnector class.
@@ -24,7 +25,7 @@ public class SqlConnector {
       if (con == null) {
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
       }
-      resetDatabase();
+      resetDatabaseFull();
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -40,7 +41,7 @@ public class SqlConnector {
       if (con == null) {
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
-      resetDatabase();
+      resetDatabaseFull();
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -126,6 +127,19 @@ public class SqlConnector {
   private boolean anyTableMissing() {
     return (!tableExists("ingredient") || !tableExists("allergen") || !tableExists("category")
         || !tableExists("recipe_ingredients") || !tableExists("recipe") || !tableExists("day"));
+  }
+
+  /**
+   * Reset the database fully to its initial state.
+   */
+  public void resetDatabaseFull() {
+    runSqlFile(dropSqlFilePath); // Drop all tables.
+    runSqlFile(createSqlFilePath);
+    if (anyTableMissing()) {
+      runSqlFile(insertSqlFilePath);
+
+      System.out.println("data inserted");
+    }
   }
 
   /**

@@ -1,53 +1,64 @@
 package no.ntnu.idatt1005.plate.model;
 
 import no.ntnu.idatt1005.plate.data.SqlConnector;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the ShoppingList class.
+
+ */
 class ShoppingListTest {
 
+  /**
+   * The SQL connector used for testing.
+   */
+  private static final SqlConnector sqlConnector = new SqlConnector();
 
-    private static final SqlConnector sqlConnector = new SqlConnector();
+  /**
+   * Set up the test environment by resetting the database before each test.
+   */
+  @BeforeEach
+  void setUp() {
+      sqlConnector.resetDatabaseFull();
+  }
 
-    @BeforeEach
-    void setUp() {
-        sqlConnector.resetDatabase();
-    }
+  /**
+   * Test the addItem method by asserting that the ingredient added is in the shopping list.
+   */
+  @Test
+  @DisplayName("addItem test")
+  void testAddItem() {
+    // Arrange
+    int ingredientId = 1000;
+    float quantity = 2.0f;
 
-    @Test
-    @DisplayName("addItem test")
-    void testAddItem() {
-      // Arrange
-      int ingredientId = 1000;
-      float quantity = 2.0f;
+    // Act
+    ShoppingList.addItem(ingredientId, quantity);
 
-      // Act
-      ShoppingList.addItem(ingredientId, quantity);
+    // Assert
+    assertTrue(ShoppingList.inShoppingList(ingredientId));
+  }
 
-      // Assert
-      assertTrue(ShoppingList.inShoppingList(ingredientId));
-    }
+  /**
+   * Test the inShoppingList method by asserting that the ingredient added is in the
+   * shopping list.
+   */
+  @Test
+  @DisplayName("inShoppingList test")
+  void testInShoppingList() {
 
-    @Test
-    @DisplayName("inShoppingList test")
-    void testInShoppingList() {
+    // Arrange
+    int ingredientId = 1;
+    ShoppingList.addItem(ingredientId, 1);
 
-      // Arrange
-      int ingredientId = 1;
-      ShoppingList.addItem(ingredientId, 1);
+    // Act
+    boolean exists = ShoppingList.inShoppingList(ingredientId);
 
-      // Act
-      boolean exists = ShoppingList.inShoppingList(ingredientId);
-
-      // Assert
-      assertTrue(exists);
-    }
+    // Assert
+    assertTrue(exists);
+  }
 }

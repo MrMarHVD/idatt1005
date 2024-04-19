@@ -16,9 +16,17 @@ import no.ntnu.idatt1005.plate.data.SqlConnector;
  */
 public class Calendar {
 
+  /**
+   * The sql connector.
+   */
   private final SqlConnector sqlConnector;
 
 
+  /**
+   * Constructor for the calendar.
+   *
+   * @param sqlConnector the sql connector.
+   */
   public Calendar(SqlConnector sqlConnector) {
     this.sqlConnector = sqlConnector;
   }
