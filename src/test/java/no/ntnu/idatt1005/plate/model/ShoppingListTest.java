@@ -23,7 +23,7 @@ class ShoppingListTest {
    */
   @BeforeEach
   void setUp() {
-      sqlConnector.resetDatabaseFull();
+      sqlConnector.resetTestDatabase();
   }
 
   /**

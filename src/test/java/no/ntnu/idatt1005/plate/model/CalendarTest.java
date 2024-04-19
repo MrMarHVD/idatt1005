@@ -49,7 +49,7 @@ class CalendarTest {
    */
   @BeforeEach
   void setUp() {
-    sqlConnector.resetDatabaseFull();
+    sqlConnector.resetTestDatabase();
     date = Date.valueOf(LocalDate.now());
     date1 = Date.valueOf(LocalDate.now().plusDays(1));
     calendar = new Calendar(sqlConnector);

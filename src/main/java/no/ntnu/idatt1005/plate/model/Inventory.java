@@ -231,7 +231,7 @@ public class Inventory {
       }
 
     } catch (Exception e) {
-      PopupManager.displayErrorFull("Error", "Failed to add ingredient", e.getMessage());
+      //PopupManager.displayErrorFull("Error", "Failed to add ingredient", e.getMessage());
       e.printStackTrace();
     }
   }

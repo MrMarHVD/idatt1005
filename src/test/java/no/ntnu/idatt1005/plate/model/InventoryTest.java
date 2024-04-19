@@ -34,7 +34,7 @@ class InventoryTest {
    */
   @BeforeEach
   void setUp() {
-    sqlConnector.resetDatabaseFull();
+    sqlConnector.resetTestDatabase();
   }
 
   /**
@@ -65,8 +65,8 @@ class InventoryTest {
    */
   @Test
   void testSelectAllInventoryIngredients() throws SQLException {
-      ResultSet rs = Inventory.selectAllInventoryIngredients();
-      assertTrue(rs.next());
+    ResultSet rs = Inventory.selectAllInventoryIngredients();
+    assertTrue(rs.next());
   }
 
   /**
@@ -77,9 +77,9 @@ class InventoryTest {
    */
   @Test
   void testSearchIngredients() throws SQLException {
-      String search = ingredientName; // Replace with actual ingredient name
-      ArrayList<String> apple = Inventory.searchIngredients(search);
-      assertEquals(apple.get(0), ingredientName);
+    String search = ingredientName; // Replace with actual ingredient name
+    ArrayList<String> apple = Inventory.searchIngredients(search);
+    assertEquals(apple.get(0), ingredientName);
   }
 
   /**
@@ -90,8 +90,8 @@ class InventoryTest {
    */
   @Test
   void testSortByName() throws SQLException {
-      ResultSet rs = Inventory.sortByName();
-      assertTrue(rs.next());
+    ResultSet rs = Inventory.sortByName();
+    assertTrue(rs.next());
   }
 
   /**
@@ -102,8 +102,8 @@ class InventoryTest {
    */
   @Test
   void testSortByCategory() throws SQLException {
-      ResultSet rs = Inventory.sortByCategory();
-      assertTrue(rs.next());
+    ResultSet rs = Inventory.sortByCategory();
+    assertTrue(rs.next());
   }
 
   /**
@@ -112,10 +112,11 @@ class InventoryTest {
    */
   @Test
   void testDeleteIngredient() {
-      int ingredientId = 1; // Replace with actual ingredient id
-      Inventory.addNewIngredient("Apple", 2.0f);
-      Inventory.deleteIngredient(ingredientId);
-      assertFalse(Inventory.ingredientExistsInInventory(Inventory.selectIngredient(ingredientId)));
+    int ingredientId = 4; // Replace with actual ingredient id
+    Inventory.deleteIngredient(ingredientId);
+    Inventory.addNewIngredient("Beef", 2.0f);
+    Inventory.deleteIngredient(ingredientId);
+    assertFalse(Inventory.ingredientExistsInInventory(Inventory.selectIngredient(ingredientId)));
   }
 
   /**
@@ -126,15 +127,15 @@ class InventoryTest {
    */
   @Test
   void testUpdateIngredient() throws SQLException {
-      ResultSet rs1 = sqlConnector.executeSqlSelect("SELECT "
-          + "* FROM inventory_ingredient WHERE id = 1;");
-      float oldQuantity = rs1.getFloat("quantity");
-      float additionalQuantity = 3.0f;
-      Inventory.updateIngredient("Milk", additionalQuantity);
-      ResultSet rs2 = sqlConnector.executeSqlSelect("SELECT "
-          + "* FROM inventory_ingredient WHERE id = 1;");
-      float actualQuantity = rs2.getFloat("quantity");
-      assertEquals(oldQuantity + additionalQuantity, actualQuantity);
+    ResultSet rs1 = sqlConnector.executeSqlSelect("SELECT "
+        + "* FROM inventory_ingredient WHERE id = 1;");
+    float oldQuantity = rs1.getFloat("quantity");
+    float additionalQuantity = 3.0f;
+    Inventory.updateIngredient("Milk", additionalQuantity);
+    ResultSet rs2 = sqlConnector.executeSqlSelect("SELECT "
+        + "* FROM inventory_ingredient WHERE id = 1;");
+    float actualQuantity = rs2.getFloat("quantity");
+    assertEquals(oldQuantity + additionalQuantity, actualQuantity);
   }
 
   /**
@@ -143,8 +144,8 @@ class InventoryTest {
    */
   @Test
   void testAddNewIngredient() {
-      Inventory.addNewIngredient("Cuecumber", 2.0f);
-      assertTrue(Inventory.ingredientExistsInInventory("Cuecumber"));
+    Inventory.addNewIngredient("Apple", 2);
+    assertTrue(Inventory.ingredientExistsInInventory("Apple"));
   }
 
   /**
@@ -152,6 +153,6 @@ class InventoryTest {
    */
   @AfterAll
   static void tearDown() {
-      sqlConnector.resetDatabaseFull();
+      sqlConnector.resetTestDatabase();
   }
 }

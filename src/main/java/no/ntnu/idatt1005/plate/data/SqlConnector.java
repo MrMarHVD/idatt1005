@@ -25,7 +25,7 @@ public class SqlConnector {
       if (con == null) {
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
       }
-      resetDatabaseFull();
+      resetTestDatabase();
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -41,11 +41,25 @@ public class SqlConnector {
       if (con == null) {
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
-      resetDatabaseFull();
+      resetTestDatabase();
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
   }
+
+  /**
+   * Close the connection to the database.
+   */
+  public void closeConnection() {
+    try {
+      if (con != null && !con.isClosed()) {
+        con.close();
+      }
+    } catch (SQLException e) {
+      System.err.println("Error closing the connection: " + e.getMessage());
+    }
+  }
+
 
   /**
    * Close the connection to the database.
@@ -132,8 +146,10 @@ public class SqlConnector {
   /**
    * Reset the database fully to its initial state.
    */
-  public void resetDatabaseFull() {
+  public synchronized void resetTestDatabase() {
     runSqlFile(dropSqlFilePath); // Drop all tables.
+    this.closeConnection();
+    //new java.io.File("src/main/resources/calendar_test.db").delete();
     runSqlFile(createSqlFilePath);
     if (anyTableMissing()) {
       runSqlFile(insertSqlFilePath);
@@ -146,7 +162,7 @@ public class SqlConnector {
    * Reset the database to its initial state. If any table is missing, the tables are created and
    * default  data is inserted.
    */
-  public void resetDatabase() {
+  public synchronized void resetDatabase() {
     runSqlFile(createSqlFilePath);
     if (anyTableMissing()) {
       runSqlFile(insertSqlFilePath);
