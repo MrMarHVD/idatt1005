@@ -4,11 +4,21 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
+import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 /**
  * This is a class for managing SQL-queries relating to the recipe view.
  */
 public class Recipe {
+
+  /**
+   * The SQL connector for this class.
+   */
+  private static SqlConnector sqlConnector = MainController.sqlConnector;
+
+  public static void setSqlConnector(SqlConnector sqlConnector) {
+    Recipe.sqlConnector = sqlConnector;
+  }
 
   /**
    * Update the instructions in the given recipe to the user's new input.
@@ -20,7 +30,7 @@ public class Recipe {
     try {
       // Escape line breaks in the instructions string
 
-      MainController.sqlConnector.executeSqlUpdate(
+      Recipe.sqlConnector.executeSqlUpdate(
           "UPDATE recipe SET instruction = '" + instructions
               + "' WHERE name = '" + recipeName + "';");
     } catch (Exception e) {
@@ -38,7 +48,7 @@ public class Recipe {
     String instructions = null;
     System.out.println(recipeName);
     try {
-      instructions = MainController.sqlConnector.executeSqlSelect(
+      instructions = Recipe.sqlConnector.executeSqlSelect(
           "SELECT instruction FROM recipe WHERE name = '" + recipeName + "';")
               .getString("instruction");
     } catch (Exception e) {
@@ -54,7 +64,7 @@ public class Recipe {
    */
   public static void deleteRecipe(String recipeName) {
     try {
-      MainController.sqlConnector.executeSqlUpdate(
+      Recipe.sqlConnector.executeSqlUpdate(
           "DELETE FROM recipe WHERE name = '" + recipeName + "';");
     } catch (Exception e) {
       PopupManager.displayError("Delete error", "Could not delete recipe");
@@ -68,7 +78,7 @@ public class Recipe {
    */
   public static void createRecipe(String recipeName) {
     try {
-      MainController.sqlConnector.executeSqlUpdate(
+      Recipe.sqlConnector.executeSqlUpdate(
           "INSERT INTO recipe (name) VALUES ('" + recipeName + "');");
     } catch (Exception e) {
       PopupManager.displayError("Create error", "Could not create recipe");
@@ -84,7 +94,7 @@ public class Recipe {
   public static String getIngredientUnit(String ingredientName) {
     String unit = null;
     try {
-      unit = MainController.sqlConnector.executeSqlSelect(
+      unit = Recipe.sqlConnector.executeSqlSelect(
           "SELECT unit FROM ingredient WHERE name = '" + ingredientName
               + "';").getString("unit");
     } catch (Exception e) {
@@ -104,13 +114,13 @@ public class Recipe {
   public static void addIngredientToRecipe(String recipeName, String ingredientName,
       float quantity) {
     try {
-      int recipeId = MainController.sqlConnector.executeSqlSelect(
+      int recipeId = Recipe.sqlConnector.executeSqlSelect(
           "SELECT recipe_id FROM recipe WHERE name = '" + recipeName + "';")
           .getInt("recipe_id");
-      int ingredientId = MainController.sqlConnector.executeSqlSelect(
+      int ingredientId = Recipe.sqlConnector.executeSqlSelect(
           "SELECT ingredient_id FROM ingredient WHERE name = '" + ingredientName + "';")
           .getInt("ingredient_id");
-      MainController.sqlConnector.executeSqlUpdate(
+      Recipe.sqlConnector.executeSqlUpdate(
           "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, quantity) VALUES "
               + "(" + recipeId + ", " + ingredientId + ", " + quantity + ");");
       System.out.println("Test: " + quantity);
@@ -127,10 +137,10 @@ public class Recipe {
    */
   public static void removeIngredientFromRecipe(String recipeName, int ingredientId) {
     try {
-      int recipeId = MainController.sqlConnector.executeSqlSelect(
+      int recipeId = Recipe.sqlConnector.executeSqlSelect(
           "SELECT recipe_id FROM recipe WHERE name = '"
               + recipeName + "';").getInt("recipe_id");
-      MainController.sqlConnector.executeSqlUpdate(
+      Recipe.sqlConnector.executeSqlUpdate(
           "DELETE FROM recipe_ingredients WHERE recipe_id = "
               + recipeId + " AND ingredient_id = " + ingredientId + ";");
     } catch (Exception e) {
@@ -148,7 +158,7 @@ public class Recipe {
     ResultSet ingredients = null;
 
     try {
-      ingredients = MainController.sqlConnector.executeSqlSelect(
+      ingredients = Recipe.sqlConnector.executeSqlSelect(
           "SELECT recipe_ingredients.ingredient_id "
               + "FROM recipe_ingredients "
               + "JOIN recipe ON recipe_ingredients.recipe_id = recipe.recipe_id "
@@ -168,12 +178,13 @@ public class Recipe {
   public static int getRecipeIdFromName(String recipeName) {
     int recipeId = -1;
     try {
-      recipeId = MainController.sqlConnector.executeSqlSelect(
+      recipeId = Recipe.sqlConnector.executeSqlSelect(
           "SELECT recipe_id FROM recipe WHERE name = '" + recipeName + "';").getInt("recipe_id");
     } catch (Exception e) {
       PopupManager.displayError("Selection error", "Could not select recipe id");
     }
     return recipeId;
   }
+
 
 }

@@ -18,12 +18,17 @@ public class SqlConnector {
   private static final String dropSqlFilePath = "src/main/resources/DropQuery.sql";
 
   /**
+   * The file name of the database.
+   */
+  private static String dbFileName = "plate.db";
+
+  /**
    * Constructor for the SqlConnector class.
    */
   public SqlConnector() {
     try {
       if (con == null) {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
+        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
       resetTestDatabase();
     } catch (Exception e) {
@@ -39,6 +44,7 @@ public class SqlConnector {
   public SqlConnector(String dbFileName) {
     try {
       if (con == null) {
+        SqlConnector.dbFileName = dbFileName;
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
       resetTestDatabase();
@@ -102,7 +108,7 @@ public class SqlConnector {
     ResultSet rs = null;
     try {
       if (con.isClosed()) {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
+        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
       Statement stmt = con.createStatement();
       rs = stmt.executeQuery(query);
@@ -122,7 +128,7 @@ public class SqlConnector {
   public void executeSqlUpdate(String query) {
     try {
       if (con.isClosed()) {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
+        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
       Statement stmt = con.createStatement();
       stmt.executeUpdate(query);
@@ -139,8 +145,10 @@ public class SqlConnector {
    * @return true if any table is missing, false otherwise.
    */
   private boolean anyTableMissing() {
-    return (!tableExists("ingredient") || !tableExists("allergen") || !tableExists("category")
-        || !tableExists("recipe_ingredients") || !tableExists("recipe") || !tableExists("day"));
+    return (!tableExists("ingredient") || !tableExists("allergen")
+        || !tableExists("category")
+        || !tableExists("recipe_ingredients") || !tableExists("recipe")
+        || !tableExists("day"));
   }
 
   /**
