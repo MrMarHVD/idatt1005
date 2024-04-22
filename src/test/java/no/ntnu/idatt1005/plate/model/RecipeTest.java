@@ -58,6 +58,17 @@ class RecipeTest {
   }
 
   /**
+   * Test getInstructions negatively by asserting that the instructions are null for a non-existent
+   * recipe.
+   */
+  @Test
+  void testGetInstructionsForNonExistentRecipe() {
+    String recipeName = "NonExistentRecipe";
+    String instructions = Recipe.getInstructions(recipeName);
+    assertNull(instructions, "Instructions for a non-existent recipe should be null");
+  }
+
+  /**
    * Test deleteRecipe by asserting that the instructions are null after deleting the recipe.
    */
   @Test
@@ -89,6 +100,17 @@ class RecipeTest {
   }
 
   /**
+   * Test getIngredientUnit negatively by asserting the unit obtained equal
+   * to null for a non-existent ingredient.
+   */
+  @Test
+  void testGetIngredientUnitForNonExistentIngredient() {
+    String ingredientName = "NonExistentIngredient";
+    String unit = Recipe.getIngredientUnit(ingredientName);
+    assertNull(unit, "Unit for a non-existent ingredient should be null");
+  }
+
+  /**
    * Test selectIngredientsInRecipe by asserting that the selected ingredient ResultSet is
    * not null.
    */
@@ -100,6 +122,17 @@ class RecipeTest {
   }
 
   /**
+   * Test selectIngredientsInRecipe negatively by asserting that getting the ingredient at
+   * index 0 of the ResultSet throws an SQLException.
+   */
+  @Test
+  void testSelectIngredientsInNonExistentRecipe() {
+    String recipeName = "NonExistentRecipe";
+    ResultSet ingredients = Recipe.selectIngredientsInRecipe(recipeName);
+    assertThrows(SQLException.class, () -> ingredients.getString(0));
+  }
+
+  /**
    * Test getRecipeIdFromName by asserting that the recipeId is greater than 0.
    */
   @Test
@@ -107,6 +140,17 @@ class RecipeTest {
     String recipeName = "Egg and Onion Scramble";
     int recipeId = Recipe.getRecipeIdFromName(recipeName);
     assertTrue(recipeId > 0);
+  }
+
+  /**
+   * Test getRecipeIdFromNonExistentRecipeName by asserting the resulting ID
+   * equal to 0.
+   */
+  @Test
+  void testGetRecipeIdFromNonExistentRecipeName() {
+    String recipeName = "NonExistentRecipe";
+    int recipeId = Recipe.getRecipeIdFromName(recipeName);
+    assertEquals(0, recipeId, "Recipe ID for a non-existent recipe should be 0");
   }
 
   // Your test methods go here
