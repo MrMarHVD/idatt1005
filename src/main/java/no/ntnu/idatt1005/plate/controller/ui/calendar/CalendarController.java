@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.utility.Formatter;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 import no.ntnu.idatt1005.plate.model.Calendar;
 import no.ntnu.idatt1005.plate.model.Settings;
@@ -293,6 +294,7 @@ public class CalendarController {
     this.addMissingFromSelectedButton.setOnAction(event -> {
 
       if (this.selectedDate == null) {
+        PopupManager.displayError("Error", "No day selected.");
         return;
       }
       String recipeName = Calendar.getDayRecipes().get(this.selectedDate.toString());
