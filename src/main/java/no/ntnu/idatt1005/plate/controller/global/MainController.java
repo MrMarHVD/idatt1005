@@ -14,8 +14,6 @@ import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiShoppingListController;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 
-// TODO: improve error handling (i.e. no printStackTrace)
-
 /**
  * Main controller class handles the logic across all the views of the application.
  * The purpose of this class is to manage the controllers for each separate view

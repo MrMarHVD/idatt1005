@@ -335,6 +335,7 @@ public class UiRecipeViewController {
       this.unitLabel.setText(unit);
     });
 
+    this.portionTextField.setTextFormatter(Formatter.getFloatFormatter());
     this.portionTextField.textProperty().addListener((observable, oldValue, newValue) -> {
       this.displayIngredients();
     });

@@ -9,22 +9,6 @@ import javafx.scene.control.Alert.AlertType;
 public class PopupManager {
 
   /**
-   * Show an alert indicating something other than an error.
-   *
-   * @param title title of the alert
-   * @param header header of the alert
-   * @param content content of the alert
-   */
-  public static void displayPopup(String title, String header, String content) {
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle(title);
-    alert.setHeaderText(header);
-    alert.setHeaderText(null);
-    alert.setContentText(content);
-    alert.showAndWait();
-  }
-
-  /**
    * Display a basic error.
    *
    * @param header the header of the popup message.
