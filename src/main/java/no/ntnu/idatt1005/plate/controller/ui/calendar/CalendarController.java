@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.utility.Formatter;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 import no.ntnu.idatt1005.plate.model.Calendar;
 import no.ntnu.idatt1005.plate.model.Settings;
@@ -98,8 +99,8 @@ public class CalendarController {
   private Button addAllMissingButton;
 
   /**
-   * The button to add all missing ingredients from the recipe planned for the selected day
-   * to the shopping list.
+   * The button to add all missing ingredients from the recipe planned for the selected day to the
+   * shopping list.
    */
   @FXML
   private Button addMissingFromSelectedButton;
@@ -112,8 +113,8 @@ public class CalendarController {
   private TextField portionsTextField;
 
   /**
-   * The list view showing the missing ingredients for the recipe corresponding to the
-   * selected day.
+   * The list view showing the missing ingredients for the recipe corresponding to the selected
+   * day.
    */
   @FXML
   private ListView<Integer> missingListView;
@@ -129,9 +130,6 @@ public class CalendarController {
     this.initializeComboBox();
     //this.missingListView.setCellFactory(param -> new MissingIngredientListCell());
 
-
-
-
     insertWeek(thisMonday);
   }
 
@@ -143,8 +141,8 @@ public class CalendarController {
   private void insertWeek(LocalDate monday) {
 
     ArrayList<DayBlockController> dayBlockControllers = new ArrayList<>(Arrays.asList(
-            mondayController, tuesdayController, wednesdayController, thursdayController,
-            fridayController, saturdayController, sundayController));
+        mondayController, tuesdayController, wednesdayController, thursdayController,
+        fridayController, saturdayController, sundayController));
 
     for (int i = 0; i < 7; i++) {
       LocalDate date = monday.plusDays(i);
@@ -239,8 +237,8 @@ public class CalendarController {
   }
 
   /**
-   * Initialize action listeners for functions relating to search and changing recipe
-   * for the selected day.
+   * Initialize action listeners for functions relating to search and changing recipe for the
+   * selected day.
    */
   private void initializeRecipeButtonActionListeners() {
 
@@ -256,18 +254,27 @@ public class CalendarController {
     // Button for changing recipe
     this.changeRecipeButton.setOnAction(e -> {
       String recipe = this.recipeComboBox.getValue();
-      if (recipe != null) {
-        for (DayBlockController dayBlockController : new DayBlockController[]{
-            mondayController, tuesdayController, wednesdayController, thursdayController,
-            fridayController, saturdayController, sundayController}) {
-          if (dayBlockController.getSelectedButton().isSelected()) {
-            String date = dayBlockController.getDate();
+      if (recipe == null) {
+        PopupManager.displayErrorFull("No recipe selected", "Please select a recipe to change to.",
+            "Please select a recipe to change to.");
+        return;
+      }
+      if (this.selectedDate == null) {
+        PopupManager.displayErrorFull("No day selected", "Please select a day in the calendar.",
+            "Please select a day in the calendar.");
+        return;
+      }
+      for (DayBlockController dayBlockController : new DayBlockController[]{
+          mondayController, tuesdayController, wednesdayController, thursdayController,
+          fridayController, saturdayController, sundayController}) {
+        if (dayBlockController.getSelectedButton().isSelected()) {
+          String date = dayBlockController.getDate();
 
-            calendar.changeRecipe(Date.valueOf(date), recipe);
-            this.initialize();
-          }
+          calendar.changeRecipe(Date.valueOf(date), recipe);
+          this.initialize();
         }
       }
+
     });
 
     // Button for rerolling the current week
@@ -279,8 +286,7 @@ public class CalendarController {
   }
 
   /**
-   * Initialize action listeners for the buttons that add missing ingredients
-   * to the shopping list.
+   * Initialize action listeners for the buttons that add missing ingredients to the shopping list.
    */
   private void initializeShoppingListButtonActionListeners() {
 
@@ -289,6 +295,8 @@ public class CalendarController {
     // Create action listener for button which adds missing ingredients from the selected recipe
     this.addMissingFromSelectedButton.setOnAction(event -> {
       if (this.selectedDate == null) {
+        PopupManager.displayErrorFull("No day selected", "Please select a day in the calendar.",
+            "Please select a day in the calendar.");
         return;
       }
       String recipeName = Calendar.getDayRecipes().get(this.selectedDate.toString());

@@ -13,6 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.Settings;
 
@@ -75,6 +76,10 @@ public class UiCookbookController {
     }
 
     this.addButton.setOnAction(event -> {
+      if (this.recipeNameTextField.getText().isEmpty()) {
+        PopupManager.displayErrorFull("Recipe name cannot be empty", "Please enter a recipe name","Recipe name cannot be empty, please enter a recipe name");
+        return;
+      }
       Recipe.createRecipe(this.recipeNameTextField.getText());
       if (this.mainController != null) {
         this.mainController.goToRecipe(this.recipeNameTextField.getText());

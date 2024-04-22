@@ -147,9 +147,15 @@ public class UiInventoryController {
     // Set handler for the update button
     updateIngredientButton.setOnMouseClicked(event -> {
       //Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
+      if (quantityFieldUpdate.getText().isEmpty()) {
+        PopupManager.displayErrorFull("Error", "No quantity entered.", "Please enter a quantity");
+        return;
+      }
       float quantity = Float.parseFloat(quantityFieldUpdate.getText());
       //if (quantity == (float) quantity)
-      this.updateIngredient(quantity);
+      if (quantity >0) {
+        this.updateIngredient(quantity);
+      }
     });
     // Set handler to remove the selected button.
     removeSelectedButton.setOnMouseClicked(event -> removeSelectedIngredient());
@@ -293,12 +299,16 @@ public class UiInventoryController {
    */
   @FXML
   private void removeSelectedIngredient() {
+    try {
     if (ingredientListView == null) {
       System.out.println("ingredientListView is null");
     } else {
       Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
       this.deleteIngredient(selectedIngredientId);
       this.displayIngredients();
+    }
+    } catch (Exception e) {
+      PopupManager.displayErrorFull("Error", "No ingredient selected.", "No ingredient selected, please select an ingredient");
     }
   }
 
@@ -343,7 +353,7 @@ public class UiInventoryController {
 
       // If no valid ingredient is in the field, and no ingredient is selected, display error.
     } else {
-      PopupManager.displayError("Error", "No valid ingredient is selected.");
+      PopupManager.displayErrorFull("Error", "No ingredient selected.", "No ingredient selected, please select an ingredient");
     }
 
     this.displayIngredients();

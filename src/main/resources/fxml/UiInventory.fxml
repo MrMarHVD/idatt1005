@@ -60,7 +60,7 @@
       <right>
         <VBox prefHeight="477.0" prefWidth="165.0" stylesheets="@../styles/plateStyle.css" BorderPane.alignment="CENTER">
           <children>
-                  <Label prefHeight="34.0" prefWidth="189.0" styleClass="greenButton" text="Add / update">
+                  <Label prefHeight="34.0" prefWidth="189.0"  text="Add / update">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -72,7 +72,7 @@
                         <TextField fx:id="quantityFieldUpdate" prefHeight="26.0" prefWidth="172.0" promptText="Quantity" />
                      </children>
                   </HBox>
-                  <Button fx:id="updateIngredientButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="187.0" text="Update ingredient" />
+                  <Button fx:id="updateIngredientButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="187.0" text="Add/Update ingredient" styleClass="greenButton" />
             <Region prefHeight="274.0" prefWidth="165.0" />
             <Button fx:id="removeSelectedButton" mnemonicParsing="false" prefHeight="55.0" prefWidth="165.0" styleClass="redButton" text="Remove selected" />
           </children>
