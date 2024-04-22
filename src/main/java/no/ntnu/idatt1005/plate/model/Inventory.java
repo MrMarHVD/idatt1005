@@ -49,6 +49,17 @@ public class Inventory {
   }
 
   /**
+   * Select an ingredient ID from its name.
+   * TODO: add test
+   * @param name the name to search for.
+   * @return the result set of the query.
+   */
+  public static ResultSet selectIngredientIdFromName(String name) {
+    return Inventory.sqlConnector.executeSqlSelect(
+        "SELECT ingredient_id FROM ingredient WHERE name = '" + name + "'");
+  }
+
+  /**
    * Check whether the given ingredient exists in the inventory.
    *
    * @param name the name of the ingredient.

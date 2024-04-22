@@ -131,7 +131,7 @@ public class UiShoppingListController {
         detailsLabel.setText("Invalid input");
         return;
       }
-      ResultSet rs = ShoppingList.selectIngredientIdFromName(itemName);
+      ResultSet rs = Inventory.selectIngredientIdFromName(itemName);
       int ingredientId = rs.getInt("ingredient_id");
 
       detailsLabel.setText("");

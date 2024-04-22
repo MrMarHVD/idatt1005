@@ -149,8 +149,6 @@ class RecipeTest {
     assertEquals(0, recipeId, "Recipe ID for a non-existent recipe should be 0");
   }
 
-  // Your test methods go here
-
   /**
    * Tear down the test environment by resetting the database after all tests.
    */
