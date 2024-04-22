@@ -11,7 +11,7 @@ import java.sql.*;
  */
 public class SqlConnector {
 
-  private static Connection con = null;
+  private Connection con = null;
 
   /**
    * The path to the create, insert and drop SQL files.
@@ -34,7 +34,7 @@ public class SqlConnector {
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      System.err.println(e.getMessage());
     }
   }
 
@@ -49,9 +49,9 @@ public class SqlConnector {
         SqlConnector.dbFileName = dbFileName;
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
-      resetTestDatabase();
+      //resetTestDatabase();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      System.err.println(e.getMessage());
     }
   }
 
@@ -80,7 +80,7 @@ public class SqlConnector {
       ResultSet tables = executeSqlSelect("SELECT * FROM %s".formatted(tableName));
       return tables.next();
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      System.err.println(e.getMessage());
       return false;
     }
   }
@@ -100,7 +100,7 @@ public class SqlConnector {
       Statement stmt = con.createStatement();
       rs = stmt.executeQuery(query);
     } catch (SQLException e) {
-      System.out.println(e.getMessage()); //TODO: Removed finally clause. Full app still working?
+      System.err.println(e.getMessage()); //TODO: Removed finally clause. Full app still working?
     }
     return rs;
   }
@@ -118,7 +118,7 @@ public class SqlConnector {
       Statement stmt = con.createStatement();
       stmt.executeUpdate(query);
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      System.err.println(e.getMessage());
     }
   }
 

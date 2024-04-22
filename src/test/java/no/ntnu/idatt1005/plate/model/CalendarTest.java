@@ -45,6 +45,7 @@ class CalendarTest {
   @BeforeEach
   void setUp() {
     sqlConnector.resetTestDatabase();
+    Calendar.setSqlConnector(sqlConnector);
     date = Date.valueOf(LocalDate.now());
     date1 = Date.valueOf(LocalDate.now().plusDays(1));
   }
@@ -60,7 +61,7 @@ class CalendarTest {
     Calendar.insertDay(date, false);
 
     //assert
-  assertTrue(Calendar.dayExists(date));
+    assertTrue(Calendar.dayExists(date));
   }
 
   /**
