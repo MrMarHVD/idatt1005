@@ -120,12 +120,8 @@ public class UiInventoryController {
     this.initializeComboBox();
 
     this.initializeSearchFeatures();
-
     this.initializeSortLabelHandlers();
-
     this.initializeButtonHandlers();
-
-
   }
 
   /**

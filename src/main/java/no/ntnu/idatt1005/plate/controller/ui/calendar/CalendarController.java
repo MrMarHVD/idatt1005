@@ -36,6 +36,9 @@ public class CalendarController {
    */
   private Date selectedDate;
 
+  /**
+   * The calendar object used to interact with the database.
+   */
   private final Calendar calendar = new Calendar(new SqlConnector());
   private final LocalDate thisMonday = LocalDate.now().with(
       TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));

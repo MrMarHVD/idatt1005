@@ -11,6 +11,7 @@ import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiInventoryController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiRecipeViewController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiSettingsController;
 import no.ntnu.idatt1005.plate.controller.ui.shoppinglist.UiShoppingListController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 // TODO: improve error handling (i.e. no printStackTrace)
@@ -47,7 +48,7 @@ public class MainController {
       stage.setMinHeight(300);
       stage.show();
     } catch (Exception e) {
-      e.printStackTrace();
+      e.printStackTrace(); // Print stack trace if initial view fails to load. (Application crashes)
     }
   }
 
@@ -71,7 +72,7 @@ public class MainController {
       currentStage.show();
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load home view.");
     }
   }
 
@@ -94,7 +95,7 @@ public class MainController {
       currentStage.setScene(scene);
       currentStage.show();
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load cookbook view.");
     }
   }
 
@@ -121,7 +122,7 @@ public class MainController {
 
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load inventory view.");
     }
   }
 
@@ -147,8 +148,7 @@ public class MainController {
 
 
     } catch (Exception e) {
-
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load shopping list view.");
     }
   }
 
@@ -175,8 +175,7 @@ public class MainController {
 
 
     } catch (Exception e) {
-
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load settings view.");
     }
   }
 
@@ -210,7 +209,7 @@ public class MainController {
       recipeController.initializeDisplay();
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load settings view.");
     }
   }
 }
