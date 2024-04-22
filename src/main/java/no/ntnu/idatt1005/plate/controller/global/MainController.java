@@ -10,7 +10,7 @@ import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiHomeController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiInventoryController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiRecipeViewController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiSettingsController;
-import no.ntnu.idatt1005.plate.controller.ui.shoppinglist.UiShoppingListController;
+import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiShoppingListController;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 

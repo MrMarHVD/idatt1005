@@ -262,6 +262,12 @@ public class UiRecipeViewController {
 
     // Define action listener for button to create new recipe. Create, and go to the new recipe.
     this.newRecipeButton.setOnAction(event -> {
+      if (this.recipeNameTextField.getText().isEmpty()) {
+        PopupManager.displayErrorFull("Recipe name cannot be empty", "Please "
+                + "enter a recipe name",
+            "Recipe name cannot be empty, please enter a recipe name");
+        return;
+      }
       Recipe.createRecipe(this.recipeNameTextField.getText());
       if (this.mainController != null) {
         this.mainController.goToRecipe(this.recipeNameTextField.getText());
@@ -277,6 +283,17 @@ public class UiRecipeViewController {
     // Define action listener for the add ingredient button
     this.addIngredientButton.setOnAction(event -> {
       String ingredient = this.selectIngredientComboBox.getSelectionModel().getSelectedItem();
+      if (ingredient == null || ingredient.isEmpty()) {
+        PopupManager.displayErrorFull("Error", "No ingredient selected",
+            "No ingredient selected.");
+        return;
+      }
+      if (this.quantityTextField.getText().isEmpty()) {
+        PopupManager.displayErrorFull("Error", "No quantity entered",
+            "No quantity entered.");
+        return;
+      }
+
       float quantity = Float.parseFloat(this.quantityTextField.getText());
       Recipe.addIngredientToRecipe(this.recipeName, ingredient, quantity);
       this.displayIngredients();
@@ -284,10 +301,16 @@ public class UiRecipeViewController {
 
     // Define action listener for the remove ingredient button
     this.removeIngredientButton.setOnAction(event -> {
-      int ingredientId = this.ingredientsListView.getSelectionModel().getSelectedItem();
-      Recipe.removeIngredientFromRecipe(this.recipeName, ingredientId);
-      this.displayIngredients();
+      try {
+        int ingredientId = this.ingredientsListView.getSelectionModel().getSelectedItem();
+        Recipe.removeIngredientFromRecipe(this.recipeName, ingredientId);
+        this.displayIngredients();
+      } catch (Exception e) {
+        PopupManager.displayErrorFull("Error", "No ingredient selected",
+            "No ingredient selected.");
+      }
     });
+
 
   }
 

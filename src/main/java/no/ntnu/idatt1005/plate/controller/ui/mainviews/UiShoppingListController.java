@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.ui.shoppinglist;
+package no.ntnu.idatt1005.plate.controller.ui.mainviews;
 
 
 import java.sql.ResultSet;
@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.model.Inventory;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
  * Controller class for the shopping list view.
@@ -116,40 +117,23 @@ public class UiShoppingListController {
   }
 
   /**
-   * makes a string title case. Used for comparing strings in the database.
-   *
-   * @param str the string to be title cased.
-   * @return the title cased string.
-   */
-  private String titleCase(String str) {
-    if (str == null || str.isEmpty()) {
-      return str;
-    }
-    return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
-  }
-
-  /**
    * Add selected items to the shopping list, or update the quantity if the item already exists.
    */
   public void addSelectedItems() {
     try {
 
-      String itemName = titleCase(selectIngredientComboBox.getSelectionModel().getSelectedItem());
+      String itemName = selectIngredientComboBox.getSelectionModel().getSelectedItem();
       String itemAmount = itemAmountField.getText();
+      if (itemName == null || itemName.isEmpty() || itemAmount == null || itemAmount.isEmpty()) {
+        PopupManager.displayErrorFull("Error", "Invalid input",
+            "Please enter a valid item name and amount.");
+        detailsLabel.setText("Invalid input");
+        return;
+      }
       ResultSet rs = MainController.sqlConnector.executeSqlSelect(
           "SELECT ingredient_id FROM ingredient WHERE name = '" + itemName + "'");
       int ingredientId = rs.getInt("ingredient_id");
 
-      if (ingredientId == 0) {
-        if (itemName.isEmpty()) {
-          detailsLabel.setText("No item name entered");
-          return;
-        } else if (itemName.length() > 16) {
-          itemName = itemName.substring(0, 16) + "...";
-        }
-        detailsLabel.setText("No ingredient named:\n " + itemName + "     ");
-        return;
-      }
       detailsLabel.setText("");
       ResultSet rs2 = MainController.sqlConnector.executeSqlSelect(
           "SELECT * FROM shopping_list_items WHERE ingredient_id = " + ingredientId);
@@ -250,6 +234,8 @@ public class UiShoppingListController {
   private void buyItems() {
     try {
       if (selectedItems.isEmpty()) {
+        PopupManager.displayErrorFull("Error", "No items selected",
+            "Please select items to add to inventory.");
         detailsLabel.setText("No items selected");
         return;
       }
@@ -293,6 +279,7 @@ public class UiShoppingListController {
   private void clearList() {
     try {
       if (selectedItems.isEmpty()) {
+        PopupManager.displayErrorFull("Error", "No items selected", "Please select items to remove.");
         detailsLabel.setText("No items selected");
         return;
       }

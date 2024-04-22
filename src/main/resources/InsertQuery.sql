@@ -173,16 +173,16 @@ INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (10, 'Recipe
 -- OppskriftsIngredienser
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (1, 20, 1); -- Pizza Dough
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (1, 21, 0.5); -- Pizza Sauce
-INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (1, 19, 100); -- Cheese
+INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (1, 19, 1); -- Cheese
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (2, 9, 2); -- Bread
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (2, 7, 1); -- Butter
-INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (2, 19, 50); -- Cheese
-INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (3, 5, 300); -- Chicken
+INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (2, 19, 5); -- Cheese
+INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (3, 5, 3); -- Chicken
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (3, 13, 2); -- Paprika
 
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (4, 20, 1); -- Pizza Dough
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (4, 21, 0.5); -- Pizza Sauce
-INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (4, 18, 50); -- Pepperoni
+INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (4, 18, 5); -- Pepperoni
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (4, 12, 2); -- Chilli Pepper
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (5, 6, 3); -- Eggs
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (5, 16, 1); -- Onion
