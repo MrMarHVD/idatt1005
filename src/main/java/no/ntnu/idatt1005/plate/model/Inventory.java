@@ -248,4 +248,12 @@ public class Inventory {
       PopupManager.displayErrorFull("Error", "Failed to add ingredient", e.getMessage());
     }
   }
+
+  /**
+   * Delete all ingredients with a quantity less than or equal to zero.
+   */
+  public static void deleteLessThanZero() {
+    ShoppingList.sqlConnector.executeSqlUpdate(
+        "DELETE FROM inventory_ingredient WHERE quantity <= 0");
+  }
 }

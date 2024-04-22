@@ -212,6 +212,7 @@ public class UiInventoryController {
     List<Integer> fullInventory = new ArrayList<Integer>();
 
     try {
+      Inventory.deleteLessThanZero();
       ResultSet inventoryIngredients = Inventory.selectAllInventoryIngredients();
       while (inventoryIngredients.next()) {
         fullInventory.add(inventoryIngredients.getInt("ingredient_id"));

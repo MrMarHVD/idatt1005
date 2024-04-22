@@ -15,7 +15,7 @@ public class Formatter {
    */
   public static UnaryOperator<Change> floatFormatter = change -> {
     String newText = change.getControlNewText();
-    if (newText.matches("([0-9]*[.])?[0-9]*")) {
+    if (newText.matches("-?([0-9]*[.])?[0-9]*")) {
       return change;
     }
     return null;
@@ -30,3 +30,5 @@ public class Formatter {
     return new TextFormatter<>(floatFormatter);
   }
 }
+
+// TODO: add condition in inventory such that negative values are not allowed
