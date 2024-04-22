@@ -39,7 +39,7 @@ public class CalendarController {
   /**
    * The calendar object used to interact with the database.
    */
-  private final Calendar calendar = new Calendar(new SqlConnector());
+  //private final Calendar calendar = new Calendar();
   private final LocalDate thisMonday = LocalDate.now().with(
       TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
   private final Path configDir = Paths.get(System.getProperty("user.home")).resolve(".plate");
@@ -151,8 +151,8 @@ public class CalendarController {
 
     for (int i = 0; i < 7; i++) {
       LocalDate date = monday.plusDays(i);
-      if (!calendar.dayExists(Date.valueOf(date))) {
-        calendar.insertDay(Date.valueOf(date), settings.getVegetarian());
+      if (!Calendar.dayExists(Date.valueOf(date))) {
+        Calendar.insertDay(Date.valueOf(date), settings.getVegetarian());
       }
 
       String day = date.getDayOfWeek().toString().charAt(0)
@@ -160,7 +160,7 @@ public class CalendarController {
       dayBlockControllers.get(i).setDay(day);
       dayBlockControllers.get(i).setDate(date.toString());
 
-      String recipe = calendar.getDayRecipes().get(date.toString());
+      String recipe = Calendar.getDayRecipes().get(date.toString());
       dayBlockControllers.get(i).setRecipe(recipe);
       dayBlockControllers.get(i).setActionOnRecipeButtonClicked(recipe);
     }
@@ -174,7 +174,7 @@ public class CalendarController {
   public void rerollWeek(LocalDate monday) {
     for (int i = 0; i < 7; i++) {
       LocalDate date = monday.plusDays(i);
-      calendar.removeDay(Date.valueOf(date));
+      Calendar.removeDay(Date.valueOf(date));
     }
     insertWeek(monday);
   }
@@ -184,7 +184,7 @@ public class CalendarController {
    */
   private void initializeComboBox() {
     int maxRecipes = 20;
-    ArrayList<String> results = calendar.searchRecipes("", settings.getVegetarian());
+    ArrayList<String> results = Calendar.searchRecipes("", settings.getVegetarian());
 
     if (results.size() > maxRecipes) {
       for (int i = 0; i < maxRecipes; i++) {
@@ -227,8 +227,8 @@ public class CalendarController {
    */
   private void populateListView(String date) {
     this.selectedDate = Date.valueOf(date); // Ensure that the selected date is stored
-    String recipeName = calendar.getDayRecipes().get(date);
-    List<Integer> missingIngredients = calendar.getMissingIngredients(recipeName);
+    String recipeName = Calendar.getDayRecipes().get(date);
+    List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
 
     // Create an ObservableList with the IDs of the missing ingredients
     ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(
@@ -266,7 +266,7 @@ public class CalendarController {
           if (dayBlockController.getSelectedButton().isSelected()) {
             String date = dayBlockController.getDate();
 
-            calendar.changeRecipe(Date.valueOf(date), recipe);
+            Calendar.changeRecipe(Date.valueOf(date), recipe);
             this.initialize();
           }
         }
@@ -303,7 +303,7 @@ public class CalendarController {
         portions = Float.parseFloat(portionsTextField.getText());
       }
 
-      Map<Integer, Float> missingIngredients = calendar.getMissingIngredientsWithQuantity(
+      Map<Integer, Float> missingIngredients = Calendar.getMissingIngredientsWithQuantity(
           recipeName, portions);
       for (int ingredientId : missingIngredients.keySet()) {
 
@@ -361,7 +361,7 @@ public class CalendarController {
    * @param recipeName the name of the selected recipe.
    */
   private void populateMissingIngredientListView(String recipeName) {
-    List<Integer> missingIngredients = calendar.getMissingIngredients(recipeName);
+    List<Integer> missingIngredients = Calendar.getMissingIngredients(recipeName);
 
     // Create an ObservableList with the IDs of the missing ingredients
     ObservableList<Integer> observableIngredients = FXCollections.observableArrayList(

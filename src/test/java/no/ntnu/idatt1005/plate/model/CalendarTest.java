@@ -40,11 +40,6 @@ class CalendarTest {
   private static final SqlConnector sqlConnector = new SqlConnector(dbFileName);
 
   /**
-   * The calendar used for testing.
-   */
-  private static Calendar calendar = new Calendar(sqlConnector);
-
-  /**
    * Set up the test environment.
    */
   @BeforeEach
@@ -52,17 +47,6 @@ class CalendarTest {
     sqlConnector.resetTestDatabase();
     date = Date.valueOf(LocalDate.now());
     date1 = Date.valueOf(LocalDate.now().plusDays(1));
-    calendar = new Calendar(sqlConnector);
-  }
-
-  /**
-   * Test the constructor.
-   */
-  @Test
-  @DisplayName("constructor test")
-  void testConstructor() {
-    //assert
-    assertNotNull(calendar);
   }
 
   /**
@@ -73,10 +57,10 @@ class CalendarTest {
   void testInsertDay() {
 
     //act
-    calendar.insertDay(date, false);
+    Calendar.insertDay(date, false);
 
     //assert
-  assertTrue(calendar.dayExists(date));
+  assertTrue(Calendar.dayExists(date));
   }
 
   /**
@@ -87,7 +71,7 @@ class CalendarTest {
   @DisplayName("day exists negative test")
   void testDayExistsNegative() {
     //act
-    boolean exists = calendar.dayExists(date1);
+    boolean exists = Calendar.dayExists(date1);
 
     //assert
     assertFalse(exists);
@@ -101,7 +85,7 @@ class CalendarTest {
   void testGetRecipe() {
 
     //act
-    String recipe = calendar.getRecipe(date);
+    String recipe = Calendar.getRecipe(date);
 
     //assert
     assertNotNull(recipe);
@@ -115,7 +99,7 @@ class CalendarTest {
   void testGetRecipeNegative() {
 
     //act
-    String recipe = calendar.getRecipe(date1);
+    String recipe = Calendar.getRecipe(date1);
 
     //assert
     assertNull(recipe);
@@ -131,10 +115,10 @@ class CalendarTest {
     String newRecipe = "Margherita Pizza";
 
     //act
-    calendar.changeRecipe(date, newRecipe);
+    Calendar.changeRecipe(date, newRecipe);
 
     //assert
-    assertEquals(newRecipe, calendar.getRecipe(date));
+    assertEquals(newRecipe, Calendar.getRecipe(date));
   }
 
   /**
@@ -146,10 +130,10 @@ class CalendarTest {
   void testGetDayRecipes() {
 
     //act
-    String recipe = calendar.getRecipe(date);
+    String recipe = Calendar.getRecipe(date);
 
     //assert
-    assertEquals(recipe, calendar.getDayRecipes().get(date.toString()));
+    assertEquals(recipe, Calendar.getDayRecipes().get(date.toString()));
   }
 
   /**
@@ -162,7 +146,7 @@ class CalendarTest {
     String search = "Pizza";
 
     //act
-    String recipe = calendar.searchRecipes(search, false).get(0);
+    String recipe = Calendar.searchRecipes(search, false).get(0);
 
     //assert
     assertTrue(recipe.contains(search));
@@ -179,7 +163,7 @@ class CalendarTest {
     String search = "Nonexistent";
 
     //act
-    int size = calendar.searchRecipes(search, false).size();
+    int size = Calendar.searchRecipes(search, false).size();
 
     //assert
     assertEquals(0, size);
@@ -193,10 +177,10 @@ class CalendarTest {
   void testRemoveDay() {
 
     //act
-    calendar.removeDay(date);
+    Calendar.removeDay(date);
 
     //assert
-    assertFalse(calendar.dayExists(date));
+    assertFalse(Calendar.dayExists(date));
   }
 
   /**
@@ -208,7 +192,7 @@ class CalendarTest {
     //arrange
 
     //act
-    String missingIngredients = calendar.getMissingIngredients("Margherita Pizza").toString();
+    String missingIngredients = Calendar.getMissingIngredients("Margherita Pizza").toString();
 
     //assert
     assertNotNull(missingIngredients);
@@ -224,7 +208,7 @@ class CalendarTest {
     //arrange
 
     //act
-    String missingIngredients = calendar.getMissingIngredientsWithQuantity("Margherita Pizza",
+    String missingIngredients = Calendar.getMissingIngredientsWithQuantity("Margherita Pizza",
         2).toString();
 
     //assert
