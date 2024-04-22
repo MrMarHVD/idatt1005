@@ -33,7 +33,6 @@ public class SqlConnector {
       if (con == null) {
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
-      resetTestDatabase();
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
