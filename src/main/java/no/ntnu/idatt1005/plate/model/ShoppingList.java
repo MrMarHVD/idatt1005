@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 /**
@@ -62,7 +63,7 @@ public class ShoppingList {
         return true;
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
     return false;
   }
@@ -187,7 +188,7 @@ public class ShoppingList {
                 + quantity + ")");
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
   }
 }

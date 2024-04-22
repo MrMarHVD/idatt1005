@@ -206,7 +206,6 @@ public class UiRecipeViewController {
       ingredientsListView.setItems(observableList);
       ingredientsListView.setCellFactory(param -> new RecipeIngredientListCell(this));
     } catch (SQLException e) {
-      e.printStackTrace();
       PopupManager.displayErrorFull("Error",
           "Error retrieving ingredients", "Error retrieving ingredients.");
     }
@@ -240,8 +239,7 @@ public class UiRecipeViewController {
       instructionsArea.setText(instructions != null ? instructions : "No instructions provided.");
 
     } catch (Exception e) {
-      e.printStackTrace();
-      instructionsArea.setText("Error retrieving instructions.");
+      PopupManager.displayError("Error", "Could not fetch instructions.");
     }
   }
 

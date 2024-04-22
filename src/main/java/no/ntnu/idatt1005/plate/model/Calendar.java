@@ -47,7 +47,7 @@ public class Calendar {
         return true;
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not check if day exists");
     }
     return false;
   }
@@ -70,7 +70,7 @@ public class Calendar {
         recipeId = rs.getInt("recipe_id");
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not insert day");
     }
 
     String query = "INSERT INTO day(date, recipe_id) VALUES ('" + date + "', " + recipeId + ");";
@@ -107,7 +107,7 @@ public class Calendar {
           dayRecipes.put(date, recipe);
         }
       } catch (SQLException e) {
-        e.printStackTrace();
+        PopupManager.displayError("Error", "Could not get day recipes");
       }
     }
 
@@ -129,7 +129,7 @@ public class Calendar {
       try {
         recipe = rs.getString("name");
       } catch (SQLException e) {
-        e.printStackTrace();
+        PopupManager.displayError("Error", "Could not get recipe");
       }
     }
     return recipe;
@@ -150,7 +150,7 @@ public class Calendar {
         recipeId = rs.getInt("recipe_id");
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not change recipe");
     }
     String updateQuery = "UPDATE day SET recipe_id = " + recipeId + " WHERE date = '" + date + "';";
     Calendar.sqlConnector.executeSqlUpdate(updateQuery);
@@ -162,7 +162,6 @@ public class Calendar {
    * @param search the string to search the database for.
    * @return an arraylist containing the names of the recipes that match the search string.
    */
-
   public static ArrayList<String> searchRecipes(String search, boolean vegetarian) {
 
     ArrayList<String> recipes = new ArrayList<>();
@@ -178,7 +177,7 @@ public class Calendar {
           recipes.add(rs.getString("name"));
         }
       } catch (SQLException e) {
-        e.printStackTrace();
+        PopupManager.displayError("Error", e.getMessage());
       }
     } else {
       PopupManager.displayError("Error", "No recipes found");
@@ -225,7 +224,7 @@ public class Calendar {
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
     return missingIngredients;
   }
@@ -272,7 +271,7 @@ public class Calendar {
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
     return missingIngredients;
   }
@@ -300,7 +299,7 @@ public class Calendar {
         totalIngredients.put(ingredientId, requiredQuantity);
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
     return totalIngredients;
   }
@@ -337,7 +336,7 @@ public class Calendar {
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
     return missingIngredients;
   }

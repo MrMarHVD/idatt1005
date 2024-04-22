@@ -219,5 +219,4 @@ class CalendarTest {
     sqlConnector.closeConnection();
     sqlConnector.resetTestDatabase();
   }
-
 }

@@ -215,7 +215,7 @@ public class Inventory {
         }
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
   }
 

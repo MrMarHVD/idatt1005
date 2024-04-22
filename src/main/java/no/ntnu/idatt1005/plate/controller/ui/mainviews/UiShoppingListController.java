@@ -199,7 +199,7 @@ public class UiShoppingListController {
         listView.getItems().add(hbox);
       }
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      PopupManager.displayError("Error", e.getMessage());
     }
   }
 
@@ -235,7 +235,7 @@ public class UiShoppingListController {
       updateItems();
       selectedItems.clear();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      PopupManager.displayError("Error", e.getMessage());
     }
   }
 
@@ -255,7 +255,7 @@ public class UiShoppingListController {
       updateItems();
       selectedItems.clear();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      PopupManager.displayError("Error", e.getMessage());
     }
 
   }
@@ -273,7 +273,7 @@ public class UiShoppingListController {
         selectedItems.add(rs.getInt("ingredient_id"));
       }
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      PopupManager.displayError("Selection error", e.getMessage());
     }
   }
 

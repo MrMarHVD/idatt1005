@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
+import javax.swing.Popup;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
  * This class manages the settings for the application.
@@ -50,7 +52,7 @@ public class Settings {
         }
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not create config file");
     }
   }
 
@@ -68,21 +70,21 @@ public class Settings {
     try (OutputStream fos = Files.newOutputStream(configFile)) {
       prop.store(fos, null);
     } catch (IOException e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not save settings");
     }
   }
 
   /**
    * Get the dark mode setting.
    *
-   * @return whether or not dark mode is enabled.
+   * @return whether dark mode is enabled.
    */
   public boolean getDarkMode() {
     Properties prop = new Properties();
     try (InputStream fis = Files.newInputStream(configFile)) {
       prop.load(fis);
     } catch (IOException e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load settings");
     }
     return Boolean.parseBoolean(prop.getProperty(DARK_MODE));
   }
@@ -97,7 +99,7 @@ public class Settings {
     try (InputStream fis = Files.newInputStream(configFile)) {
       prop.load(fis);
     } catch (IOException e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
     return Boolean.parseBoolean(prop.getProperty(VEGETARIAN));
   }
