@@ -16,6 +16,11 @@ public class Recipe {
    */
   private static SqlConnector sqlConnector = MainController.sqlConnector;
 
+  /**
+   * Set the SQL connector to something other than that belonging to the MainController (testing).
+   *
+   * @param sqlConnector the SQL connector to assign.
+   */
   public static void setSqlConnector(SqlConnector sqlConnector) {
     Recipe.sqlConnector = sqlConnector;
   }

@@ -17,7 +17,7 @@ class InventoryTest {
   /**
    * The name of the database file used for testing.
    */
-  private static final String dbFileName = "calendar_test.db";
+  private static final String dbFileName = "inventory_test.db";
 
   /**
    * The SQL connector used for testing.

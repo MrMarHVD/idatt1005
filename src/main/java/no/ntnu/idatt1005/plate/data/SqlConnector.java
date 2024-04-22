@@ -13,6 +13,9 @@ public class SqlConnector {
 
   private static Connection con = null;
 
+  /**
+   * The path to the create, insert and drop SQL files.
+   */
   private static final String createSqlFilePath = "src/main/resources/CreateQuery.sql";
   private static final String insertSqlFilePath = "src/main/resources/InsertQuery.sql";
   private static final String dropSqlFilePath = "src/main/resources/DropQuery.sql";
@@ -68,21 +71,6 @@ public class SqlConnector {
 
 
   /**
-   * Close the connection to the database.
-   */
-  public void close() {
-    //try {
-    //if (con != null) {
-    //con.close();
-    //System.out.println("Connection closed");
-    //}
-    //} catch (Exception e) {
-    //System.out.println(e.getMessage());
-    //}
-  }
-
-
-  /**
    * Check if a table exists in the database.
    *
    * @param tableName the name of the table.
@@ -113,9 +101,7 @@ public class SqlConnector {
       Statement stmt = con.createStatement();
       rs = stmt.executeQuery(query);
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    } finally {
-      close();
+      System.out.println(e.getMessage()); //TODO: Removed finally clause. Full app still working?
     }
     return rs;
   }
@@ -134,8 +120,6 @@ public class SqlConnector {
       stmt.executeUpdate(query);
     } catch (SQLException e) {
       System.out.println(e.getMessage());
-    } finally {
-      close();
     }
   }
 
