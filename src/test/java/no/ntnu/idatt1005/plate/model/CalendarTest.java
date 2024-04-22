@@ -44,6 +44,7 @@ class CalendarTest {
    */
   @BeforeEach
   void setUp() {
+    sqlConnector.closeConnection();
     sqlConnector.resetTestDatabase();
     Calendar.setSqlConnector(sqlConnector);
     date = Date.valueOf(LocalDate.now());
@@ -58,7 +59,7 @@ class CalendarTest {
   void testInsertDay() {
 
     //act
-    Calendar.insertDay(date, false);
+    Calendar.insertDay(Date.valueOf(LocalDate.now().plusDays(7)), false);
 
     //assert
     assertTrue(Calendar.dayExists(date));
@@ -72,7 +73,7 @@ class CalendarTest {
   @DisplayName("day exists negative test")
   void testDayExistsNegative() {
     //act
-    boolean exists = Calendar.dayExists(date1);
+    boolean exists = Calendar.dayExists(Date.valueOf(LocalDate.now().plusDays(10)));
 
     //assert
     assertFalse(exists);
@@ -98,9 +99,8 @@ class CalendarTest {
   @Test
   @DisplayName("get recipe negative test")
   void testGetRecipeNegative() {
-
     //act
-    String recipe = Calendar.getRecipe(date1);
+    String recipe = Calendar.getRecipe(Date.valueOf(LocalDate.now().plusDays(10)));
 
     //assert
     assertNull(recipe);
@@ -113,7 +113,7 @@ class CalendarTest {
   @DisplayName("change recipe test")
   void testChangeRecipe() {
     //arrange
-    String newRecipe = "Margherita Pizza";
+    String newRecipe = "Spicy Pepperoni Pizza";
 
     //act
     Calendar.changeRecipe(date, newRecipe);
@@ -220,13 +220,9 @@ class CalendarTest {
    * Clean up after all tests have been run.
    */
   @AfterAll
-  static void cleanUp() {
-    try {
-      Files.deleteIfExists(Paths.get("src/main/resources/" + dbFileName));
-      System.out.println(dbFileName + " deleted successfully");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  static void tearDown() {
+    sqlConnector.closeConnection();
+    sqlConnector.resetTestDatabase();
   }
 
 }

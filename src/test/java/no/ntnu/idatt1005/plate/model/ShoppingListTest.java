@@ -25,6 +25,7 @@ class ShoppingListTest {
    */
   @BeforeEach
   void setUp() {
+    sqlConnector.closeConnection();
     sqlConnector.resetTestDatabase();
     ShoppingList.setSqlConnector(sqlConnector);
   }

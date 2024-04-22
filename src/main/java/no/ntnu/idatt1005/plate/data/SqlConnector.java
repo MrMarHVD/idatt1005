@@ -116,9 +116,10 @@ public class SqlConnector {
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
       Statement stmt = con.createStatement();
+
       stmt.executeUpdate(query);
     } catch (SQLException e) {
-      System.err.println(e.getMessage());
+      e.printStackTrace();
     }
   }
 

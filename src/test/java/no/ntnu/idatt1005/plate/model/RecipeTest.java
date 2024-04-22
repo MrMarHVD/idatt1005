@@ -31,6 +31,7 @@ class RecipeTest {
    */
   @BeforeEach
   void setUp() {
+    sqlConnector.closeConnection();
     Recipe.setSqlConnector(sqlConnector);
     sqlConnector.resetTestDatabase();
   }
@@ -160,13 +161,8 @@ class RecipeTest {
    */
   @AfterAll
   static void tearDown() {
+    sqlConnector.closeConnection();
     sqlConnector.resetTestDatabase();
-    try {
-      Files.deleteIfExists(Paths.get("src/main/resources/" + dbFileName));
-      System.out.println(dbFileName + " deleted successfully");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
   }
 
 }

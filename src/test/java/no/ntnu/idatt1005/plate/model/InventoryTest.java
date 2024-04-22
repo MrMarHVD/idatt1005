@@ -34,6 +34,7 @@ class InventoryTest {
    */
   @BeforeEach
   void setUp() {
+    sqlConnector.closeConnection();
     sqlConnector.resetTestDatabase();
     Inventory.setSqlConnector(sqlConnector);
   }
@@ -154,6 +155,7 @@ class InventoryTest {
    */
   @AfterAll
   static void tearDown() {
-      sqlConnector.resetTestDatabase();
+    sqlConnector.closeConnection();
+    sqlConnector.resetTestDatabase();
   }
 }
