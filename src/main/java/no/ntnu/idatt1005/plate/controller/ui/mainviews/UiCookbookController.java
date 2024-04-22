@@ -13,6 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.Recipe;
 import no.ntnu.idatt1005.plate.model.Settings;
 
@@ -219,7 +220,7 @@ public class UiCookbookController {
         gridPane.setVgap(10);
       }
     } else {
-      System.out.println("gridPane is null in updateRecipeButtons");
+      PopupManager.displayError("Error", "gridPane is null in updateRecipeButtons");
     }
   }
 

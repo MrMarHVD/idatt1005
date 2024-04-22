@@ -13,12 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ShoppingListTest {
 
-  private static final String dbFileName = "shopping_list_test.db";
-
   /**
    * The SQL connector used for testing.
    */
-  private static final SqlConnector sqlConnector = new SqlConnector(dbFileName);
+  private static final SqlConnector sqlConnector = new SqlConnector(":memory:");
 
   /**
    * Set up the test environment by resetting the database before each test.

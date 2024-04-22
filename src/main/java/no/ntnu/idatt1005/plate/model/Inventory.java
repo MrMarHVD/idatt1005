@@ -242,13 +242,10 @@ public class Inventory {
             "INSERT INTO inventory_ingredient (ingredient_id, quantity) "
                 + "VALUES (" + ingredientId + ", " + quantity + "); "
         );
-      } else {
-        System.out.println("Test");
       }
 
     } catch (Exception e) {
-      //PopupManager.displayErrorFull("Error", "Failed to add ingredient", e.getMessage());
-      e.printStackTrace();
+      PopupManager.displayErrorFull("Error", "Failed to add ingredient", e.getMessage());
     }
   }
 }

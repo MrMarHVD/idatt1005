@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.Popup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 /**
@@ -17,7 +19,7 @@ import no.ntnu.idatt1005.plate.data.SqlConnector;
 public class Calendar {
 
   /**
-   * The SQL connector for this class
+   * The SQL connector for this class.
    */
   private static SqlConnector sqlConnector = MainController.sqlConnector;
 
@@ -107,8 +109,6 @@ public class Calendar {
       } catch (SQLException e) {
         e.printStackTrace();
       }
-    } else {
-      System.err.println("Error: ResultSet is null");
     }
 
     return dayRecipes;
@@ -131,8 +131,6 @@ public class Calendar {
       } catch (SQLException e) {
         e.printStackTrace();
       }
-    } else {
-      System.err.println("Error: ResultSet is null");
     }
     return recipe;
   }
@@ -183,7 +181,7 @@ public class Calendar {
         e.printStackTrace();
       }
     } else {
-      System.err.println("Error: ResultSet is null");
+      PopupManager.displayError("Error", "No recipes found");
     }
     return recipes;
   }
@@ -228,9 +226,6 @@ public class Calendar {
 
     } catch (Exception e) {
       e.printStackTrace();
-    }
-    for (int i = 0; i < missingIngredients.size(); i++) {
-      System.out.println(missingIngredients.get(i));
     }
     return missingIngredients;
   }

@@ -14,15 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class InventoryTest {
 
-  /**
-   * The name of the database file used for testing.
-   */
-  private static final String dbFileName = "inventory_test.db";
 
   /**
    * The SQL connector used for testing.
    */
-  private static final SqlConnector sqlConnector = new SqlConnector(dbFileName);
+  private static final SqlConnector sqlConnector = new SqlConnector(":memory:");
 
   /**
    * The name of the ingredient used for testing.

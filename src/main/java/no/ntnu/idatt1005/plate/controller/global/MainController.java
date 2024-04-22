@@ -103,7 +103,6 @@ public class MainController {
    * Go to the inventory view.
    */
   public void goToInventory() {
-    System.out.println("Test");
     try {
       FXMLLoader inventoryLoader = new FXMLLoader(getClass().getResource("/fxml/UiInventory.fxml"));
       Parent inventoryView = inventoryLoader.load();
@@ -197,10 +196,8 @@ public class MainController {
 
       if (recipe != null) {
         recipeController.setRecipeName(recipe);
-        System.out.println(recipe);
-      } else {
-        System.out.println("Null");
       }
+
 
       Scene scene = new Scene(recipeView);
       Stage currentStage = MyApp.getPrimaryStage();

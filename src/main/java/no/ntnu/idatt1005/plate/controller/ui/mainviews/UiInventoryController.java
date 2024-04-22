@@ -11,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javax.swing.Popup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui.inventory.IngredientListCell;
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
@@ -290,7 +291,7 @@ public class UiInventoryController {
   @FXML
   private void removeSelectedIngredient() {
     if (ingredientListView == null) {
-      System.out.println("ingredientListView is null");
+      PopupManager.displayError("Error", "ingredientListView is null");
     } else {
       Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
       this.deleteIngredient(selectedIngredientId);

@@ -157,7 +157,6 @@ public class UiShoppingListController {
         MainController.sqlConnector.executeSqlUpdate(
             "UPDATE shopping_list_items SET quantity = quantity + " + Float.parseFloat(itemAmount)
                 + " WHERE ingredient_id = " + ingredientId);
-        System.out.println("Updated " + itemName + " " + itemAmount);
         updateItems();
         return;
       }
@@ -165,7 +164,6 @@ public class UiShoppingListController {
       MainController.sqlConnector.executeSqlUpdate(
           "INSERT INTO shopping_list_items (ingredient_id, quantity) VALUES (" + ingredientId + ", "
               + Float.parseFloat(itemAmount) + ")");
-      System.out.println("Added " + itemName + " " + itemAmount);
       updateItems();
 
     } catch (Exception e) {
@@ -204,10 +202,8 @@ public class UiShoppingListController {
         checkBox.setOnAction(e -> {
           if (checkBox.isSelected()) {
             selectedItems.add(ingredientId);
-            System.out.println(selectedItems);
           } else if (selectedItems.contains(ingredientId)) {
             selectedItems.remove(Integer.valueOf(ingredientId));
-            System.out.println(selectedItems);
           }
         });
         checkBoxes.add(checkBox);

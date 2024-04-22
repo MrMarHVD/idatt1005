@@ -20,11 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalendarTest {
 
   /**
-   * The name of the database file used for testing.
-   */
-  private static final String dbFileName = "calendar_test.db";
-
-  /**
    * Date used for testing: the current date.
    */
   private static Date date = Date.valueOf(LocalDate.now());
@@ -37,7 +32,7 @@ class CalendarTest {
   /**
    * The SQL connector used for testing.
    */
-  private static final SqlConnector sqlConnector = new SqlConnector(dbFileName);
+  private static final SqlConnector sqlConnector = new SqlConnector(":memory:");
 
   /**
    * Set up the test environment.

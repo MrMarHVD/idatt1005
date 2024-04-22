@@ -51,7 +51,6 @@ public class Recipe {
    */
   public static String getInstructions(String recipeName) {
     String instructions = null;
-    System.out.println(recipeName);
     try {
       instructions = Recipe.sqlConnector.executeSqlSelect(
           "SELECT instruction FROM recipe WHERE name = '" + recipeName + "';")
@@ -128,7 +127,6 @@ public class Recipe {
       Recipe.sqlConnector.executeSqlUpdate(
           "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, quantity) VALUES "
               + "(" + recipeId + ", " + ingredientId + ", " + quantity + ");");
-      System.out.println("Test: " + quantity);
     } catch (Exception e) {
       PopupManager.displayError("Insert error", "Could not insert ingredient");
     }

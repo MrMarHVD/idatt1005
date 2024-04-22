@@ -7,6 +7,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
@@ -125,7 +126,7 @@ public class MissingIngredientListCell extends ListCell<Integer> {
           setGraphic(grid);
         }
       } catch (SQLException e) {
-        System.out.println(e.getMessage());
+        PopupManager.displayError("Selection error", "Could not select ingredients.");
       }
     }
   }

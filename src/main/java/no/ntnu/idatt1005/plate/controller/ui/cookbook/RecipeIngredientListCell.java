@@ -8,6 +8,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiRecipeViewController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
@@ -114,7 +115,6 @@ public class RecipeIngredientListCell extends ListCell<Integer> {
 
           String quantity = ingredientDetails.getString("quantity");
           String unit = ingredientDetails.getString("unit");
-          System.out.println("Test2" + quantity);
 
           /* Check if the input to the portion text field can be converted to a float, and if so,
           calculate the new quantity and add it to the display*/
@@ -141,7 +141,7 @@ public class RecipeIngredientListCell extends ListCell<Integer> {
           setGraphic(grid);
         }
       } catch (SQLException e) {
-        System.out.println(e.getMessage());
+        PopupManager.displayError("Selection error", "Could not select ingredients.");
       }
     }
   }

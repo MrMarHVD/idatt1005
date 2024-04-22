@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
+import javax.swing.Popup;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
  * This class handles all direct interactions with the SQLite database, and is
@@ -34,7 +36,7 @@ public class SqlConnector {
         con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
     } catch (Exception e) {
-      System.err.println(e.getMessage());
+      PopupManager.displayError("Database error", e.getMessage());
     }
   }
 
@@ -47,11 +49,16 @@ public class SqlConnector {
     try {
       if (con == null) {
         SqlConnector.dbFileName = dbFileName;
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
+
+        // Run database in memory if the file name is ":memory:".
+        if (dbFileName.equals(":memory:")) {
+          con = DriverManager.getConnection("jdbc:sqlite::memory:");
+        } else {
+          con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
+        }
       }
-      //resetTestDatabase();
     } catch (Exception e) {
-      System.err.println(e.getMessage());
+      PopupManager.displayError("Database error", e.getMessage());
     }
   }
 
@@ -64,7 +71,7 @@ public class SqlConnector {
         con.close();
       }
     } catch (SQLException e) {
-      System.err.println("Error closing the connection: " + e.getMessage());
+      PopupManager.displayError("Database error", e.getMessage());
     }
   }
 
@@ -80,7 +87,7 @@ public class SqlConnector {
       ResultSet tables = executeSqlSelect("SELECT * FROM %s".formatted(tableName));
       return tables.next();
     } catch (SQLException e) {
-      System.err.println(e.getMessage());
+      PopupManager.displayError("Database error", e.getMessage());
       return false;
     }
   }
@@ -100,7 +107,7 @@ public class SqlConnector {
       Statement stmt = con.createStatement();
       rs = stmt.executeQuery(query);
     } catch (SQLException e) {
-      System.err.println(e.getMessage()); //TODO: Removed finally clause. Full app still working?
+      PopupManager.displayError("SQL Select error", "Could not select data.");
     }
     return rs;
   }
@@ -119,7 +126,7 @@ public class SqlConnector {
 
       stmt.executeUpdate(query);
     } catch (SQLException e) {
-      e.printStackTrace();
+      PopupManager.displayError("SQL Update error", "Could not update data.");
     }
   }
 
@@ -145,8 +152,6 @@ public class SqlConnector {
     runSqlFile(createSqlFilePath);
     if (anyTableMissing()) {
       runSqlFile(insertSqlFilePath);
-
-      System.out.println("data inserted");
     }
   }
 
@@ -158,8 +163,6 @@ public class SqlConnector {
     runSqlFile(createSqlFilePath);
     if (anyTableMissing()) {
       runSqlFile(insertSqlFilePath);
-
-      System.out.println("data inserted");
     }
   }
 
@@ -173,7 +176,7 @@ public class SqlConnector {
       String query = new String(Files.readAllBytes(Paths.get(path)));
       executeSqlUpdate(query);
     } catch (IOException e) {
-      e.printStackTrace();
+      PopupManager.displayError("SQL file error", "Could not read SQL file.");
     }
   }
 

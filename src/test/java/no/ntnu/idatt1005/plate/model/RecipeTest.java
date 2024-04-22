@@ -17,14 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class RecipeTest {
 
   /**
-   * The name of the database file used for testing.
-   */
-  private static final String dbFileName = "recipe_test.db";
-
-  /**
    * The SQL connector used for testing.
    */
-  private static final SqlConnector sqlConnector = new SqlConnector(dbFileName);
+  private static final SqlConnector sqlConnector = new SqlConnector(":memory:");
 
   /**
    * Set up the test environment by resetting the database before each test.
