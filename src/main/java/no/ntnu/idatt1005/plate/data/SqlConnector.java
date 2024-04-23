@@ -33,12 +33,14 @@ public class SqlConnector {
   public SqlConnector() {
     try {
       if (con == null) {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
+        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
       }
+      resetDatabase();
     } catch (Exception e) {
-      PopupManager.displayError("Database error", e.getMessage());
+      System.out.println(e.getMessage());
     }
   }
+
 
   /**
    * Constructor for testing SqlConnector class, points to a different database.

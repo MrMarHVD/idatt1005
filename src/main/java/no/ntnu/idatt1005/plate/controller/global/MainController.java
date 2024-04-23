@@ -20,7 +20,7 @@ import no.ntnu.idatt1005.plate.data.SqlConnector;
  * as well as the toolbar on a high level.
  */
 public class MainController {
-  public static SqlConnector sqlConnector = new SqlConnector("plate.db");
+  public static SqlConnector sqlConnector = new SqlConnector();
 
   /**
    * Load the initial view. Only called once when the application starts.
