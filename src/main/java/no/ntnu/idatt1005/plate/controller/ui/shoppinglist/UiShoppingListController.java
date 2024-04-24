@@ -4,6 +4,7 @@ package no.ntnu.idatt1005.plate.controller.ui.shoppinglist;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -18,6 +19,7 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.Inventory;
+import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
  * Controller class for the shopping list view.
@@ -131,27 +133,8 @@ public class UiShoppingListController {
         detailsLabel.setText("Invalid input");
         return;
       }
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient_id FROM ingredient WHERE name = '" + itemName + "'");
-      int ingredientId = rs.getInt("ingredient_id");
+      ShoppingList.addSelectedItems(itemName, itemAmount);
 
-
-      detailsLabel.setText("");
-      ResultSet rs2 = MainController.sqlConnector.executeSqlSelect(
-          "SELECT * FROM shopping_list_items WHERE ingredient_id = " + ingredientId);
-      if (rs2.next()) {
-        MainController.sqlConnector.executeSqlUpdate(
-            "UPDATE shopping_list_items SET quantity = quantity + " + Float.parseFloat(itemAmount)
-                + " WHERE ingredient_id = " + ingredientId);
-        System.out.println("Updated " + itemName + " " + itemAmount);
-        updateItems();
-        return;
-      }
-
-      MainController.sqlConnector.executeSqlUpdate(
-          "INSERT INTO shopping_list_items (ingredient_id, quantity) VALUES (" + ingredientId + ", "
-              + Float.parseFloat(itemAmount) + ")");
-      System.out.println("Added " + itemName + " " + itemAmount);
       updateItems();
 
     } catch (Exception e) {
@@ -166,27 +149,14 @@ public class UiShoppingListController {
    */
   public void updateItems() {
     try {
+      detailsLabel.setText("");
       listView.getItems().clear();
       checkBoxes.clear();
       boolean nextRowGray = false;
-
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient.ingredient_id, name, quantity, "
-              + "unit FROM shopping_list_items JOIN ingredient ON "
-              + "shopping_list_items.ingredient_id = ingredient.ingredient_id");
-      while (rs.next()) {
-        if (Float.parseFloat(rs.getString("quantity")) <= 0) {
-          MainController.sqlConnector.executeSqlUpdate(
-              "DELETE FROM shopping_list_items WHERE quantity <= 0");
-          continue;
-        }
-        int ingredientId = rs.getInt("ingredient_id");
-        String name = rs.getString("name");
-        System.out.println(name);
-        String quantity = rs.getString("quantity");
-        String unit = rs.getString("unit");
-        String item = String.format("%-30s %-5s %-15s", name, quantity, unit);
-
+      Map<Integer,String> items = ShoppingList.getAllItems();
+      for (Map.Entry<Integer, String> entry : items.entrySet()) {
+        int ingredientId = entry.getKey();
+        String item = entry.getValue();
         CheckBox checkBox = new CheckBox();
         checkBox.setOnAction(e -> {
           if (checkBox.isSelected()) {
@@ -245,32 +215,8 @@ public class UiShoppingListController {
         detailsLabel.setText("No items selected");
         return;
       }
+      ShoppingList.buySelectedItems(selectedItems);
 
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient_id, quantity FROM shopping_list_items WHERE ingredient_id IN ("
-              + selectedItems.toString().substring(1, selectedItems.toString().length() - 1)
-              + ")");
-      while (rs.next()) {
-        System.out.println(rs.getInt("ingredient_id"));
-        int ingredientId = rs.getInt("ingredient_id");
-        float qty = rs.getFloat("quantity");
-
-        ResultSet rs2 = MainController.sqlConnector.executeSqlSelect(
-            "SELECT * FROM inventory_ingredient WHERE ingredient_id = " + ingredientId);
-        if (rs2.next()) {
-          MainController.sqlConnector.executeSqlUpdate(
-              "UPDATE inventory_ingredient SET quantity = quantity + " + qty
-                  + " WHERE ingredient_id = "
-                  + ingredientId);
-        } else {
-          MainController.sqlConnector.executeSqlUpdate(
-              "INSERT INTO inventory_ingredient(ingredient_id, quantity ) VALUES(" + ingredientId
-                  + ", "
-                  + qty + ")");
-        }
-        MainController.sqlConnector.executeSqlUpdate(
-            "DELETE FROM shopping_list_items WHERE ingredient_id = " + ingredientId);
-      }
       updateItems();
       selectedItems.clear();
     } catch (Exception e) {
@@ -289,10 +235,7 @@ public class UiShoppingListController {
         detailsLabel.setText("No items selected");
         return;
       }
-      MainController.sqlConnector.executeSqlUpdate(
-          "DELETE FROM shopping_list_items WHERE ingredient_id IN ("
-              + selectedItems.toString().substring(1, selectedItems.toString().length() - 1)
-              + ")");
+      ShoppingList.clearSelectedItems(selectedItems);
       updateItems();
       selectedItems.clear();
     } catch (Exception e) {
