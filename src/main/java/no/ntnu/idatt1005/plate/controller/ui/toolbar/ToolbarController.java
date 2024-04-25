@@ -7,6 +7,8 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 
 /**
  * Controller class for the toolbar in the GUI.
+ *
+ * @version 1.0
  */
 public class ToolbarController {
 

@@ -13,6 +13,8 @@ import no.ntnu.idatt1005.plate.model.Settings;
 
 /**
  * Controller class for the inventory view.
+ *
+ * @version 1.0
  */
 public class UiSettingsController {
 

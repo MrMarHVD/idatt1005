@@ -9,13 +9,15 @@ import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 /**
  * This class handles all direct interactions with the SQLite database, and is responsible for
  * querying and updating it according to the needs of the application.
+ *
+ * @version 1.0
  */
 public class SqlConnector {
 
   private Connection con = null;
 
   /**
-   * The path to the create, insert and drop SQL files.
+   * The paths to the create, insert and drop SQL files.
    */
   private static final String createSqlFilePath = "src/main/resources/CreateQuery.sql";
   private static final String insertSqlFilePath = "src/main/resources/InsertQuery.sql";
@@ -28,7 +30,7 @@ public class SqlConnector {
 
 
   /**
-   * Returns the connection to the database
+   * Returns the connection to the database.
    *
    * @return connection to database
    */
@@ -58,7 +60,6 @@ public class SqlConnector {
     }
   }
 
-
   /**
    * Constructor for testing SqlConnector class, points to a different database.
    *
@@ -68,7 +69,6 @@ public class SqlConnector {
     try {
       SqlConnector.dbFileName = dbFileName;
 
-      // Run database in memory if the file name is ":memory:".
       con = getConnection();
 
 
@@ -163,7 +163,6 @@ public class SqlConnector {
   public synchronized void resetTestDatabase() {
     runSqlFile(dropSqlFilePath); // Drop all tables.
     this.closeConnection();
-    //new java.io.File("src/main/resources/calendar_test.db").delete();
     runSqlFile(createSqlFilePath);
     if (anyTableMissing()) {
       runSqlFile(insertSqlFilePath);
@@ -194,6 +193,4 @@ public class SqlConnector {
       PopupManager.displayError("SQL file error", "Could not read SQL file.");
     }
   }
-
-
 }

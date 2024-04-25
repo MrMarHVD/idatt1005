@@ -9,6 +9,8 @@ import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
  * This class is the controller for the DayBlock object in the user interface.
+ *
+ * @version 1.0
  */
 public class DayBlockController {
 

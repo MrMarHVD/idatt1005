@@ -5,14 +5,16 @@ import javafx.scene.control.Alert.AlertType;
 
 /**
  * This class handles all popups in the application.
+ *
+ * @version 1.0
  */
 public class PopupManager {
 
   /**
    * Display a basic error.
    *
-   * @param header the header of the popup message.
-   * @param content the content of the popup message.
+   * @param header the header of the alert.
+   * @param content the content of the alert.
    */
   public static void displayError(String header,  String content) {
     Alert alert = new Alert(AlertType.ERROR);
@@ -22,11 +24,11 @@ public class PopupManager {
   }
 
   /**
-   * Show an alert indicating an error.
+   * Show an alert indicating an error with both a header and title.
    *
-   * @param title title of the alert
-   * @param header header of the alert
-   * @param content content of the alert
+   * @param title title of the alert.
+   * @param header header of the alert.
+   * @param content content of the alert.
    */
   public static void displayErrorFull(String title, String header, String content) {
     Alert alert = new Alert(AlertType.ERROR);

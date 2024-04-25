@@ -11,21 +11,16 @@ import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
- * ListCell class which manages the cells in the ingredient list,
- * specifically ingredients in a recipe within the recipe view.
-=======
-import javafx.scene.layout.Priority;
-import no.ntnu.idatt1005.plate.controller.MainController;
-import no.ntnu.idatt1005.plate.controller.UiInventoryController;
-import no.ntnu.idatt1005.plate.model.Ingredient;
-import org.iq80.snappy.Main;
-
-/**
  * ListCell class which manages ingredients that are missing from the inventory
  * based on the required ingredients in the recipe selected in the calendar.
+ *
+ * @version 1.0
  */
 public class MissingIngredientListCell extends ListCell<Integer> {
 
+  /**
+   * The name of the recipe.
+   */
   private final String recipeName;
 
   /**
@@ -44,7 +39,7 @@ public class MissingIngredientListCell extends ListCell<Integer> {
   private final Label quantity = new Label();
 
   /**
-   * Label showing whether or not the ingredient in question is in the shopping list already.
+   * Label showing whether the ingredient in question is in the shopping list already.
    */
   private final Label inShoppingList = new Label();
 
@@ -58,7 +53,7 @@ public class MissingIngredientListCell extends ListCell<Integer> {
   public MissingIngredientListCell(String recipeName) {
     this.recipeName = recipeName;
     // Set the column constraints for the grid such that the columns are equally wide.
-    int noOfColumns = 3; // Change this if you want to change the number of columns.
+    int noOfColumns = 3; // Number of columns in the list view
     ColumnConstraints column1 = new ColumnConstraints();
     column1.setPercentWidth((float) (100 / noOfColumns));
     ColumnConstraints column2 = new ColumnConstraints();

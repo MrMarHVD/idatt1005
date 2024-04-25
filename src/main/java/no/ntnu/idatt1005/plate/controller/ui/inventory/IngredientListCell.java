@@ -13,9 +13,10 @@ import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 /**
  * ListCell class which manages the cells in the ingredient list,
  * specifically in the inventory.
+ *
+ * @version 1.0
  */
 public class IngredientListCell extends ListCell<Integer> {
-
 
   /**
    * The grid.
@@ -49,7 +50,7 @@ public class IngredientListCell extends ListCell<Integer> {
   public IngredientListCell() {
 
     // Set the column constraints for the grid such that the columns are equally wide.
-    int noOfColumns = 4; // Change this if you want to change the number of columns.
+    int noOfColumns = 4; // Number of columns in the list view.
     ColumnConstraints column1 = new ColumnConstraints();
     column1.setPercentWidth((float) (100 / noOfColumns));
     ColumnConstraints column2 = new ColumnConstraints();
@@ -69,8 +70,6 @@ public class IngredientListCell extends ListCell<Integer> {
     grid.setAlignment(Pos.CENTER_LEFT);
 
   }
-
-
 
   /**
    * Updates the item in the cell (automatic).

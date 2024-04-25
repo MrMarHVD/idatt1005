@@ -24,6 +24,8 @@ import no.ntnu.idatt1005.plate.model.Recipe;
 
 /**
  * Controller class for the recipe view.
+ *
+ * @version 1.0
  */
 public class UiRecipeViewController {
 
@@ -46,17 +48,18 @@ public class UiRecipeViewController {
 
   /**
    * The instructions for the recipe's preparation.
-   * TODO: Implement the code to fill the instructions field.
    */
   @FXML
   private TextField instructions;
 
+  /**
+   * The ListView for displaying ingredients in the recipe.
+   */
   @FXML
   private ListView<Integer> ingredientsListView;
 
   /**
    * The GridPane for displaying recommended recipes.
-   * TODO: Either implement the code to fill the recommended recipes or drop this feature.
    */
   @FXML
   private GridPane recommendedRecipes;
@@ -91,6 +94,9 @@ public class UiRecipeViewController {
   @FXML
   private Button removeIngredientButton;
 
+  /**
+   * Button for adding an ingredient to the recipe.
+   */
   @FXML
   private Button addIngredientButton;
 
@@ -147,10 +153,8 @@ public class UiRecipeViewController {
    */
   @FXML
   private void initialize() {
-
     this.setMainController(mainController);
     ingredientsListView.setCellFactory(param -> new RecipeIngredientListCell(this));
-
   }
 
   /**

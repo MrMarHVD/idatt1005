@@ -11,20 +11,12 @@ import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiRecipeViewController;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.Recipe;
 
-/**
- * ListCell class which manages the cells in the ingredient list,
- * specifically ingredients in a recipe within the recipe view.
-=======
-import javafx.scene.layout.Priority;
-import no.ntnu.idatt1005.plate.controller.MainController;
-import no.ntnu.idatt1005.plate.controller.UiInventoryController;
-import no.ntnu.idatt1005.plate.model.Ingredient;
-import org.iq80.snappy.Main;
 
 /**
  * ListCell class which manages the cells in the ingredient list,
  * specifically in the inventory.
->>>>>>> feature/cookbook
+ *
+ * @version 1.0
  */
 public class RecipeIngredientListCell extends ListCell<Integer> {
 
@@ -55,10 +47,10 @@ public class RecipeIngredientListCell extends ListCell<Integer> {
   private final Label allergens = new Label();
 
   /**
-   * The category of the ingredient.
+   * Constructor for the RecipeIngredientListCell.
+   *
+   * @param controller the controller for the UiRecipeViewController.
    */
-  //private final Label category = new Label();
-
   public RecipeIngredientListCell(UiRecipeViewController controller) {
     this.controller = controller;
 
@@ -129,8 +121,6 @@ public class RecipeIngredientListCell extends ListCell<Integer> {
           String allergen = ingredientDetails.getString("allergen");
           allergens.setText(allergen != null ? allergen : "None");
 
-          //String category = ingredientDetails.getString("category");
-          //this.category.setText(category != null ? category : "None");
           int index = getIndex();
           if (index % 2 == 0) {
             grid.setStyle("-fx-background-color: #ffffff00;");

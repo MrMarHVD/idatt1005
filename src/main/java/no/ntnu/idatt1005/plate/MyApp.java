@@ -12,7 +12,7 @@ import no.ntnu.idatt1005.plate.model.Settings;
 /**
  * Use this class to start the application.
  *
- * @author nilstes
+ * @version 1.0
  */
 public class MyApp extends Application {
 

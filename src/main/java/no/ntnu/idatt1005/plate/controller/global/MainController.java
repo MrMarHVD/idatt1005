@@ -18,6 +18,8 @@ import no.ntnu.idatt1005.plate.data.SqlConnector;
  * Main controller class handles the logic across all the views of the application.
  * The purpose of this class is to manage the controllers for each separate view
  * as well as the toolbar on a high level.
+ *
+ * @version 1.0
  */
 public class MainController {
   public static SqlConnector sqlConnector = new SqlConnector();
@@ -37,7 +39,6 @@ public class MainController {
       homeController.setMainController(this);
 
       Scene scene = new Scene(homeView);
-      //scene.getStylesheets().add(css);
       stage.setScene(scene);
 
 

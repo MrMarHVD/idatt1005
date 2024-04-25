@@ -6,6 +6,8 @@ import javafx.scene.control.TextFormatter.Change;
 
 /**
  * This class sets formatting constraints for certain UI components.
+ *
+ * @version 1.0
  */
 public class Formatter {
 
@@ -30,5 +32,3 @@ public class Formatter {
     return new TextFormatter<>(floatFormatter);
   }
 }
-
-// TODO: add condition in inventory such that negative values are not allowed

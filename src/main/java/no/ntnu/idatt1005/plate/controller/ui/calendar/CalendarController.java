@@ -28,6 +28,8 @@ import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
  * This class is the controller for the Calendar view in the user interface.
+ *
+ * @version 1.0
  */
 public class CalendarController {
 
@@ -39,10 +41,17 @@ public class CalendarController {
   /**
    * The calendar object used to interact with the database.
    */
-  //private final Calendar calendar = new Calendar();
   private final LocalDate thisMonday = LocalDate.now().with(
       TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+
+  /**
+   * The config directory (set to the user's home directory).
+   */
   private final Path configDir = Paths.get(System.getProperty("user.home")).resolve(".plate");
+
+  /**
+   * Assign the data found in the config directory, to the settings.
+   */
   private final Settings settings = new Settings(configDir);
 
   /**
@@ -130,7 +139,6 @@ public class CalendarController {
     this.initializeRecipeButtonActionListeners();
     this.initializeShoppingListButtonActionListeners();
     this.initializeComboBox();
-    //this.missingListView.setCellFactory(param -> new MissingIngredientListCell());
 
     insertWeek(thisMonday);
   }
@@ -272,8 +280,8 @@ public class CalendarController {
         if (dayBlockController.getSelectedButton().isSelected()) {
           String date = dayBlockController.getDate();
 
-            Calendar.changeRecipe(Date.valueOf(date), recipe);
-            this.initialize();
+          Calendar.changeRecipe(Date.valueOf(date), recipe);
+          this.initialize();
         }
 
       }

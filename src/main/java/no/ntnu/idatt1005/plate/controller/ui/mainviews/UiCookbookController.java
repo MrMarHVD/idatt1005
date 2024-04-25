@@ -19,6 +19,8 @@ import no.ntnu.idatt1005.plate.model.Settings;
 
 /**
  * Controller class for the cookbook view in the GUI.
+ *
+ * @version 1.0
  */
 public class UiCookbookController {
 
@@ -77,7 +79,8 @@ public class UiCookbookController {
 
     this.addButton.setOnAction(event -> {
       if (this.recipeNameTextField.getText().isEmpty()) {
-        PopupManager.displayErrorFull("Recipe name cannot be empty", "Please enter a recipe name","Recipe name cannot be empty, please enter a recipe name");
+        PopupManager.displayErrorFull("Recipe name cannot be empty", "Please enter a recipe name",
+            "Recipe name cannot be empty, please enter a recipe name");
         return;
       }
       Recipe.createRecipe(this.recipeNameTextField.getText());

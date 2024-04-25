@@ -23,6 +23,8 @@ import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
  * Controller class for the shopping list view.
+ *
+ * @version 1.0
  */
 public class UiShoppingListController {
 
@@ -54,6 +56,7 @@ public class UiShoppingListController {
    */
   @FXML
   private Button clearListButton;
+
   @FXML
   private Button buyItemsButton;
 
@@ -106,7 +109,6 @@ public class UiShoppingListController {
     for (int i = 0; i < ingredients.size(); i++) {
       this.selectIngredientComboBox.getItems().add(ingredients.get(i));
     }
-
 
     this.itemNameField.textProperty().addListener((observable, oldValue, newValue) -> {
       this.selectIngredientComboBox.getItems().clear();
@@ -166,7 +168,7 @@ public class UiShoppingListController {
       listView.getItems().clear();
       checkBoxes.clear();
       boolean nextRowGray = false;
-      Map<Integer,String> items = ShoppingList.getAllItems();
+      Map<Integer, String> items = ShoppingList.getAllItems();
       for (Map.Entry<Integer, String> entry : items.entrySet()) {
         int ingredientId = entry.getKey();
         String item = entry.getValue();

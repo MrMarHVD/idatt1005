@@ -8,6 +8,8 @@ import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 /**
  * This class is the controller for the user interface, mediating between the model and view
  * layers.
+ *
+ * @version 1.0
  */
 public class UiHomeController {
 

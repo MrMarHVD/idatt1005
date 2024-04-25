@@ -21,6 +21,8 @@ import no.ntnu.idatt1005.plate.model.Inventory;
 
 /**
  * Controller class for the inventory view.
+ *
+ * @version 1.0
  */
 public class UiInventoryController {
 
@@ -149,7 +151,6 @@ public class UiInventoryController {
         return;
       }
       float quantity = Float.parseFloat(quantityFieldUpdate.getText());
-      //if (quantity == (float) quantity)
       this.updateIngredient(quantity);
     });
     // Set handler to remove the selected button.
@@ -350,7 +351,8 @@ public class UiInventoryController {
 
       // If no valid ingredient is in the field, and no ingredient is selected, display error.
     } else {
-      PopupManager.displayErrorFull("Error", "No ingredient selected.", "No ingredient selected, please select an ingredient");
+      PopupManager.displayErrorFull("Error", "No ingredient selected.",
+          "No ingredient selected, please select an ingredient");
     }
 
     this.displayIngredients();
