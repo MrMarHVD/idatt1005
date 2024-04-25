@@ -16,6 +16,7 @@ public class SqlConnector {
   private static final String createSqlFilePath = "src/main/resources/CreateQuery.sql";
   private static final String insertSqlFilePath = "src/main/resources/InsertQuery.sql";
 
+  private String dbFileName = "plate.db";
   /**
    * Constructor for the SqlConnector class.
    */
@@ -30,15 +31,29 @@ public class SqlConnector {
     }
   }
 
+  private Connection getCon(String dbFileName) {
+    try {
+      if (dbFileName.equals(":memory:")) {
+        con = DriverManager.getConnection("jdbc:sqlite::memory:");
+      } else {
+        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
+      }
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    return con;
+  }
+
   /**
    * Constructor for testing SqlConnector class, points to a different database.
    *
    * @param dbFileName the path to the database file
    */
   public SqlConnector(String dbFileName) {
+    this.dbFileName = dbFileName;
     try {
       if (con == null) {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
+      con = getCon(dbFileName);
       }
       resetDatabase();
     } catch (Exception e) {
@@ -87,7 +102,7 @@ public class SqlConnector {
     ResultSet rs = null;
     try {
       if (con.isClosed()) {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
+        con = getCon(dbFileName);
       }
       Statement stmt = con.createStatement();
       rs = stmt.executeQuery(query);
@@ -107,7 +122,7 @@ public class SqlConnector {
   public void executeSqlUpdate(String query) {
     try {
       if (con.isClosed()) {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
+        con = getCon(dbFileName);
       }
       Statement stmt = con.createStatement();
       stmt.executeUpdate(query);
