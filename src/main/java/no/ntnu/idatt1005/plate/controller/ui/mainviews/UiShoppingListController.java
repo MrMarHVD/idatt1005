@@ -1,4 +1,4 @@
-package no.ntnu.idatt1005.plate.controller.ui.shoppinglist;
+package no.ntnu.idatt1005.plate.controller.ui.mainviews;
 
 
 import java.sql.ResultSet;
@@ -19,7 +19,6 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.Inventory;
-import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
@@ -145,7 +144,8 @@ public class UiShoppingListController {
         updateItems();
         return;
       }
-      ShoppingList.addSelectedItems(itemName, itemAmount);
+      float ammount = Float.parseFloat(itemAmount);
+      ShoppingList.addItem(ingredientId, ammount);
 
       ShoppingList.insertIntoShoppingList(ingredientId, Float.parseFloat(itemAmount));
       updateItems();

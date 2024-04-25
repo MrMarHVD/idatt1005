@@ -2,7 +2,9 @@ package no.ntnu.idatt1005.plate.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
@@ -143,6 +145,41 @@ public class ShoppingList {
   public static ResultSet selectAllItems() {
     return ShoppingList.sqlConnector.executeSqlSelect(
         "SELECT ingredient_id FROM shopping_list_items");
+  }
+
+
+  /**
+   * Get all items in the shopping list in a hashmap. The key is the ingredient ID and the value is
+   * a string representation of the item
+   *
+   * @return a hashmap of all items in the shopping list
+   */
+  public static Map<Integer, String> getAllItems() {
+    try {
+      Map<Integer, String> items = new HashMap<>();
+      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+          "SELECT ingredient.ingredient_id, name, quantity, "
+              + "unit FROM shopping_list_items JOIN ingredient ON "
+              + "shopping_list_items.ingredient_id = ingredient.ingredient_id");
+      while (rs.next()) {
+        if (Float.parseFloat(rs.getString("quantity")) <= 0) {
+          MainController.sqlConnector.executeSqlUpdate(
+              "DELETE FROM shopping_list_items WHERE quantity <= 0");
+          continue;
+        }
+        int ingredientId = rs.getInt("ingredient_id");
+        String name = rs.getString("name");
+        String quantity = rs.getString("quantity");
+        String unit = rs.getString("unit");
+        String item = String.format("%-30s %-5s %-15s", name, quantity, unit);
+        items.put(ingredientId, item);
+      }
+      return items;
+
+    } catch (Exception e) {
+      PopupManager.displayError("Error", e.getMessage());
+    }
+    return null;
   }
 
 

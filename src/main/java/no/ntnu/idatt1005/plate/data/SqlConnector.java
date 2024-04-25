@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
-import javax.swing.Popup;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
- * This class handles all direct interactions with the SQLite database, and is
- * responsible for querying and updating it according to the needs of the application.
+ * This class handles all direct interactions with the SQLite database, and is responsible for
+ * querying and updating it according to the needs of the application.
  */
 public class SqlConnector {
 
@@ -30,18 +29,20 @@ public class SqlConnector {
 
   /**
    * Returns the connection to the database
+   *
    * @return connection to database
    */
-    private Connection getConnection() {
-      try {
-        if (dbFileName.equals("memory")) {
-          con = DriverManager.getConnection("jdbc:sqlite::memory:");
-        } else {
-          con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
-        }
-      } catch(Exception e) {
-        System.out.println(e.getMessage());
+  private Connection getConnection() {
+    try {
+      if (dbFileName.equals("memory")) {
+        con = DriverManager.getConnection("jdbc:sqlite::memory:");
+      } else {
+        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
       }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return con;
   }
 
   /**
@@ -49,9 +50,8 @@ public class SqlConnector {
    */
   public SqlConnector() {
     try {
-      if (con == null) {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
-      }
+      con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/plate.db");
+
       resetDatabase();
     } catch (Exception e) {
       System.out.println(e.getMessage());
@@ -66,13 +66,12 @@ public class SqlConnector {
    */
   public SqlConnector(String dbFileName) {
     try {
-      if (con == null) {
-        SqlConnector.dbFileName = dbFileName;
+      SqlConnector.dbFileName = dbFileName;
 
-        // Run database in memory if the file name is ":memory:".
-        con = getConnection();
+      // Run database in memory if the file name is ":memory:".
+      con = getConnection();
 
-      }
+
     } catch (Exception e) {
       PopupManager.displayError("Database error", e.getMessage());
     }

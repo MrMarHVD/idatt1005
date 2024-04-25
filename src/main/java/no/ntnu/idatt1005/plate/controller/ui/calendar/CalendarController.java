@@ -22,7 +22,6 @@ import javafx.scene.control.ToggleGroup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.utility.Formatter;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
-import no.ntnu.idatt1005.plate.data.SqlConnector;
 import no.ntnu.idatt1005.plate.model.Calendar;
 import no.ntnu.idatt1005.plate.model.Settings;
 import no.ntnu.idatt1005.plate.model.ShoppingList;
@@ -275,8 +274,8 @@ public class CalendarController {
 
             Calendar.changeRecipe(Date.valueOf(date), recipe);
             this.initialize();
-          }
         }
+
       }
 
     });
