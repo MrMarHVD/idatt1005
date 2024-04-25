@@ -53,7 +53,7 @@ class InventoryTest {
    */
   @Test
   void testIngredientExists() {
-      assertTrue(Inventory.ingredientExists(ingredientName));
+    assertTrue(Inventory.ingredientExists(ingredientName));
   }
 
   /**

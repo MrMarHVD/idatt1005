@@ -207,27 +207,27 @@ class ShoppingListTest {
   @Test
   @DisplayName("selectShoppingListItemFromId test")
   void testSelectShoppingListItemFromId() {
-      // Arrange
-      int ingredientId = 7;
-      float quantity = 2.0f;
-      ShoppingList.addItem(ingredientId, quantity);
+    // Arrange
+    int ingredientId = 7;
+    float quantity = 2.0f;
+    ShoppingList.addItem(ingredientId, quantity);
 
-      // Act
-      ResultSet rs = null;
-      try {
-          rs = ShoppingList.selectShoppingListItemFromId(ingredientId);
-      } catch (Exception e) {
-          fail("Exception should not have been thrown.");
-      }
+    // Act
+    ResultSet rs = null;
+    try {
+      rs = ShoppingList.selectShoppingListItemFromId(ingredientId);
+    } catch (Exception e) {
+      fail("Exception should not have been thrown.");
+    }
 
-      // Assert
-      try {
-          assertTrue(rs.next());
-          assertEquals(ingredientId, rs.getInt("ingredient_id"));
-          assertEquals(quantity, rs.getFloat("quantity"), 0.01);
-      } catch (SQLException e) {
-          fail("SQLException should not have been thrown.");
-      }
+    // Assert
+    try {
+      assertTrue(rs.next());
+      assertEquals(ingredientId, rs.getInt("ingredient_id"));
+      assertEquals(quantity, rs.getFloat("quantity"), 0.01);
+    } catch (SQLException e) {
+      fail("SQLException should not have been thrown.");
+    }
   }
 
   @Test
