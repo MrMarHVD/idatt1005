@@ -55,6 +55,7 @@ public class Calendar {
   /**
    * This method inserts a day into the database with a random recipe.
    *
+   * @param vegetarian whether the recipe should be vegetarian.
    * @param date the date to insert
    */
   public static void insertDay(Date date, boolean vegetarian) {
@@ -160,6 +161,7 @@ public class Calendar {
    * Search the database for recipes with a name that contains the search string.
    *
    * @param search the string to search the database for.
+   * @param vegetarian whether to search for vegetarian recipes.
    * @return an arraylist containing the names of the recipes that match the search string.
    */
   public static ArrayList<String> searchRecipes(String search, boolean vegetarian) {
@@ -169,7 +171,6 @@ public class Calendar {
     if (vegetarian) {
       selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%' AND vegetarian = 1;";
     }
-    //SqlConnector sqlConnector = MainController.sqlConnector;
     ResultSet rs = Calendar.sqlConnector.executeSqlSelect(selectQuery);
     if (rs != null) {
       try {
@@ -234,6 +235,7 @@ public class Calendar {
    * from the inventory based on an input
    * recipe.
    *
+   * @param portions the number of portions.
    * @param recipe the input recipe.
    * @return a list of missing ingredients.
    */

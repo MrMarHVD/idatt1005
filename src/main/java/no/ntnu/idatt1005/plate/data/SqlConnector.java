@@ -17,10 +17,18 @@ public class SqlConnector {
   private Connection con = null;
 
   /**
-   * The paths to the create, insert and drop SQL files.
+   * The path to the CreateQuery.sql file.
    */
   private static final String createSqlFilePath = "src/main/resources/CreateQuery.sql";
+
+  /**
+   * The path to the InsertQuery.sql file.
+   */
   private static final String insertSqlFilePath = "src/main/resources/InsertQuery.sql";
+
+  /**
+   * The path to the DropQuery.sql file.
+   */
   private static final String dropSqlFilePath = "src/main/resources/DropQuery.sql";
 
   /**

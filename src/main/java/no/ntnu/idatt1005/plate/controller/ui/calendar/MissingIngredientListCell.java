@@ -44,12 +44,11 @@ public class MissingIngredientListCell extends ListCell<Integer> {
   private final Label inShoppingList = new Label();
 
 
-
   /**
-   * The category of the ingredient.
+   * Constructor for the MissingIngredientListCell class.
+   *
+   * @param recipeName the name of the recipe.
    */
-  //private final Label category = new Label();
-
   public MissingIngredientListCell(String recipeName) {
     this.recipeName = recipeName;
     // Set the column constraints for the grid such that the columns are equally wide.

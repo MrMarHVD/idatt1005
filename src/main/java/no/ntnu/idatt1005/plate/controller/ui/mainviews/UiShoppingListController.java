@@ -52,11 +52,14 @@ public class UiShoppingListController {
   private TextField itemAmountField;
 
   /**
-   * The buttons for the shopping list.
+   * The button for clearing the shopping list.
    */
   @FXML
   private Button clearListButton;
 
+  /**
+   * The button for buying items.
+   */
   @FXML
   private Button buyItemsButton;
 

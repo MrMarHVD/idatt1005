@@ -40,12 +40,24 @@ public class UiCookbookController {
    */
   @FXML private GridPane gridPane;
 
+  /**
+   * The search field for searching the cookbook.
+   */
   @FXML private TextField searchField;
 
+  /**
+   * The sort button for sorting the cookbook.
+   */
   @FXML private Button sortButton;
 
+  /**
+   * The add button for adding a new recipe.
+   */
   @FXML private Button addButton;
 
+  /**
+   * The text field for the recipe name.
+   */
   @FXML private TextField recipeNameTextField;
 
   /**
@@ -53,9 +65,19 @@ public class UiCookbookController {
    */
   private ArrayList<Button> recipeButtons = new ArrayList<>();
 
+  /**
+   * The boolean for checking if the cookbook is sorted in ascending order.
+   */
   private boolean isSortedAsc = false;
 
+  /**
+   * The path to the config directory.
+   */
   private final Path configDir = Paths.get(System.getProperty("user.home")).resolve(".plate");
+
+  /**
+   * The settings for the application.
+   */
   private final Settings settings = new Settings(configDir);
 
   /**
