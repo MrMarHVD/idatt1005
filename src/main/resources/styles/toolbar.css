@@ -12,7 +12,7 @@
     -fx-background-color: rgba(206, 255, 206, 0.67);
 }
 .cookBookButton {
-    -fx-background-color: rgba(225, 157, 157, 0.53);
+  -fx-background-color: rgba(225, 157, 157, 0.53);
 }
 .cookBookButton:hover {
     -fx-background-color: rgba(248, 194, 194, 0.67);
@@ -24,7 +24,7 @@
     -fx-background-color: rgba(252, 238, 190, 0.67);
 }
 .shoppingListButton {
-    -fx-background-color: rgba(253, 198, 134, 0.53);
+  -fx-background-color: rgba(253, 198, 134, 0.53);
 }
 .shoppingListButton:hover {
     -fx-background-color: rgba(250, 210, 177, 0.67);

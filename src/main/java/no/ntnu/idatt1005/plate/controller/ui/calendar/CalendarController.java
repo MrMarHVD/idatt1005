@@ -37,7 +37,10 @@ public class CalendarController {
    */
   private Date selectedDate;
 
-  private final Calendar calendar = new Calendar(new SqlConnector());
+  /**
+   * The calendar object used to interact with the database.
+   */
+  //private final Calendar calendar = new Calendar();
   private final LocalDate thisMonday = LocalDate.now().with(
       TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
   private final Path configDir = Paths.get(System.getProperty("user.home")).resolve(".plate");
@@ -146,8 +149,8 @@ public class CalendarController {
 
     for (int i = 0; i < 7; i++) {
       LocalDate date = monday.plusDays(i);
-      if (!calendar.dayExists(Date.valueOf(date))) {
-        calendar.insertDay(Date.valueOf(date), settings.getVegetarian());
+      if (!Calendar.dayExists(Date.valueOf(date))) {
+        Calendar.insertDay(Date.valueOf(date), settings.getVegetarian());
       }
 
       String day = date.getDayOfWeek().toString().charAt(0)
@@ -169,7 +172,7 @@ public class CalendarController {
   public void rerollWeek(LocalDate monday) {
     for (int i = 0; i < 7; i++) {
       LocalDate date = monday.plusDays(i);
-      calendar.removeDay(Date.valueOf(date));
+      Calendar.removeDay(Date.valueOf(date));
     }
     insertWeek(monday);
   }
@@ -179,7 +182,7 @@ public class CalendarController {
    */
   private void initializeComboBox() {
     int maxRecipes = 20;
-    ArrayList<String> results = calendar.searchRecipes("", settings.getVegetarian());
+    ArrayList<String> results = Calendar.searchRecipes("", settings.getVegetarian());
 
     if (results.size() > maxRecipes) {
       for (int i = 0; i < maxRecipes; i++) {
@@ -270,8 +273,9 @@ public class CalendarController {
         if (dayBlockController.getSelectedButton().isSelected()) {
           String date = dayBlockController.getDate();
 
-          calendar.changeRecipe(Date.valueOf(date), recipe);
-          this.initialize();
+            Calendar.changeRecipe(Date.valueOf(date), recipe);
+            this.initialize();
+          }
         }
       }
 
@@ -294,6 +298,7 @@ public class CalendarController {
 
     // Create action listener for button which adds missing ingredients from the selected recipe
     this.addMissingFromSelectedButton.setOnAction(event -> {
+
       if (this.selectedDate == null) {
         PopupManager.displayErrorFull("No day selected", "Please select a day in the calendar.",
             "Please select a day in the calendar.");
@@ -337,6 +342,7 @@ public class CalendarController {
                 + currentMissing.get(ingredientId));
           } else {
             missingIngredients.put(ingredientId, currentMissing.get(ingredientId));
+
           }
         }
       }

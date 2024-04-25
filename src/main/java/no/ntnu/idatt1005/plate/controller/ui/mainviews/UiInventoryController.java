@@ -11,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javax.swing.Popup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui.inventory.IngredientListCell;
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
@@ -120,12 +121,8 @@ public class UiInventoryController {
     this.initializeComboBox();
 
     this.initializeSearchFeatures();
-
     this.initializeSortLabelHandlers();
-
     this.initializeButtonHandlers();
-
-
   }
 
   /**
@@ -146,16 +143,14 @@ public class UiInventoryController {
 
     // Set handler for the update button
     updateIngredientButton.setOnMouseClicked(event -> {
-      //Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
       if (quantityFieldUpdate.getText().isEmpty()) {
-        PopupManager.displayErrorFull("Error", "No quantity entered.", "Please enter a quantity");
+        PopupManager.displayErrorFull("Error", "No quantity entered.",
+            "Please enter a quantity");
         return;
       }
       float quantity = Float.parseFloat(quantityFieldUpdate.getText());
       //if (quantity == (float) quantity)
-      if (quantity >0) {
-        this.updateIngredient(quantity);
-      }
+      this.updateIngredient(quantity);
     });
     // Set handler to remove the selected button.
     removeSelectedButton.setOnMouseClicked(event -> removeSelectedIngredient());
@@ -218,12 +213,13 @@ public class UiInventoryController {
     List<Integer> fullInventory = new ArrayList<Integer>();
 
     try {
+      Inventory.deleteLessThanZero();
       ResultSet inventoryIngredients = Inventory.selectAllInventoryIngredients();
       while (inventoryIngredients.next()) {
         fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Failed to display ingredients.");
     }
     ObservableList<Integer> observableIngredients =
         FXCollections.observableArrayList(fullInventory);
@@ -244,7 +240,7 @@ public class UiInventoryController {
         fullInventory.add(searchResults.getInt("ingredient_id"));
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Failed to search for ingredients.");
     }
     ObservableList<Integer> observableIngredients =
         FXCollections.observableArrayList(fullInventory);
@@ -263,7 +259,7 @@ public class UiInventoryController {
         fullInventory.add(inventoryIngredients.getInt("ingredient_id"));
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Failed to sort.");
     }
     ObservableList<Integer> observableIngredients =
         FXCollections.observableArrayList(fullInventory);
@@ -285,7 +281,7 @@ public class UiInventoryController {
       }
     } catch (Exception e) {
       PopupManager.displayErrorFull("Error", "Failed to sort", e.getMessage());
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Failed to sort.");
     }
     ObservableList<Integer> observableIngredients =
         FXCollections.observableArrayList(fullInventory);
@@ -300,16 +296,18 @@ public class UiInventoryController {
   @FXML
   private void removeSelectedIngredient() {
     try {
-    if (ingredientListView == null) {
-      System.out.println("ingredientListView is null");
-    } else {
-      Integer selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
-      this.deleteIngredient(selectedIngredientId);
-      this.displayIngredients();
-    }
+      int selectedIngredientId = ingredientListView.getSelectionModel().getSelectedItem();
+      if (ingredientListView == null) {
+        System.err.println("ingredientListView is null");
+      } else {
+        this.deleteIngredient(selectedIngredientId);
+        this.displayIngredients();
+      }
     } catch (Exception e) {
-      PopupManager.displayErrorFull("Error", "No ingredient selected.", "No ingredient selected, please select an ingredient");
+      PopupManager.displayErrorFull("Error", "No ingredient selected.",
+          "No ingredient selected, please select an ingredient");
     }
+
   }
 
   /**
@@ -321,7 +319,7 @@ public class UiInventoryController {
     try {
       Inventory.deleteIngredient(ingredientId);
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Failed to delete ingredient.");
     }
   }
 
@@ -348,7 +346,6 @@ public class UiInventoryController {
     } else if (ingredientListView.getSelectionModel().getSelectedItem() != null) {
       int ingredientId = ingredientListView.getSelectionModel().getSelectedItem();
       ingredientName = Inventory.selectIngredient(ingredientId);
-      System.out.println(ingredientName);
       Inventory.updateIngredient(ingredientName, quantity);
 
       // If no valid ingredient is in the field, and no ingredient is selected, display error.

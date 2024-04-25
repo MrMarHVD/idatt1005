@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.Popup;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 /**
@@ -16,14 +18,19 @@ import no.ntnu.idatt1005.plate.data.SqlConnector;
  */
 public class Calendar {
 
-  private static SqlConnector sqlConnector;
+  /**
+   * The SQL connector for this class.
+   */
+  private static SqlConnector sqlConnector = MainController.sqlConnector;
 
-
-  public Calendar(SqlConnector sqlConnector) {
-    this.sqlConnector = sqlConnector;
+  /**
+   * Set the SQL connector to something other than that belonging to the MainController (testing).
+   *
+   * @param sqlConnector the SQL connector to assign.
+   */
+  public static void setSqlConnector(SqlConnector sqlConnector) {
+    Calendar.sqlConnector = sqlConnector;
   }
-
-
 
   /**
    * This method checks if a day already exists in the database.
@@ -31,16 +38,16 @@ public class Calendar {
    * @param date the date to check
    * @return true if the day exists, false if not
    */
-  public boolean dayExists(Date date) {
+  public static boolean dayExists(Date date) {
     String query = "SELECT * FROM day WHERE date = '" + date + "';";
-    ResultSet rs = sqlConnector.executeSqlSelect(query);
+    ResultSet rs = Calendar.sqlConnector.executeSqlSelect(query);
 
     try {
       if (rs != null && rs.next()) {
         return true;
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not check if day exists");
     }
     return false;
   }
@@ -50,24 +57,24 @@ public class Calendar {
    *
    * @param date the date to insert
    */
-  public void insertDay(Date date, boolean vegetarian) {
+  public static void insertDay(Date date, boolean vegetarian) {
     String selectQuery = "SELECT recipe_id FROM recipe ORDER BY ABS(RANDOM()) LIMIT 1;";
     if (vegetarian) {
       selectQuery = "SELECT recipe_id FROM recipe WHERE vegetarian = 1 "
           + "ORDER BY ABS(RANDOM()) LIMIT 1;";
     }
-    ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
+    ResultSet rs = Calendar.sqlConnector.executeSqlSelect(selectQuery);
     int recipeId = 0;
     try {
       if (rs != null) {
         recipeId = rs.getInt("recipe_id");
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not insert day");
     }
 
     String query = "INSERT INTO day(date, recipe_id) VALUES ('" + date + "', " + recipeId + ");";
-    sqlConnector.executeSqlUpdate(query);
+    Calendar.sqlConnector.executeSqlUpdate(query);
   }
 
   /**
@@ -75,7 +82,7 @@ public class Calendar {
    *
    * @param date the date to remove.
    */
-  public void removeDay(Date date) {
+  public static void removeDay(Date date) {
     String query = "DELETE FROM day WHERE date = '" + date + "';";
     sqlConnector.executeSqlUpdate(query);
   }
@@ -89,7 +96,8 @@ public class Calendar {
     Map<String, String> dayRecipes = new HashMap<>();
     String selectQuery = "SELECT * FROM day JOIN recipe ON day.recipe_id = recipe.recipe_id";
 
-    ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
+    //SqlConnector sqlConnector = MainController.sqlConnector;
+    ResultSet rs = Calendar.sqlConnector.executeSqlSelect(selectQuery);
 
     if (rs != null) {
       try {
@@ -99,10 +107,8 @@ public class Calendar {
           dayRecipes.put(date, recipe);
         }
       } catch (SQLException e) {
-        e.printStackTrace();
+        PopupManager.displayError("Error", "Could not get day recipes");
       }
-    } else {
-      System.err.println("Error: ResultSet is null");
     }
 
     return dayRecipes;
@@ -114,19 +120,17 @@ public class Calendar {
    * @param date the date to search with.
    * @return the recipe name.
    */
-  public String getRecipe(Date date) {
+  public static String getRecipe(Date date) {
     String recipe = "";
     String selectQuery = "SELECT * FROM day JOIN recipe ON day.recipe_id "
         + "= recipe.recipe_id WHERE date = '" + date + "';";
-    ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
+    ResultSet rs = Calendar.sqlConnector.executeSqlSelect(selectQuery);
     if (rs != null) {
       try {
         recipe = rs.getString("name");
       } catch (SQLException e) {
-        e.printStackTrace();
+        PopupManager.displayError("Error", "Could not get recipe");
       }
-    } else {
-      System.err.println("Error: ResultSet is null");
     }
     return recipe;
   }
@@ -137,19 +141,19 @@ public class Calendar {
    * @param date the date to change the recipe for.
    * @param recipe the new recipe
    */
-  public void changeRecipe(Date date, String recipe) {
+  public static void changeRecipe(Date date, String recipe) {
     String selectQuery = "SELECT recipe_id FROM recipe WHERE name = '" + recipe + "';";
-    ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
+    ResultSet rs = Calendar.sqlConnector.executeSqlSelect(selectQuery);
     int recipeId = 0;
     try {
       if (rs != null) {
         recipeId = rs.getInt("recipe_id");
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not change recipe");
     }
     String updateQuery = "UPDATE day SET recipe_id = " + recipeId + " WHERE date = '" + date + "';";
-    sqlConnector.executeSqlUpdate(updateQuery);
+    Calendar.sqlConnector.executeSqlUpdate(updateQuery);
   }
 
   /**
@@ -159,22 +163,24 @@ public class Calendar {
    * @return an arraylist containing the names of the recipes that match the search string.
    */
   public static ArrayList<String> searchRecipes(String search, boolean vegetarian) {
+
     ArrayList<String> recipes = new ArrayList<>();
     String selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%';";
     if (vegetarian) {
       selectQuery = "SELECT * FROM recipe WHERE name LIKE '%" + search + "%' AND vegetarian = 1;";
     }
-    ResultSet rs = sqlConnector.executeSqlSelect(selectQuery);
+    //SqlConnector sqlConnector = MainController.sqlConnector;
+    ResultSet rs = Calendar.sqlConnector.executeSqlSelect(selectQuery);
     if (rs != null) {
       try {
         while (rs.next()) {
           recipes.add(rs.getString("name"));
         }
       } catch (SQLException e) {
-        e.printStackTrace();
+        PopupManager.displayError("Error", e.getMessage());
       }
     } else {
-      System.err.println("Error: ResultSet is null");
+      PopupManager.displayError("Error", "No recipes found");
     }
     return recipes;
   }
@@ -190,7 +196,7 @@ public class Calendar {
     List<Integer> missingIngredients = new ArrayList<>();
     try {
       // Fetch the list of ingredients required for the recipe
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = Calendar.sqlConnector.executeSqlSelect(
           "SELECT ingredient_id, quantity "
               + "FROM recipe_ingredients "
               + "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
@@ -201,7 +207,7 @@ public class Calendar {
         float requiredQuantity = rs.getFloat("quantity");
 
         // Check if the ingredient is available in the inventory in the required quantity
-        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+        ResultSet rsInventory = Calendar.sqlConnector.executeSqlSelect(
             "SELECT quantity "
                 + "FROM inventory_ingredient "
                 + "WHERE ingredient_id = " + ingredientId
@@ -218,10 +224,7 @@ public class Calendar {
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
-    }
-    for (int i = 0; i < missingIngredients.size(); i++) {
-      System.out.println(missingIngredients.get(i));
+      PopupManager.displayError("Error", e.getMessage());
     }
     return missingIngredients;
   }
@@ -239,10 +242,11 @@ public class Calendar {
     Map<Integer, Float> missingIngredients = new HashMap<>();
     try {
       // Fetch the list of ingredients required for the recipe
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = Calendar.sqlConnector.executeSqlSelect(
           "SELECT ingredient_id, quantity "
               + "FROM recipe_ingredients "
               + "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
+
       );
 
       while (rs.next()) {
@@ -250,7 +254,7 @@ public class Calendar {
         float requiredQuantity = rs.getFloat("quantity") * portions;
 
         // Check if the ingredient is available in the inventory in the required quantity
-        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+        ResultSet rsInventory = Calendar.sqlConnector.executeSqlSelect(
             "SELECT quantity "
                 + "FROM inventory_ingredient "
                 + "WHERE ingredient_id = " + ingredientId
@@ -267,7 +271,7 @@ public class Calendar {
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
     return missingIngredients;
   }
@@ -283,7 +287,7 @@ public class Calendar {
     Map<Integer, Float> totalIngredients = new HashMap<>();
     try {
       // Fetch the list of ingredients required for the recipe
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = Calendar.sqlConnector.executeSqlSelect(
           "SELECT ingredient_id, quantity "
               + "FROM recipe_ingredients "
               + "WHERE recipe_id = (SELECT recipe_id FROM recipe WHERE name = '" + recipe + "')"
@@ -295,7 +299,7 @@ public class Calendar {
         totalIngredients.put(ingredientId, requiredQuantity);
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
     return totalIngredients;
   }
@@ -315,7 +319,7 @@ public class Calendar {
         float requiredQuantity = entry.getValue();
 
         // Check if the ingredient is available in the inventory in the required quantity
-        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+        ResultSet rsInventory = Calendar.sqlConnector.executeSqlSelect(
             "SELECT quantity "
                 + "FROM inventory_ingredient "
                 + "WHERE ingredient_id = " + ingredientId
@@ -332,7 +336,7 @@ public class Calendar {
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
     return missingIngredients;
   }

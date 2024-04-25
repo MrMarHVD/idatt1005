@@ -187,14 +187,14 @@ INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (4, 12
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (5, 6, 3); -- Eggs
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (5, 16, 1); -- Onion
 
--- Kallender
-INSERT INTO day(date, recipe_id) VALUES ('2024-03-12', 3);
-INSERT INTO day(date, recipe_id) VALUES ('2024-03-13', 4);
-INSERT INTO day(date, recipe_id) VALUES ('2024-03-14', 2);
-INSERT INTO day(date, recipe_id) VALUES ('2024-03-15', 1);
-INSERT INTO day(date, recipe_id) VALUES ('2024-03-16', 4);
-INSERT INTO day(date, recipe_id) VALUES ('2024-03-17', 1);
-INSERT INTO day(date, recipe_id) VALUES ('2024-03-18', 3);
+-- Kalender
+INSERT INTO day(date, recipe_id) VALUES (DATE('now', 'weekday 0'), 3);
+INSERT INTO day(date, recipe_id) VALUES (DATE('now', 'weekday 1'), 4);
+INSERT INTO day(date, recipe_id) VALUES (DATE('now', 'weekday 2'), 2);
+INSERT INTO day(date, recipe_id) VALUES (DATE('now', 'weekday 3'), 1);
+INSERT INTO day(date, recipe_id) VALUES (DATE('now', 'weekday 4'), 4);
+INSERT INTO day(date, recipe_id) VALUES (DATE('now', 'weekday 5'), 1);
+INSERT INTO day(date, recipe_id) VALUES (DATE('now', 'weekday 6'), 3);
 
 -- Lager
 INSERT INTO inventory_ingredient(id, ingredient_id, quantity) VALUES (1, 3, 2.5); -- Melk

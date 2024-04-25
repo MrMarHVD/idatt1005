@@ -10,10 +10,9 @@ import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiHomeController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiInventoryController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiRecipeViewController;
 import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiSettingsController;
-import no.ntnu.idatt1005.plate.controller.ui.shoppinglist.UiShoppingListController;
+import no.ntnu.idatt1005.plate.controller.ui.mainviews.UiShoppingListController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
-
-// TODO: improve error handling (i.e. no printStackTrace)
 
 /**
  * Main controller class handles the logic across all the views of the application.
@@ -47,7 +46,7 @@ public class MainController {
       stage.setMinHeight(300);
       stage.show();
     } catch (Exception e) {
-      e.printStackTrace();
+      e.printStackTrace(); // Print stack trace if initial view fails to load. (Application crashes)
     }
   }
 
@@ -71,7 +70,7 @@ public class MainController {
       currentStage.show();
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load home view.");
     }
   }
 
@@ -94,7 +93,7 @@ public class MainController {
       currentStage.setScene(scene);
       currentStage.show();
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load cookbook view.");
     }
   }
 
@@ -102,7 +101,6 @@ public class MainController {
    * Go to the inventory view.
    */
   public void goToInventory() {
-    System.out.println("Test");
     try {
       FXMLLoader inventoryLoader = new FXMLLoader(getClass().getResource("/fxml/UiInventory.fxml"));
       Parent inventoryView = inventoryLoader.load();
@@ -121,7 +119,7 @@ public class MainController {
 
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load inventory view.");
     }
   }
 
@@ -147,8 +145,7 @@ public class MainController {
 
 
     } catch (Exception e) {
-
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load shopping list view.");
     }
   }
 
@@ -175,8 +172,7 @@ public class MainController {
 
 
     } catch (Exception e) {
-
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load settings view.");
     }
   }
 
@@ -198,10 +194,8 @@ public class MainController {
 
       if (recipe != null) {
         recipeController.setRecipeName(recipe);
-        System.out.println(recipe);
-      } else {
-        System.out.println("Null");
       }
+
 
       Scene scene = new Scene(recipeView);
       Stage currentStage = MyApp.getPrimaryStage();
@@ -210,7 +204,7 @@ public class MainController {
       recipeController.initializeDisplay();
 
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", "Could not load settings view.");
     }
   }
 }

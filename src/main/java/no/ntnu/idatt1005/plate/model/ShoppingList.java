@@ -2,10 +2,10 @@ package no.ntnu.idatt1005.plate.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
+import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 /**
  * Class for managing SQL queries relating to the shopping list.
@@ -13,20 +13,35 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 public class ShoppingList {
 
   /**
-   * Add an item to the shopping list, or update the quantity if it already exists.
+   * The SQL connector for this class.
+   */
+  public static SqlConnector sqlConnector = MainController.sqlConnector;
+
+  /**
+   * Set the SQL connector to something other than that belonging to the MainController (testing).
+   *
+   * @param sqlConnector the SQL connector to assign.
+   */
+  public static void setSqlConnector(SqlConnector sqlConnector) {
+    ShoppingList.sqlConnector = sqlConnector;
+  }
+
+  /**
+   * Add an item to the shopping list, or update the quantity
+   * if it already exists.
    *
    * @param ingredientId the ingredient id to look for and add.
-   * @param quantity     the quantity to add.
+   * @param quantity the quantity to add.
    */
   public static void addItem(int ingredientId, float quantity) {
     // Insert the ingredient into the shopping list, or ignore if it already exists
-    MainController.sqlConnector.executeSqlUpdate(
+    ShoppingList.sqlConnector.executeSqlUpdate(
         "INSERT OR IGNORE INTO shopping_list_items (ingredient_id, quantity) "
             + "VALUES (" + ingredientId + ", 0);"
     );
 
     // Increment the quantity of the ingredient
-    MainController.sqlConnector.executeSqlUpdate(
+    ShoppingList.sqlConnector.executeSqlUpdate(
         "UPDATE shopping_list_items SET quantity = quantity + " + quantity + " "
             + "WHERE ingredient_id = " + ingredientId + ";"
     );
@@ -39,7 +54,7 @@ public class ShoppingList {
    * @return the boolean value of whether the ingredient is in the shopping list.
    */
   public static boolean inShoppingList(int ingredientId) {
-    ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+    ResultSet rs = ShoppingList.sqlConnector.executeSqlSelect(
         "SELECT * FROM shopping_list_items WHERE ingredient_id = " + ingredientId + ";"
     );
 
@@ -48,147 +63,132 @@ public class ShoppingList {
         return true;
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
     return false;
   }
 
   /**
-   * Add selected items to the shopping list
-   * @param selectedItems the list of selected items to add
+   * Buy items in the shopping list (move to inventory).
+   *
+   * @param selectedItems the selected items to be bought.
+   * @throws SQLException if the SQL query fails (caught by the caller).
    */
-  public static void buySelectedItems(List<Integer> selectedItems) {
-    try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient_id, quantity FROM shopping_list_items WHERE ingredient_id IN ("
-              + selectedItems.toString().substring(1, selectedItems.toString().length() - 1)
-              + ")");
-      while (rs.next()) {
-        System.out.println(rs.getInt("ingredient_id"));
-        int ingredientId = rs.getInt("ingredient_id");
-        float qty = rs.getFloat("quantity");
+  public static void buyItems(List<Integer> selectedItems) throws SQLException {
 
-        ResultSet rs2 = MainController.sqlConnector.executeSqlSelect(
-            "SELECT * FROM inventory_ingredient WHERE ingredient_id = " + ingredientId);
-        if (rs2.next()) {
-          MainController.sqlConnector.executeSqlUpdate(
-              "UPDATE inventory_ingredient SET quantity = quantity + " + qty
-                  + " WHERE ingredient_id = "
-                  + ingredientId);
-        } else {
-          MainController.sqlConnector.executeSqlUpdate(
-              "INSERT INTO inventory_ingredient(ingredient_id, quantity ) VALUES(" + ingredientId
-                  + ", "
-                  + qty + ")");
-        }
-        MainController.sqlConnector.executeSqlUpdate(
-            "DELETE FROM shopping_list_items WHERE ingredient_id = " + ingredientId);
+    ResultSet rs = ShoppingList.sqlConnector.executeSqlSelect(
+        "SELECT ingredient_id, quantity FROM shopping_list_items WHERE ingredient_id IN ("
+            + selectedItems.toString().substring(1, selectedItems.toString().length() - 1)
+            + ")");
+    while (rs.next()) {
+      int ingredientId = rs.getInt("ingredient_id");
+      float qty = rs.getFloat("quantity");
+
+      ResultSet rs2 = ShoppingList.sqlConnector.executeSqlSelect(
+          "SELECT * FROM inventory_ingredient WHERE ingredient_id = " + ingredientId);
+      if (rs2.next()) {
+        ShoppingList.sqlConnector.executeSqlUpdate(
+            "UPDATE inventory_ingredient SET quantity = quantity + " + qty
+                + " WHERE ingredient_id = "
+                + ingredientId);
+      } else {
+        ShoppingList.sqlConnector.executeSqlUpdate(
+            "INSERT INTO inventory_ingredient(ingredient_id, quantity ) VALUES(" + ingredientId
+                + ", "
+                + qty + ")");
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+      ShoppingList.sqlConnector.executeSqlUpdate(
+          "DELETE FROM shopping_list_items WHERE ingredient_id = " + ingredientId);
     }
   }
 
   /**
-   * Clear selected items from the shopping list.
+   * Delete items from the shopping list.
    *
-   * @param selectedItems the list of selected items to clear.
+   * @param selectedItems the items to delete.
+   * @throws SQLException if the SQL query fails (caught by the caller).
    */
-  public static void clearSelectedItems(List<Integer> selectedItems) {
-    MainController.sqlConnector.executeSqlUpdate(
+  public static void deleteItems(List<Integer> selectedItems) throws SQLException {
+    ShoppingList.sqlConnector.executeSqlUpdate(
         "DELETE FROM shopping_list_items WHERE ingredient_id IN ("
             + selectedItems.toString().substring(1, selectedItems.toString().length() - 1)
             + ")");
   }
 
   /**
-   * Get all items in the shopping list in a hashmap. The key is the ingredient ID and the value is
-   * a string representation of the item
+   * Select all the items in the ingredient table that are in the shopping list.
    *
-   * @return a hashmap of all items in the shopping list
+   * @return a ResultSet with the returned items.
    */
-  public static Map<Integer, String> getAllItems() {
-    try {
-      Map<Integer, String> items = new HashMap<>();
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient.ingredient_id, name, quantity, "
-              + "unit FROM shopping_list_items JOIN ingredient ON "
-              + "shopping_list_items.ingredient_id = ingredient.ingredient_id");
-      while (rs.next()) {
-        if (Float.parseFloat(rs.getString("quantity")) <= 0) {
-          MainController.sqlConnector.executeSqlUpdate(
-              "DELETE FROM shopping_list_items WHERE quantity <= 0");
-          continue;
-        }
-        int ingredientId = rs.getInt("ingredient_id");
-        String name = rs.getString("name");
-        String quantity = rs.getString("quantity");
-        String unit = rs.getString("unit");
-        String item = String.format("%-30s %-5s %-15s", name, quantity, unit);
-        items.put(ingredientId, item);
-      }
-      return items;
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
+  public static ResultSet selectAllMatchingIds() {
+    return ShoppingList.sqlConnector.executeSqlSelect(
+        "SELECT ingredient.ingredient_id, name, quantity, "
+            + "unit FROM shopping_list_items JOIN ingredient ON "
+            + "shopping_list_items.ingredient_id = ingredient.ingredient_id");
   }
 
   /**
-   * Add selected items to the shopping list. If the item already exists, update the quantity.
-   *
-   * @param itemName the name of the item to add
-   * @param quantity the quantity of the item to add
+   * Delete all items in the shopping list with a quantity less than or equal to zero.
    */
-  public static void addSelectedItems(String itemName, String quantity) {
-    try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient_id FROM ingredient WHERE name = '" + itemName + "'");
-      int ingredientId = rs.getInt("ingredient_id");
-      if (ingredientInShoppingList(ingredientId)) {
-        updateIngredient(ingredientId, quantity);
-        return;
-      }
-
-      MainController.sqlConnector.executeSqlUpdate(
-          "INSERT INTO shopping_list_items (ingredient_id, quantity) VALUES (" + ingredientId + ", "
-              + Float.parseFloat(quantity) + ")");
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+  public static void deleteLessThanZero() {
+    ShoppingList.sqlConnector.executeSqlUpdate(
+        "DELETE FROM shopping_list_items WHERE quantity <= 0");
   }
 
   /**
-   * Check if an ingredient is already in the shopping list.
+   * Select all items in the shopping list.
    *
-   * @param ingredientId the ID of the ingredient to check for
-   * @return true if the ingredient is in the shopping list, false otherwise
+   * @return a ResultSet of all items in the shopping list.
    */
-  private static boolean ingredientInShoppingList(int ingredientId) {
+  public static ResultSet selectAllItems() {
+    return ShoppingList.sqlConnector.executeSqlSelect(
+        "SELECT ingredient_id FROM shopping_list_items");
+  }
+
+
+  /**
+   * Select a shopping list item from its ingredient ID.
+   *
+   * @param ingredientId the ID to select from.
+   * @return a ResultSet of the selected item.
+   */
+  public static ResultSet selectShoppingListItemFromId(int ingredientId) {
+    return ShoppingList.sqlConnector.executeSqlSelect(
+        "SELECT * FROM shopping_list_items WHERE ingredient_id = " + ingredientId);
+  }
+
+  /**
+   * Update the quantity of an item in the shopping list.
+   *
+   * @param ingredientId the ID of the ingredient to update.
+   * @param quantity the quantity to update with.
+   */
+  public static void updateShoppingListQuantity(int ingredientId, float quantity) {
+    ShoppingList.sqlConnector.executeSqlUpdate(
+        "UPDATE shopping_list_items SET quantity = quantity + " + quantity
+            + " WHERE ingredient_id = " + ingredientId);
+  }
+
+  /**
+   * Insert an item into the shopping list.
+   *
+   * @param ingredientId the ID of the ingredient to insert.
+   * @param quantity the quantity of the ingredient to insert.
+   */
+  public static void insertIntoShoppingList(int ingredientId, float quantity) {
+    // Check if the ingredient exists in the ingredient table
+    ResultSet rs = ShoppingList.sqlConnector.executeSqlSelect(
+        "SELECT * FROM ingredient WHERE ingredient_id = " + ingredientId);
+
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT * FROM shopping_list_items WHERE ingredient_id = " + ingredientId);
-      return rs.next();
+      // If the ingredient exists, insert it into the shopping list
+      if (rs.next()) {
+        ShoppingList.sqlConnector.executeSqlUpdate(
+            "INSERT INTO shopping_list_items (ingredient_id, quantity) VALUES (" + ingredientId + ", "
+                + quantity + ")");
+      }
     } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return false;
-  }
-
-  /**
-   * Update the quantity of an ingredient in the shopping list.
-   *
-   * @param ingredientId the ID of the ingredient to update
-   * @param quantity     the quantity to update with
-   */
-  private static void updateIngredient(int ingredientId, String quantity) {
-    try {
-      MainController.sqlConnector.executeSqlUpdate(
-          "UPDATE shopping_list_items SET quantity = quantity + " + Float.parseFloat(quantity)
-              + " WHERE ingredient_id = " + ingredientId);
-    } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
   }
 }

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
+import javax.swing.Popup;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
  * This class handles all direct interactions with the SQLite database, and is
@@ -11,12 +13,37 @@ import java.sql.*;
  */
 public class SqlConnector {
 
-  private static Connection con = null;
+  private Connection con = null;
 
+  /**
+   * The path to the create, insert and drop SQL files.
+   */
   private static final String createSqlFilePath = "src/main/resources/CreateQuery.sql";
   private static final String insertSqlFilePath = "src/main/resources/InsertQuery.sql";
+  private static final String dropSqlFilePath = "src/main/resources/DropQuery.sql";
 
-  private String dbFileName = "plate.db";
+  /**
+   * The file name of the database.
+   */
+  private static String dbFileName = "plate.db";
+
+
+  /**
+   * Returns the connection to the database
+   * @return connection to database
+   */
+    private Connection getConnection() {
+      try {
+        if (dbFileName.equals("memory")) {
+          con = DriverManager.getConnection("jdbc:sqlite::memory:");
+        } else {
+          con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
+        }
+      } catch(Exception e) {
+        System.out.println(e.getMessage());
+      }
+  }
+
   /**
    * Constructor for the SqlConnector class.
    */
@@ -31,18 +58,6 @@ public class SqlConnector {
     }
   }
 
-  private Connection getCon(String dbFileName) {
-    try {
-      if (dbFileName.equals(":memory:")) {
-        con = DriverManager.getConnection("jdbc:sqlite::memory:");
-      } else {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
-      }
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    return con;
-  }
 
   /**
    * Constructor for testing SqlConnector class, points to a different database.
@@ -50,29 +65,30 @@ public class SqlConnector {
    * @param dbFileName the path to the database file
    */
   public SqlConnector(String dbFileName) {
-    this.dbFileName = dbFileName;
     try {
       if (con == null) {
-      con = getCon(dbFileName);
+        SqlConnector.dbFileName = dbFileName;
+
+        // Run database in memory if the file name is ":memory:".
+        con = getConnection();
+
       }
-      resetDatabase();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      PopupManager.displayError("Database error", e.getMessage());
     }
   }
 
   /**
    * Close the connection to the database.
    */
-  public void close() {
-    //try {
-    //if (con != null) {
-    //con.close();
-    //System.out.println("Connection closed");
-    //}
-    //} catch (Exception e) {
-    //System.out.println(e.getMessage());
-    //}
+  public void closeConnection() {
+    try {
+      if (con != null && !con.isClosed()) {
+        con.close();
+      }
+    } catch (SQLException e) {
+      PopupManager.displayError("Database error", e.getMessage());
+    }
   }
 
 
@@ -87,7 +103,7 @@ public class SqlConnector {
       ResultSet tables = executeSqlSelect("SELECT * FROM %s".formatted(tableName));
       return tables.next();
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      PopupManager.displayError("Database error", e.getMessage());
       return false;
     }
   }
@@ -102,14 +118,12 @@ public class SqlConnector {
     ResultSet rs = null;
     try {
       if (con.isClosed()) {
-        con = getCon(dbFileName);
+        con = getConnection();
       }
       Statement stmt = con.createStatement();
       rs = stmt.executeQuery(query);
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    } finally {
-      close();
+      PopupManager.displayError("SQL Select error", "Could not select data.");
     }
     return rs;
   }
@@ -122,14 +136,13 @@ public class SqlConnector {
   public void executeSqlUpdate(String query) {
     try {
       if (con.isClosed()) {
-        con = getCon(dbFileName);
+        con = getConnection();
       }
       Statement stmt = con.createStatement();
+
       stmt.executeUpdate(query);
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    } finally {
-      close();
+      PopupManager.displayError("SQL Update error", "Could not update data.");
     }
   }
 
@@ -139,20 +152,33 @@ public class SqlConnector {
    * @return true if any table is missing, false otherwise.
    */
   private boolean anyTableMissing() {
-    return (!tableExists("ingredient") || !tableExists("allergen") || !tableExists("category")
-        || !tableExists("recipe_ingredients") || !tableExists("recipe") || !tableExists("day"));
+    return (!tableExists("ingredient") || !tableExists("allergen")
+        || !tableExists("category")
+        || !tableExists("recipe_ingredients") || !tableExists("recipe")
+        || !tableExists("day"));
+  }
+
+  /**
+   * Reset the database fully to its initial state.
+   */
+  public synchronized void resetTestDatabase() {
+    runSqlFile(dropSqlFilePath); // Drop all tables.
+    this.closeConnection();
+    //new java.io.File("src/main/resources/calendar_test.db").delete();
+    runSqlFile(createSqlFilePath);
+    if (anyTableMissing()) {
+      runSqlFile(insertSqlFilePath);
+    }
   }
 
   /**
    * Reset the database to its initial state. If any table is missing, the tables are created and
    * default  data is inserted.
    */
-  private void resetDatabase() {
+  public synchronized void resetDatabase() {
     runSqlFile(createSqlFilePath);
     if (anyTableMissing()) {
       runSqlFile(insertSqlFilePath);
-
-      System.out.println("data inserted");
     }
   }
 
@@ -166,7 +192,7 @@ public class SqlConnector {
       String query = new String(Files.readAllBytes(Paths.get(path)));
       executeSqlUpdate(query);
     } catch (IOException e) {
-      e.printStackTrace();
+      PopupManager.displayError("SQL file error", "Could not read SQL file.");
     }
   }
 

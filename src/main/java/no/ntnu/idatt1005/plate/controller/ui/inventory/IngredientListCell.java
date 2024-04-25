@@ -8,6 +8,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
  * ListCell class which manages the cells in the ingredient list,
@@ -120,7 +121,7 @@ protected void updateItem(Integer ingredientId, boolean empty) {
           setGraphic(grid);
         }
       } catch (SQLException e) {
-        System.out.println(e.getMessage());
+        PopupManager.displayError("Selection error", "Could not select ingredients.");
       }
     }
   }

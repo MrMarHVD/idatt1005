@@ -4,11 +4,27 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
+import no.ntnu.idatt1005.plate.data.SqlConnector;
 
 /**
  * Class for managing the sql queries for the inventory.
  */
 public class Inventory {
+
+
+  /**
+   * The SQL connector for this class.
+   */
+  public static SqlConnector sqlConnector = MainController.sqlConnector;
+
+  /**
+   * Set the SQL connector to something other than that belonging to the MainController (testing).
+   *
+   * @param sqlConnector the SQL connector to assign.
+   */
+  public static void setSqlConnector(SqlConnector sqlConnector) {
+    Inventory.sqlConnector = sqlConnector;
+  }
 
   /**
    * Select an ingredient by its ID.
@@ -19,7 +35,7 @@ public class Inventory {
   public static String selectIngredient(int ingredientId) {
     String ingredientName = null;
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = Inventory.sqlConnector.executeSqlSelect(
           "SELECT * FROM ingredient WHERE ingredient_id = " + ingredientId + ";");
       if (rs.next()) {
         ingredientName = rs.getString("name");
@@ -33,6 +49,17 @@ public class Inventory {
   }
 
   /**
+   * Select an ingredient ID from its name.
+   * TODO: add test
+   * @param name the name to search for.
+   * @return the result set of the query.
+   */
+  public static ResultSet selectIngredientIdFromName(String name) {
+    return Inventory.sqlConnector.executeSqlSelect(
+        "SELECT ingredient_id FROM ingredient WHERE name = '" + name + "'");
+  }
+
+  /**
    * Check whether the given ingredient exists in the inventory.
    *
    * @param name the name of the ingredient.
@@ -40,7 +67,7 @@ public class Inventory {
    */
   public static boolean ingredientExistsInInventory(String name) {
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = Inventory.sqlConnector.executeSqlSelect(
           "SELECT * FROM inventory_ingredient "
               + "LEFT JOIN ingredient i ON inventory_ingredient.ingredient_id = i.ingredient_id "
               + "WHERE i.name = '" + name + "';");
@@ -61,7 +88,7 @@ public class Inventory {
    */
   public static boolean ingredientExists(String name) {
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = Inventory.sqlConnector.executeSqlSelect(
           "SELECT * FROM ingredient WHERE name = '" + name + "';");
       if (rs.next()) {
         return true;
@@ -78,7 +105,7 @@ public class Inventory {
    * @return the result set of the query.
    */
   public static ResultSet selectAllInventoryIngredients() {
-    return MainController.sqlConnector.executeSqlSelect(
+    return Inventory.sqlConnector.executeSqlSelect(
         "SELECT i.ingredient_id "
             + "FROM ingredient i "
             + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id;");
@@ -91,7 +118,7 @@ public class Inventory {
    * @return the result set of the query.
    */
   public static ResultSet searchIngredientsInInventory(String search) {
-    return MainController.sqlConnector.executeSqlSelect(""
+    return Inventory.sqlConnector.executeSqlSelect(""
         + "SELECT i.ingredient_id "
         + "FROM ingredient i "
         + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
@@ -107,7 +134,7 @@ public class Inventory {
   public static ArrayList<String> searchIngredients(String search) {
     ArrayList<String> ingredients = new ArrayList<>();
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = Inventory.sqlConnector.executeSqlSelect(
           "SELECT name FROM ingredient WHERE name LIKE '%" + search + "%'");
       while (rs.next()) {
         String name = rs.getString("name");
@@ -125,7 +152,7 @@ public class Inventory {
    * @return a result set of sorted ingredients by name.
    */
   public static ResultSet sortByName() {
-    return MainController.sqlConnector.executeSqlSelect(""
+    return Inventory.sqlConnector.executeSqlSelect(""
         + "SELECT i.ingredient_id "
         + "FROM ingredient i "
         + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
@@ -138,7 +165,7 @@ public class Inventory {
    * @return a result set of the sorted ingredients by category.
    */
   public static ResultSet sortByCategory() {
-    return MainController.sqlConnector.executeSqlSelect(""
+    return Inventory.sqlConnector.executeSqlSelect(""
         + "SELECT i.ingredient_id "
         + "FROM ingredient i "
         + "INNER JOIN inventory_ingredient ii ON ii.ingredient_id = i.ingredient_id "
@@ -152,7 +179,7 @@ public class Inventory {
    * @param ingredientId the ID of the ingredient to delete.
    */
   public static void deleteIngredient(int ingredientId) {
-    MainController.sqlConnector.executeSqlUpdate(""
+    Inventory.sqlConnector.executeSqlUpdate(""
         + "DELETE FROM inventory_ingredient "
         + "WHERE ingredient_id = " + ingredientId + ";");
   }
@@ -166,7 +193,7 @@ public class Inventory {
   public static void updateIngredient(String name, float quantity) {
     try {
       // Get the ingredient_id of the ingredient with the given name
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = Inventory.sqlConnector.executeSqlSelect(
           "SELECT ingredient_id FROM ingredient WHERE name = '" + name + "'"
       );
 
@@ -174,21 +201,21 @@ public class Inventory {
         int ingredientId = rs.getInt("ingredient_id");
 
         // Check if the ingredient exists in the inventory_ingredient table
-        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+        ResultSet rsInventory = Inventory.sqlConnector.executeSqlSelect(
             "SELECT ingredient_id FROM inventory_ingredient WHERE ingredient_id = "
                 + ingredientId
         );
 
         if (rsInventory.next()) {
           // If the ingredient exists, update its quantity
-          MainController.sqlConnector.executeSqlUpdate(
+          Inventory.sqlConnector.executeSqlUpdate(
               "UPDATE inventory_ingredient SET quantity = quantity + " + quantity
                   + " WHERE ingredient_id = " + ingredientId
           );
         }
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      PopupManager.displayError("Error", e.getMessage());
     }
   }
 
@@ -200,7 +227,7 @@ public class Inventory {
    */
   public static void addNewIngredient(String name, float quantity) {
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+      ResultSet rs = Inventory.sqlConnector.executeSqlSelect(
           "SELECT i.ingredient_id "
               + "FROM ingredient i "
               + "WHERE i.name = '" + name + "'");
@@ -209,7 +236,7 @@ public class Inventory {
         int ingredientId = rs.getInt("ingredient_id");
 
         // Check if there already exists a corresponding ingredient in inventory
-        ResultSet rsInventory = MainController.sqlConnector.executeSqlSelect(
+        ResultSet rsInventory = Inventory.sqlConnector.executeSqlSelect(
             "SELECT ii.ingredient_id "
                 + "FROM inventory_ingredient ii "
                 + "WHERE ii.ingredient_id = " + ingredientId
@@ -222,17 +249,22 @@ public class Inventory {
             + "update existing ingredient instead.");
         }
 
-        MainController.sqlConnector.executeSqlUpdate(
+        Inventory.sqlConnector.executeSqlUpdate(
             "INSERT INTO inventory_ingredient (ingredient_id, quantity) "
                 + "VALUES (" + ingredientId + ", " + quantity + "); "
         );
-      } else {
-        System.out.println("Test");
       }
 
     } catch (Exception e) {
       PopupManager.displayErrorFull("Error", "Failed to add ingredient", e.getMessage());
-      e.printStackTrace();
     }
+  }
+
+  /**
+   * Delete all ingredients with a quantity less than or equal to zero.
+   */
+  public static void deleteLessThanZero() {
+    ShoppingList.sqlConnector.executeSqlUpdate(
+        "DELETE FROM inventory_ingredient WHERE quantity <= 0");
   }
 }

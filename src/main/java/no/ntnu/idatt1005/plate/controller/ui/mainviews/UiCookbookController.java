@@ -224,7 +224,7 @@ public class UiCookbookController {
         gridPane.setVgap(10);
       }
     } else {
-      System.out.println("gridPane is null in updateRecipeButtons");
+      PopupManager.displayError("Error", "gridPane is null in updateRecipeButtons");
     }
   }
 

@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import no.ntnu.idatt1005.plate.controller.global.MainController;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 
 /**
  * This class is the controller for the DayBlock object in the user interface.
@@ -78,7 +79,7 @@ public class DayBlockController {
       if (this.mainController != null) {
         this.mainController.goToRecipe(recipe);
       } else {
-        System.out.println("Main controller is null");
+        PopupManager.displayError("Error", "MainController is null");
       }
     });
   }

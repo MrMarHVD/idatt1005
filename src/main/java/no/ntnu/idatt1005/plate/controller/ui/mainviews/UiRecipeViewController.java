@@ -206,7 +206,6 @@ public class UiRecipeViewController {
       ingredientsListView.setItems(observableList);
       ingredientsListView.setCellFactory(param -> new RecipeIngredientListCell(this));
     } catch (SQLException e) {
-      e.printStackTrace();
       PopupManager.displayErrorFull("Error",
           "Error retrieving ingredients", "Error retrieving ingredients.");
     }
@@ -240,8 +239,7 @@ public class UiRecipeViewController {
       instructionsArea.setText(instructions != null ? instructions : "No instructions provided.");
 
     } catch (Exception e) {
-      e.printStackTrace();
-      instructionsArea.setText("Error retrieving instructions.");
+      PopupManager.displayError("Error", "Could not fetch instructions.");
     }
   }
 
@@ -284,13 +282,16 @@ public class UiRecipeViewController {
 
       String ingredient = this.selectIngredientComboBox.getSelectionModel().getSelectedItem();
       if (ingredient == null || ingredient.isEmpty()) {
-        PopupManager.displayErrorFull("Error", "No ingredient selected", "No ingredient selected.");
+        PopupManager.displayErrorFull("Error", "No ingredient selected",
+            "No ingredient selected.");
         return;
       }
       if (this.quantityTextField.getText().isEmpty()) {
-        PopupManager.displayErrorFull("Error", "No quantity entered", "No quantity entered.");
+        PopupManager.displayErrorFull("Error", "No quantity entered",
+            "No quantity entered.");
         return;
       }
+
       float quantity = Float.parseFloat(this.quantityTextField.getText());
       Recipe.addIngredientToRecipe(this.recipeName, ingredient, quantity);
       this.displayIngredients();
@@ -299,13 +300,15 @@ public class UiRecipeViewController {
     // Define action listener for the remove ingredient button
     this.removeIngredientButton.setOnAction(event -> {
       try {
-      int ingredientId = this.ingredientsListView.getSelectionModel().getSelectedItem();
-      Recipe.removeIngredientFromRecipe(this.recipeName, ingredientId);
-      this.displayIngredients();
+        int ingredientId = this.ingredientsListView.getSelectionModel().getSelectedItem();
+        Recipe.removeIngredientFromRecipe(this.recipeName, ingredientId);
+        this.displayIngredients();
       } catch (Exception e) {
-        PopupManager.displayErrorFull("Error", "No ingredient selected", "No ingredient selected.");
+        PopupManager.displayErrorFull("Error", "No ingredient selected",
+            "No ingredient selected.");
       }
     });
+
 
   }
 
@@ -332,6 +335,7 @@ public class UiRecipeViewController {
       this.unitLabel.setText(unit);
     });
 
+    this.portionTextField.setTextFormatter(Formatter.getFloatFormatter());
     this.portionTextField.textProperty().addListener((observable, oldValue, newValue) -> {
       this.displayIngredients();
     });

@@ -19,6 +19,7 @@ import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.controller.ui.toolbar.ToolbarController;
 import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.Inventory;
+import no.ntnu.idatt1005.plate.controller.utility.PopupManager;
 import no.ntnu.idatt1005.plate.model.ShoppingList;
 
 /**
@@ -129,12 +130,24 @@ public class UiShoppingListController {
       String itemName = selectIngredientComboBox.getSelectionModel().getSelectedItem();
       String itemAmount = itemAmountField.getText();
       if (itemName == null || itemName.isEmpty() || itemAmount == null || itemAmount.isEmpty()) {
-        PopupManager.displayErrorFull("Error", "Invalid input", "Please enter a valid item name and amount.");
+        PopupManager.displayErrorFull("Error", "Invalid input",
+            "Please enter a valid item name and amount.");
         detailsLabel.setText("Invalid input");
+        return;
+      }
+      ResultSet rs = Inventory.selectIngredientIdFromName(itemName);
+      int ingredientId = rs.getInt("ingredient_id");
+
+      detailsLabel.setText("");
+      ResultSet rs2 = ShoppingList.selectShoppingListItemFromId(ingredientId);
+      if (rs2.next()) {
+        ShoppingList.updateShoppingListQuantity(ingredientId, Float.parseFloat(itemAmount));
+        updateItems();
         return;
       }
       ShoppingList.addSelectedItems(itemName, itemAmount);
 
+      ShoppingList.insertIntoShoppingList(ingredientId, Float.parseFloat(itemAmount));
       updateItems();
 
     } catch (Exception e) {
@@ -161,10 +174,8 @@ public class UiShoppingListController {
         checkBox.setOnAction(e -> {
           if (checkBox.isSelected()) {
             selectedItems.add(ingredientId);
-            System.out.println(selectedItems);
           } else if (selectedItems.contains(ingredientId)) {
             selectedItems.remove(Integer.valueOf(ingredientId));
-            System.out.println(selectedItems);
           }
         });
         checkBoxes.add(checkBox);
@@ -185,7 +196,7 @@ public class UiShoppingListController {
         listView.getItems().add(hbox);
       }
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      PopupManager.displayError("Error", e.getMessage());
     }
   }
 
@@ -211,16 +222,17 @@ public class UiShoppingListController {
   private void buyItems() {
     try {
       if (selectedItems.isEmpty()) {
-        PopupManager.displayErrorFull("Error", "No items selected", "Please select items to add to inventory.");
+        PopupManager.displayErrorFull("Error", "No items selected",
+            "Please select items to add to inventory.");
         detailsLabel.setText("No items selected");
         return;
       }
-      ShoppingList.buySelectedItems(selectedItems);
 
+      ShoppingList.buyItems(selectedItems);
       updateItems();
       selectedItems.clear();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      PopupManager.displayError("Error", e.getMessage());
     }
   }
 
@@ -231,15 +243,16 @@ public class UiShoppingListController {
   private void clearList() {
     try {
       if (selectedItems.isEmpty()) {
-        PopupManager.displayErrorFull("Error", "No items selected", "Please select items to remove.");
+        PopupManager.displayErrorFull("Error", "No items selected",
+            "Please select items to remove.");
         detailsLabel.setText("No items selected");
         return;
       }
-      ShoppingList.clearSelectedItems(selectedItems);
+      ShoppingList.deleteItems(selectedItems);
       updateItems();
       selectedItems.clear();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      PopupManager.displayError("Error", e.getMessage());
     }
 
   }
@@ -252,13 +265,12 @@ public class UiShoppingListController {
       checkBox.setSelected(true);
     }
     try {
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient_id FROM shopping_list_items");
+      ResultSet rs = ShoppingList.selectAllItems();
       while (rs.next()) {
         selectedItems.add(rs.getInt("ingredient_id"));
       }
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      PopupManager.displayError("Selection error", e.getMessage());
     }
   }
 

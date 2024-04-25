@@ -2,6 +2,7 @@ package no.ntnu.idatt1005.plate.model;
 
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,130 +14,209 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the Calendar class.
+ */
 class CalendarTest {
 
-    private static final String dbFileName = "calendar_test.db";
+  /**
+   * Date used for testing: the current date.
+   */
+  private static Date date = Date.valueOf(LocalDate.now());
 
-    private static final Date date = Date.valueOf(LocalDate.now());
+  /**
+   * Second date used for testing: tomorrow's date.
+   */
+  private static Date date1 = Date.valueOf(LocalDate.now().plusDays(1));
 
-    private static final Date date1 = Date.valueOf(LocalDate.now().plusDays(1));
+  /**
+   * The SQL connector used for testing.
+   */
+  private static final SqlConnector sqlConnector = new SqlConnector("memory");
 
-    private static final SqlConnector sqlConnector = new SqlConnector(dbFileName);
+  /**
+   * Set up the test environment.
+   */
+  @BeforeEach
+  void setUp() {
+    sqlConnector.closeConnection();
+    sqlConnector.resetTestDatabase();
+    Calendar.setSqlConnector(sqlConnector);
+    date = Date.valueOf(LocalDate.now());
+    date1 = Date.valueOf(LocalDate.now().plusDays(1));
+  }
 
-    private static final Calendar calendar = new Calendar(sqlConnector);
+  /**
+   * Test the insert day method.
+   */
+  @Test
+  @DisplayName("insert day test")
+  void testInsertDay() {
 
-    @Test
-    @DisplayName("constructor test")
-    void testConstructor() {
-        //assert
-        assertNotNull(calendar);
-    }
+    //act
+    Calendar.insertDay(Date.valueOf(LocalDate.now().plusDays(7)), false);
 
+    //assert
+    assertTrue(Calendar.dayExists(date));
+  }
 
-    @Test
-    @DisplayName("insert day test")
-    void testInsertDay() {
+  /**
+   * Test the day exists method by asserting the result false when a day not found in the calendar
+   * is used as an argument.
+   */
+  @Test
+  @DisplayName("day exists negative test")
+  void testDayExistsNegative() {
+    //act
+    boolean exists = Calendar.dayExists(Date.valueOf(LocalDate.now().plusDays(10)));
 
-        //act
-        calendar.insertDay(date, false);
+    //assert
+    assertFalse(exists);
+  }
 
-        //assert
-      assertTrue(calendar.dayExists(date));
-    }
+  /**
+   * Test the day exists method by asserting the recipe obtained not equal to null.
+   */
+  @Test
+  @DisplayName("get recipe test")
+  void testGetRecipe() {
 
+    //act
+    String recipe = Calendar.getRecipe(date);
 
-    @Test
-    @DisplayName("day exists negative test")
-    void testDayExistsNegative() {
-        //act
-        boolean exists = calendar.dayExists(date1);
+    //assert
+    assertNotNull(recipe);
+  }
 
-        //assert
-        assertFalse(exists);
-    }
+  /**
+   * Test the get recipe method by asserting the result null when a day not found in the calendar.
+   */
+  @Test
+  @DisplayName("get recipe negative test")
+  void testGetRecipeNegative() {
+    //act
+    String recipe = Calendar.getRecipe(Date.valueOf(LocalDate.now().plusDays(10)));
 
-    @Test
-    @DisplayName("get recipe test")
-    void testGetRecipe() {
+    //assert
+    assertNull(recipe);
+  }
 
-        //act
-        String recipe = calendar.getRecipe(date);
+  /**
+   * Test the change recipe method by asserting the new recipe is equal to the recipe obtained.
+   */
+  @Test
+  @DisplayName("change recipe test")
+  void testChangeRecipe() {
+    //arrange
+    String newRecipe = "Spicy Pepperoni Pizza";
 
-        //assert
-        assertNotNull(recipe);
-    }
+    //act
+    Calendar.changeRecipe(date, newRecipe);
 
-    @Test
-    @DisplayName("get recipe negative test")
-    void testGetRecipeNegative() {
+    //assert
+    assertEquals(newRecipe, Calendar.getRecipe(date));
+  }
 
-        //act
-        String recipe = calendar.getRecipe(date1);
+  /**
+   * Test the get day recipes method by asserting the recipe obtained is equal to the recipe in the
+   * calendar.
+   */
+  @Test
+  @DisplayName("get day recipes test")
+  void testGetDayRecipes() {
 
-        //assert
-        assertNull(recipe);
-    }
+    //act
+    String recipe = Calendar.getRecipe(date);
 
-    @Test
-    @DisplayName("change recipe test")
-    void testChangeRecipe() {
-        //arrange
-        String newRecipe = "Margherita Pizza";
+    //assert
+    assertEquals(recipe, Calendar.getDayRecipes().get(date.toString()));
+  }
 
-        //act
-        calendar.changeRecipe(date, newRecipe);
+  /**
+   * Test the search recipes method by asserting the recipe obtained contains the search string.
+   */
+  @Test
+  @DisplayName("search recipes test")
+  void testSearchRecipes() {
+    //arrange
+    String search = "Pizza";
 
-        //assert
-        assertEquals(newRecipe, calendar.getRecipe(date));
-    }
+    //act
+    String recipe = Calendar.searchRecipes(search, false).get(0);
 
-    @Test
-    @DisplayName("get day recipes test")
-    void testGetDayRecipes() {
+    //assert
+    assertTrue(recipe.contains(search));
+  }
 
-        //act
-        String recipe = calendar.getRecipe(date);
+  /**
+   * Test the search recipes method by asserting the size of the result is 0 when the search string
+   * does not match any recipe.
+   */
+  @Test
+  @DisplayName("search recipes negative test")
+  void testSearchRecipesNegative() {
+    //arrange
+    String search = "Nonexistent";
 
-        //assert
-        assertEquals(recipe, calendar.getDayRecipes().get(date.toString()));
-    }
+    //act
+    int size = Calendar.searchRecipes(search, false).size();
 
-    @Test
-    @DisplayName("search recipes test")
-    void testSearchRecipes() {
-        //arrange
-        String search = "Pizza";
+    //assert
+    assertEquals(0, size);
+  }
 
-        //act
-        String recipe = calendar.searchRecipes(search, false).get(0);
+  /**
+   *
+   */
+  @Test
+  @DisplayName("remove day test")
+  void testRemoveDay() {
 
-        //assert
-        assertTrue(recipe.contains(search));
-    }
+    //act
+    Calendar.removeDay(date);
 
-    @Test
-    @DisplayName("search recipes negative test")
-    void testSearchRecipesNegative() {
-        //arrange
-        String search = "Nonexistent";
+    //assert
+    assertFalse(Calendar.dayExists(date));
+  }
 
-        //act
-        int size = calendar.searchRecipes(search, false).size();
+  /**
+   * Test the get missing ingredients method by asserting the result not equal to null.
+   */
+  @Test
+  @DisplayName("get missing ingredients test")
+  void testGetMissingIngredients() {
+    //arrange
 
-        //assert
-        assertEquals(0, size);
-    }
+    //act
+    String missingIngredients = Calendar.getMissingIngredients("Margherita Pizza").toString();
 
+    //assert
+    assertNotNull(missingIngredients);
 
+  }
 
-    @AfterAll
-    static void cleanUp() {
-        try {
-            Files.deleteIfExists(Paths.get("src/main/resources/" + dbFileName));
-            System.out.println(dbFileName + " deleted successfully");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+  /**
+   * Test the get missing ingredients with quantity method by asserting the result not equal to null.
+   */
+  @Test
+  @DisplayName("get missing ingredients with quantity test")
+  void testGetMissingIngredientsWithQuantity() {
+    //arrange
 
+    //act
+    String missingIngredients = Calendar.getMissingIngredientsWithQuantity("Margherita Pizza",
+        2).toString();
+
+    //assert
+    assertNotNull(missingIngredients);
+  }
+
+  /**
+   * Clean up after all tests have been run.
+   */
+  @AfterAll
+  static void tearDown() {
+    sqlConnector.closeConnection();
+    sqlConnector.resetTestDatabase();
+  }
 }
