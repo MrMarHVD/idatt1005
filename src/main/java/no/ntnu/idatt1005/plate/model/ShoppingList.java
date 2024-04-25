@@ -29,11 +29,10 @@ public class ShoppingList {
   }
 
   /**
-   * Add an item to the shopping list, or update the quantity
-   * if it already exists.
+   * Add an item to the shopping list, or update the quantity if it already exists.
    *
    * @param ingredientId the ingredient id to look for and add.
-   * @param quantity the quantity to add.
+   * @param quantity     the quantity to add.
    */
   public static void addItem(int ingredientId, float quantity) {
     // Insert the ingredient into the shopping list, or ignore if it already exists
@@ -156,23 +155,17 @@ public class ShoppingList {
    */
   public static Map<Integer, String> getAllItems() {
     try {
+      deleteLessThanZero();
       Map<Integer, String> items = new HashMap<>();
-      ResultSet rs = MainController.sqlConnector.executeSqlSelect(
-          "SELECT ingredient.ingredient_id, name, quantity, "
-              + "unit FROM shopping_list_items JOIN ingredient ON "
-              + "shopping_list_items.ingredient_id = ingredient.ingredient_id");
+      ResultSet rs = selectAllMatchingIds();
       while (rs.next()) {
-        if (Float.parseFloat(rs.getString("quantity")) <= 0) {
-          MainController.sqlConnector.executeSqlUpdate(
-              "DELETE FROM shopping_list_items WHERE quantity <= 0");
-          continue;
-        }
         int ingredientId = rs.getInt("ingredient_id");
         String name = rs.getString("name");
         String quantity = rs.getString("quantity");
         String unit = rs.getString("unit");
         String item = String.format("%-30s %-5s %-15s", name, quantity, unit);
         items.put(ingredientId, item);
+
       }
       return items;
 
@@ -198,7 +191,7 @@ public class ShoppingList {
    * Update the quantity of an item in the shopping list.
    *
    * @param ingredientId the ID of the ingredient to update.
-   * @param quantity the quantity to update with.
+   * @param quantity     the quantity to update with.
    */
   public static void updateShoppingListQuantity(int ingredientId, float quantity) {
     ShoppingList.sqlConnector.executeSqlUpdate(
@@ -210,7 +203,7 @@ public class ShoppingList {
    * Insert an item into the shopping list.
    *
    * @param ingredientId the ID of the ingredient to insert.
-   * @param quantity the quantity of the ingredient to insert.
+   * @param quantity     the quantity of the ingredient to insert.
    */
   public static void insertIntoShoppingList(int ingredientId, float quantity) {
     // Check if the ingredient exists in the ingredient table
@@ -221,7 +214,8 @@ public class ShoppingList {
       // If the ingredient exists, insert it into the shopping list
       if (rs.next()) {
         ShoppingList.sqlConnector.executeSqlUpdate(
-            "INSERT INTO shopping_list_items (ingredient_id, quantity) VALUES (" + ingredientId + ", "
+            "INSERT INTO shopping_list_items (ingredient_id, quantity) VALUES (" + ingredientId
+                + ", "
                 + quantity + ")");
       }
     } catch (SQLException e) {

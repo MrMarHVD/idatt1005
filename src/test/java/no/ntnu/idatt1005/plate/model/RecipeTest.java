@@ -150,6 +150,55 @@ class RecipeTest {
   }
 
   /**
+   * Test addIngredientToRecipe by asserting that the ingredient is added to the recipe.
+   */
+  @Test
+  @DisplayName("addIngredientToRecipe adds ingredient to recipe")
+  void testAddIngredientToRecipe() {
+    String recipeName = "Egg and Onion Scramble";
+    String ingredientName = "Cheese";
+    int ingredientId = 19;
+    float quantity = 1.0f;
+    Recipe.addIngredientToRecipe(recipeName, ingredientName, quantity);
+    ResultSet ingredients = Recipe.selectIngredientsInRecipe(recipeName);
+    boolean found = false;
+    try {
+      while (ingredients.next()) {
+        if (ingredients.getInt("ingredient_id") == ingredientId) {
+          found = true;
+        }
+      }
+
+      assertTrue(found);
+    } catch (SQLException e) {
+      fail(e.getMessage());
+    }
+  }
+
+  /**
+   * Test removeIngredientFromRecipe by asserting that the ingredient is removed from the recipe.
+   */
+  @Test
+  @DisplayName("removeIngredientFromRecipe removes ingredient from recipe")
+  void testRemoveIngredientFromRecipe() {
+    String recipeName = "Egg and Onion Scramble";
+    int ingredientId = 6;
+    Recipe.removeIngredientFromRecipe(recipeName, ingredientId);
+    ResultSet ingredients = Recipe.selectIngredientsInRecipe(recipeName);
+    boolean found = false;
+    try {
+      while (ingredients.next()) {
+        if (ingredients.getInt("ingredient_id") == ingredientId) {
+          found = true;
+        }
+      }
+      assertFalse(found);
+    } catch (SQLException e) {
+      fail(e.getMessage());
+    }
+  }
+
+  /**
    * Tear down the test environment by resetting the database after all tests.
    */
   @AfterAll

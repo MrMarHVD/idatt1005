@@ -1,6 +1,7 @@
 package no.ntnu.idatt1005.plate.model;
 
 import java.util.ArrayList;
+import no.ntnu.idatt1005.plate.controller.global.MainController;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 import org.junit.jupiter.api.*;
 
@@ -144,6 +145,67 @@ class InventoryTest {
   void testAddNewIngredient() {
     Inventory.addNewIngredient("Apple", 2);
     assertTrue(Inventory.ingredientExistsInInventory("Apple"));
+  }
+
+  /**
+   * Test whether adding a new ingredient to the inventory works by asserting that the ingredient
+   * added is in the inventory.
+   */
+  @Test
+  @DisplayName("selectIngredientIdFromName selects the correct ID")
+  void testSelectIngredientIdFromName() {
+    String ingredientName = "Apple";
+    ResultSet rs = Inventory.selectIngredientIdFromName(ingredientName);
+    int ingredientId = 0;
+    try {
+      if (rs.next()) {
+        ingredientId = rs.getInt("ingredient_id");
+      }
+    } catch (SQLException e) {
+      fail(e.getMessage());
+    }
+    assertEquals(1, ingredientId);
+  }
+
+  /**
+   * Test whether searching ingredients in the inventory works by asserting that the ingredient
+   * with the given name is found.
+   */
+  @Test
+  @DisplayName("searchIngredientsInInventory returns correct ingredients")
+  void testSearchIngredientsInInventory() {
+    String search = "sweet";
+    ResultSet rs = Inventory.searchIngredientsInInventory(search);
+    ArrayList<String> ingredients = new ArrayList<>();
+    try {
+      while (rs.next()) {
+        ingredients.add(rs.getString("ingredient_id"));
+      }
+    } catch (SQLException e) {
+      fail(e.getMessage());
+    }
+    assertEquals(1, ingredients.size());
+    assertEquals("17", ingredients.get(0));
+  }
+
+  @Test
+  @DisplayName("deleteLessThanZero deletes ingredients with quantity less than zero")
+  void testDeleteLessThanZero() {
+    Inventory.addNewIngredient("Pepperoni", -5);
+    assertTrue(Inventory.ingredientExistsInInventory("Pepperoni"));
+    Inventory.deleteLessThanZero();
+    ResultSet rs = MainController.sqlConnector.executeSqlSelect(
+        "SELECT * FROM inventory_ingredient LEFT JOIN ingredient i ON inventory_ingredient.ingredient_id = i.ingredient_id;");
+    try {
+      while (rs.next()) {
+        if (rs.getString("ingredient_id").equals("18")) {
+
+          fail("Ingredient with quantity " + rs.getFloat("quantity") + " should have been deleted");
+        }
+      }
+    } catch (SQLException e) {
+      fail(e.getMessage());
+    }
   }
 
   /**

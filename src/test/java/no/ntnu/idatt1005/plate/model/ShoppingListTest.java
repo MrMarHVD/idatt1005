@@ -290,4 +290,22 @@ class ShoppingListTest {
     }
   }
 
+  @Test
+  @DisplayName("getAllItems returns a map with the correct items")
+  void testGetAllItemsReturnsCorrectItems() {
+    // Arrange
+    int ingredientId1 = 5;
+    float quantity1 = 2.0f;
+    ShoppingList.addItem(ingredientId1, quantity1);
+
+    int ingredientId2 = 6;
+    float quantity2 = 1.0f;
+    ShoppingList.addItem(ingredientId2, quantity2);
+
+    // Act
+    var items = ShoppingList.getAllItems();
+    // Assert
+    assertTrue(items.containsKey(ingredientId1));
+  }
+
 }

@@ -1,5 +1,6 @@
 package no.ntnu.idatt1005.plate.model;
 
+import java.util.Map;
 import no.ntnu.idatt1005.plate.data.SqlConnector;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -209,6 +210,37 @@ class CalendarTest {
 
     //assert
     assertNotNull(missingIngredients);
+  }
+
+
+  @Test
+  @DisplayName("getIngredientsAndQuantity returns correct values")
+  void testGetIngredientsAndQuantity() {
+    //arrange
+    String recipe = "Margherita Pizza";
+    int portion = 1;
+
+    //act
+    Map<Integer, Float> ingredientsAndQuantity = Calendar.getIngredientsAndQuantity(recipe, portion);
+    //assert
+    assertNotNull(ingredientsAndQuantity);
+    assertEquals(3, ingredientsAndQuantity.size());
+    assertEquals("{19=1.0, 20=1.0, 21=0.5}", ingredientsAndQuantity.toString());
+
+  }
+
+  @Test
+  @DisplayName("getMissingIngredientsFromMap returns correct values")
+  void testGetMissingIngredientsFromMap() {
+    //arrange
+    Map<Integer, Float> ingredientsAndQuantity = Map.of(19, 1.0f, 20, 1.0f, 21, 0.5f);
+
+    //act
+    String missingIngredients = Calendar.getMissingIngredientsFromMap(ingredientsAndQuantity).toString();
+
+    //assert
+    assertNotNull(missingIngredients);
+    assertEquals("{19=1.0, 20=1.0, 21=0.5}", missingIngredients);
   }
 
   /**
