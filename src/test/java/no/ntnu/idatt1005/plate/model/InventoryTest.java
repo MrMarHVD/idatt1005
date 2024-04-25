@@ -18,7 +18,7 @@ class InventoryTest {
   /**
    * The SQL connector used for testing.
    */
-  private static final SqlConnector sqlConnector = new SqlConnector(":memory:");
+  private static final SqlConnector sqlConnector = new SqlConnector("memory");
 
   /**
    * The name of the ingredient used for testing.

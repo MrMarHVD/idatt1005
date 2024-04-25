@@ -32,7 +32,7 @@ class CalendarTest {
   /**
    * The SQL connector used for testing.
    */
-  private static final SqlConnector sqlConnector = new SqlConnector(":memory:");
+  private static final SqlConnector sqlConnector = new SqlConnector("memory");
 
   /**
    * Set up the test environment.

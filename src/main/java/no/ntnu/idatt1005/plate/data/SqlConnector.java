@@ -27,6 +27,19 @@ public class SqlConnector {
    */
   private static String dbFileName = "plate.db";
 
+
+  /**
+   * Returns the connection to the database
+   * @return connection to database
+   */
+    private Connection getConnection() {
+    if (dbFileName.equals("memory")) {
+      con = DriverManager.getConnection("jdbc:sqlite::memory:");
+      } else {
+        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
+      }
+  }
+
   /**
    * Constructor for the SqlConnector class.
    */
@@ -53,11 +66,8 @@ public class SqlConnector {
         SqlConnector.dbFileName = dbFileName;
 
         // Run database in memory if the file name is ":memory:".
-        if (dbFileName.equals(":memory:")) {
-          con = DriverManager.getConnection("jdbc:sqlite::memory:");
-        } else {
-          con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
-        }
+        con = getConnection();
+
       }
     } catch (Exception e) {
       PopupManager.displayError("Database error", e.getMessage());
@@ -104,7 +114,7 @@ public class SqlConnector {
     ResultSet rs = null;
     try {
       if (con.isClosed()) {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
+        con = getConnection();
       }
       Statement stmt = con.createStatement();
       rs = stmt.executeQuery(query);
@@ -122,7 +132,7 @@ public class SqlConnector {
   public void executeSqlUpdate(String query) {
     try {
       if (con.isClosed()) {
-        con = DriverManager.getConnection("jdbc:sqlite:src/main/resources/" + dbFileName);
+        con = getConnection();
       }
       Statement stmt = con.createStatement();
 
