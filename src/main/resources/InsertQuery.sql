@@ -164,11 +164,12 @@ INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (2, 'Classic
 INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (3, 'Chicken and Paprika Skewers', 'Flavorful Chicken and Paprika Skewers with marinated chicken and paprika. Skewer chicken and paprika alternately, grill, and serve.', 0);
 INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (4, 'Spicy Pepperoni Pizza', 'Spicy Pepperoni Pizza with tomato sauce, pepperoni, and chilli peppers. Roll out pizza dough, add sauce, toppings, and bake.', 0);
 INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (5, 'Egg and Onion Scramble', 'Quick and tasty Egg and Onion Scramble with scrambled eggs and sautéed onions. Scramble eggs, sauté onions, and mix together.', 1);
-INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (6, 'Recipe 6', 'Recipe 6 instruction', 0);
-INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (7, 'Recipe 7', 'Recipe 7 instruction', 1);
-INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (8, 'Recipe 8', 'Recipe 8 instruction', 0);
-INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (9, 'Recipe 9', 'Recipe 9 instruction', 1);
-INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (10, 'Recipe 10', 'Recipe 10 instruction', 0);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (6, 'Veggie Pasta', 'Delicious Veggie Pasta with fresh vegetables and pasta. Boil pasta, sauté vegetables, mix together and serve.', 1);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (7, 'Chicken Caesar Salad', 'Classic Chicken Caesar Salad with grilled chicken, lettuce, and Caesar dressing. Grill chicken, chop lettuce, mix together and top with dressing.', 0);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (8, 'Vegetarian Tacos', 'Tasty Vegetarian Tacos with beans, cheese, and salsa. Warm tortillas, add beans and cheese, top with salsa and serve.', 1);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (9, 'Beef Stir Fry', 'Flavorful Beef Stir Fry with beef, vegetables, and soy sauce. Stir fry beef, add vegetables, mix in soy sauce and serve.', 0);
+INSERT INTO recipe(recipe_id, name, instruction, vegetarian) VALUES (10, 'Vegan Buddha Bowl', 'Healthy Vegan Buddha Bowl with quinoa, chickpeas, and vegetables. Cook quinoa, roast chickpeas, chop vegetables, assemble bowl and serve.', 1);
+
 
 -- OppskriftsIngredienser
 INSERT INTO recipe_ingredients(recipe_id, ingredient_id, quantity) VALUES (1, 20, 1); -- Pizza Dough
