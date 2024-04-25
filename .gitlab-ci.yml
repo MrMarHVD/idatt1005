@@ -66,11 +66,9 @@ pages:
   when: manual
   script:
     - mvn clean package
-    - mvn jacoco:report
     - mvn javadoc:javadoc
     - mkdir public
-    - cp -r target/site/apidocs public/javadoc
-    - cp -r target/jacoco public/coverage
+    - cp -r target/site/apidocs/* public/
   artifacts:
     paths:
       - public
