@@ -9,13 +9,18 @@ Plate is a meal planning application which can be used for a variety of purposes
 Before running the program you need to have Maven and JavaFX installed on your machine. For information on how to install maven click here: https://maven.apache.org/install.html and for javafx click here: https://openjfx.io/openjfx-docs/#introduction
 
 ### Using Maven
-With Maven and JavaFX installed, you can run the following command while in the project root directory to launch the application:
+With Maven and JavaFX installed, you can run the following command while in the project root directory to build the application:
+
+```
+mvn clean install compile
+```
+Then run this command to launch the application:
 ```
 mvn javafx:run
 ```
 
 ### Using .JAR-file
-firstly, to package the application to a .JAR file, run the following command while in the root directory:
+Firstly, to package the application to a .JAR file, run the following command while in the root directory:
 ```
 mvn clean package
 ```
