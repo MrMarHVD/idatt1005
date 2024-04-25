@@ -67,16 +67,8 @@ pages:
   script:
     - mvn clean package
     - mvn javadoc:javadoc
-    - ls target/site/
-    - ls target/site/apidocs/
-    - mkdir .public
-    - cd .public
-    - mkdir apidocs
-    - cd ..
-    - cp -rf target/site/apidocs/* .public/apidocs/
-    - cp -rf target/jacoco/* .public
-    - cp -rf page/index.html .public
-    - mv -f .public public
+    - mkdir public
+    - cp -r target/site/apidocs/* public/
   artifacts:
     paths:
       - public
